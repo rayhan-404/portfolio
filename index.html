@@ -21,12 +21,12 @@
   <!-- Material Symbols Rounded -->
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
 
-  <!-- Highlight.js (Syntax Highlighting) -->
+  <!-- Highlight.js -->
   <link id="hl-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css" />
   <link id="hl-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" disabled />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 
-  <!-- Marked.js (Markdown Rendering) -->
+  <!-- Marked.js -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
   <!-- CSS -->
@@ -36,9 +36,9 @@
   <link rel="stylesheet" href="assets/css/animations.css" />
   <link rel="stylesheet" href="assets/css/components.css" />
   <link rel="stylesheet" href="assets/css/pages/pages.css" />
+  <link rel="stylesheet" href="assets/css/pages/home.css" />
 
   <style>
-    /* Inline critical: prevent FOUC */
     html { background: #e8eaf0; }
     html[data-theme="dark"] { background: #1e1e24; }
     .material-symbols-rounded {
@@ -63,63 +63,47 @@
   <!-- ===== TOP APP BAR ===== -->
   <header id="top-bar">
     <span id="top-bar-title" class="top-bar-title">Portfolio</span>
-    <button id="theme-toggle" class="icon-btn" aria-label="Toggle theme" title="Toggle theme">
+    <button id="theme-toggle" class="icon-btn" aria-label="Toggle theme">
       <span id="theme-icon" class="material-symbols-rounded">dark_mode</span>
     </button>
   </header>
 
   <!-- ===== DESKTOP SIDEBAR ===== -->
   <nav id="sidebar" aria-label="Main navigation">
-    <!-- Avatar -->
     <div id="sidebar-avatar-placeholder" class="sidebar-avatar-placeholder">R</div>
     <img id="sidebar-avatar" class="sidebar-avatar" src="" alt="Avatar" style="display:none;" />
-
     <div id="sidebar-name" class="sidebar-name">M Rayhan</div>
     <div id="sidebar-bio" class="sidebar-bio">Aspiring AI Engineer · CSE Student</div>
 
-    <!-- Nav Links -->
     <nav class="sidebar-nav">
       <button class="sidebar-nav-item active" data-route="home">
-        <span class="material-symbols-rounded">home</span>
-        Home
+        <span class="material-symbols-rounded">home</span>Home
       </button>
       <button class="sidebar-nav-item" data-route="projects">
-        <span class="material-symbols-rounded">code</span>
-        Projects
+        <span class="material-symbols-rounded">code</span>Projects
       </button>
       <button class="sidebar-nav-item" data-route="blog">
-        <span class="material-symbols-rounded">article</span>
-        Blog
+        <span class="material-symbols-rounded">article</span>Blog
       </button>
       <button class="sidebar-nav-item" data-route="skills">
-        <span class="material-symbols-rounded">psychology_alt</span>
-        Skills
+        <span class="material-symbols-rounded">psychology_alt</span>Skills
       </button>
       <button class="sidebar-nav-item" data-route="profile">
-        <span class="material-symbols-rounded">person</span>
-        Profile
+        <span class="material-symbols-rounded">person</span>Profile
       </button>
-
       <div class="sidebar-divider"></div>
-
       <button class="sidebar-nav-item" data-route="certifications">
-        <span class="material-symbols-rounded">workspace_premium</span>
-        Certifications
+        <span class="material-symbols-rounded">workspace_premium</span>Certifications
       </button>
       <button class="sidebar-nav-item" data-route="contact">
-        <span class="material-symbols-rounded">mail</span>
-        Contact
+        <span class="material-symbols-rounded">mail</span>Contact
       </button>
-
       <div class="sidebar-divider"></div>
-
       <button class="sidebar-nav-item sidebar-admin-btn" data-route="admin">
-        <span class="material-symbols-rounded">admin_panel_settings</span>
-        Admin
+        <span class="material-symbols-rounded">admin_panel_settings</span>Admin
       </button>
     </nav>
 
-    <!-- Bottom: Theme Toggle -->
     <div class="sidebar-bottom">
       <button id="sidebar-theme-toggle" class="sidebar-nav-item">
         <span id="sidebar-theme-icon" class="material-symbols-rounded">dark_mode</span>
@@ -130,10 +114,7 @@
 
   <!-- ===== MAIN CONTENT ===== -->
   <main id="app-content" role="main">
-    <!-- SPA content injected here -->
-    <div class="page-loading">
-      <div class="spinner"></div>
-    </div>
+    <div class="page-loading"><div class="spinner"></div></div>
   </main>
 
   <!-- ===== BOTTOM NAV (Mobile) ===== -->
@@ -144,28 +125,24 @@
       </div>
       <span class="nav-label">Home</span>
     </button>
-
     <button class="nav-item" data-route="projects" aria-label="Projects">
       <div class="nav-icon-wrap">
         <span class="material-symbols-rounded">code</span>
       </div>
       <span class="nav-label">Projects</span>
     </button>
-
     <button class="nav-item" data-route="blog" aria-label="Blog">
       <div class="nav-icon-wrap">
         <span class="material-symbols-rounded">article</span>
       </div>
       <span class="nav-label">Blog</span>
     </button>
-
     <button class="nav-item" data-route="skills" aria-label="Skills">
       <div class="nav-icon-wrap">
         <span class="material-symbols-rounded">psychology_alt</span>
       </div>
       <span class="nav-label">Skills</span>
     </button>
-
     <button class="nav-item" data-route="profile" aria-label="Profile">
       <div class="nav-icon-wrap">
         <span class="material-symbols-rounded">person</span>
@@ -174,13 +151,13 @@
     </button>
   </nav>
 
-  <!-- ===== GLOBAL OVERLAY (for bottom sheets) ===== -->
+  <!-- ===== OVERLAY ===== -->
   <div id="overlay" class="overlay" role="presentation"></div>
 
-  <!-- ===== TOAST CONTAINER ===== -->
+  <!-- ===== TOAST ===== -->
   <div id="toast-container" aria-live="polite"></div>
 
-  <!-- ===== SPA ROUTER ===== -->
+  <!-- ===== APP ===== -->
   <script type="module" src="assets/js/app.js"></script>
 
   <!-- ===== SERVICE WORKER ===== -->
