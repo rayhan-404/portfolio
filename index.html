@@ -3,14 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="theme-color" content="#6750A4" />
+  <meta name="theme-color" id="meta-theme-color" content="#6750A4" />
   <meta name="description" content="M Rayhan — Aspiring AI Engineer | CSE Student at North Western University, Khulna" />
+
+  <!-- PWA / Mobile -->
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Rayhan" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="application-name" content="Rayhan Portfolio" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="M Rayhan — Portfolio" />
+  <meta property="og:description" content="Aspiring AI Engineer | CSE Student at NWU Khulna" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://rayhan.iam.bd/image/1772015520268_image.png" />
 
   <title>M Rayhan — Portfolio</title>
 
+  <!-- PWA Manifest -->
   <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="assets/img/icon-192.png" />
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -26,7 +39,7 @@
   <!-- Marked.js -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
-  <!-- CSS -->
+  <!-- CSS (order matters!) -->
   <link rel="stylesheet" href="assets/css/reset.css" />
   <link rel="stylesheet" href="assets/css/variables.css" />
   <link rel="stylesheet" href="assets/css/theme.css" />
@@ -38,10 +51,15 @@
   <link rel="stylesheet" href="assets/css/pages/repo-viewer.css" />
   <link rel="stylesheet" href="assets/css/pages/other-pages.css" />
   <link rel="stylesheet" href="assets/css/pages/admin.css" />
+  <!-- Phase 6: Desktop + Polish -->
+  <link rel="stylesheet" href="assets/css/desktop.css" />
+  <link rel="stylesheet" href="assets/css/polish.css" />
 
   <style>
+    /* Prevent FOUC */
     html { background: #e8eaf0; }
     html[data-theme="dark"] { background: #1e1e24; }
+
     .material-symbols-rounded {
       font-family: 'Material Symbols Rounded';
       font-weight: normal;
@@ -58,24 +76,25 @@
     }
   </style>
 </head>
+
 <body>
 
-  <!-- TOP APP BAR -->
+  <!-- ===== TOP APP BAR ===== -->
   <header id="top-bar">
     <span id="top-bar-title" class="top-bar-title">Portfolio</span>
-    <button id="theme-toggle" class="icon-btn" aria-label="Toggle theme">
+    <button id="theme-toggle" class="icon-btn" aria-label="Toggle theme" title="Toggle theme">
       <span id="theme-icon" class="material-symbols-rounded">dark_mode</span>
     </button>
   </header>
 
-  <!-- DESKTOP SIDEBAR -->
+  <!-- ===== DESKTOP SIDEBAR ===== -->
   <nav id="sidebar" aria-label="Main navigation">
     <div id="sidebar-avatar-placeholder" class="sidebar-avatar-placeholder">R</div>
-    <img id="sidebar-avatar" class="sidebar-avatar" src="" alt="Avatar" style="display:none;" />
+    <img id="sidebar-avatar" class="sidebar-avatar" src="" alt="Profile avatar" style="display:none;" />
     <div id="sidebar-name" class="sidebar-name">M Rayhan</div>
     <div id="sidebar-bio" class="sidebar-bio">Aspiring AI Engineer · CSE Student</div>
 
-    <nav class="sidebar-nav">
+    <nav class="sidebar-nav" role="navigation">
       <button class="sidebar-nav-item active" data-route="home">
         <span class="material-symbols-rounded">home</span>Home
       </button>
@@ -112,51 +131,67 @@
     </div>
   </nav>
 
-  <!-- MAIN CONTENT -->
-  <main id="app-content" role="main">
+  <!-- ===== MAIN CONTENT ===== -->
+  <main id="app-content" role="main" aria-live="polite">
     <div class="page-loading"><div class="spinner"></div></div>
   </main>
 
-  <!-- BOTTOM NAV (Mobile) -->
+  <!-- ===== BOTTOM NAV (Mobile) ===== -->
   <nav id="bottom-nav" aria-label="Bottom navigation">
     <button class="nav-item active" data-route="home" aria-label="Home">
-      <div class="nav-icon-wrap"><span class="material-symbols-rounded">home</span></div>
+      <div class="nav-icon-wrap">
+        <span class="material-symbols-rounded">home</span>
+      </div>
       <span class="nav-label">Home</span>
     </button>
     <button class="nav-item" data-route="projects" aria-label="Projects">
-      <div class="nav-icon-wrap"><span class="material-symbols-rounded">code</span></div>
+      <div class="nav-icon-wrap">
+        <span class="material-symbols-rounded">code</span>
+      </div>
       <span class="nav-label">Projects</span>
     </button>
     <button class="nav-item" data-route="blog" aria-label="Blog">
-      <div class="nav-icon-wrap"><span class="material-symbols-rounded">article</span></div>
+      <div class="nav-icon-wrap">
+        <span class="material-symbols-rounded">article</span>
+      </div>
       <span class="nav-label">Blog</span>
     </button>
     <button class="nav-item" data-route="skills" aria-label="Skills">
-      <div class="nav-icon-wrap"><span class="material-symbols-rounded">psychology_alt</span></div>
+      <div class="nav-icon-wrap">
+        <span class="material-symbols-rounded">psychology_alt</span>
+      </div>
       <span class="nav-label">Skills</span>
     </button>
     <button class="nav-item" data-route="profile" aria-label="Profile">
-      <div class="nav-icon-wrap"><span class="material-symbols-rounded">person</span></div>
+      <div class="nav-icon-wrap">
+        <span class="material-symbols-rounded">person</span>
+      </div>
       <span class="nav-label">Profile</span>
     </button>
   </nav>
 
-  <!-- OVERLAY -->
-  <div id="overlay" class="overlay" role="presentation"></div>
+  <!-- ===== OVERLAY (bottom sheets) ===== -->
+  <div id="overlay" class="overlay" role="presentation" aria-hidden="true"></div>
 
-  <!-- TOAST -->
-  <div id="toast-container" aria-live="polite"></div>
+  <!-- ===== TOAST CONTAINER ===== -->
+  <div id="toast-container" role="status" aria-live="polite" aria-atomic="false"></div>
 
-  <!-- APP -->
+  <!-- ===== APP SCRIPT ===== -->
   <script type="module" src="assets/js/app.js"></script>
 
-  <!-- SERVICE WORKER -->
+  <!-- ===== SERVICE WORKER ===== -->
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js').catch(() => {});
+        navigator.serviceWorker.register('sw.js')
+          .then(reg => {
+            // Check for updates every 60s
+            setInterval(() => reg.update(), 60000);
+          })
+          .catch(() => {});
       });
     }
   </script>
+
 </body>
 </html>

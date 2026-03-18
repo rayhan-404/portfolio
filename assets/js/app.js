@@ -1,9 +1,10 @@
 // ==========================================
-// app.js — SPA Router (Main Entry)
+// app.js — SPA Router (Final — Phase 6)
 // ==========================================
 
-import { initTheme } from './theme.js';
+import { initTheme, getTheme } from './theme.js';
 import { applyRippleToButtons, closeAllBottomSheets, initScrollReveal } from './utils.js';
+import { initPWAInstallBanner, initPullToRefresh, initSWUpdateDetection } from './pwa.js';
 
 // === Route Config ===
 const ROUTES = {
@@ -14,16 +15,15 @@ const ROUTES = {
   profile:        { page: 'profile',        title: 'Profile',        nav: 'profile' },
   certifications: { page: 'certifications', title: 'Certifications', nav: 'skills' },
   contact:        { page: 'contact',        title: 'Contact',        nav: 'profile' },
-  admin:          { page: 'admin',          title: 'Admin',          nav: null },
+  admin:          { page: 'admin',          title: 'Admin ⚙️',       nav: null },
 };
 
-// Nav order (for slide direction)
 const NAV_ORDER = ['home', 'projects', 'blog', 'skills', 'profile'];
 
-let currentRoute = '';
+let currentRoute  = '';
 let lastDirection = 'forward';
 
-// === Lazy page init loaders ===
+// === Lazy page module loader ===
 async function getPageInit(pageName) {
   try {
     switch (pageName) {
@@ -46,7 +46,7 @@ async function getPageInit(pageName) {
 // ROUTER
 // ==========================================
 async function router() {
-  const hash = window.location.hash.slice(1) || 'home';
+  const hash  = window.location.hash.slice(1) || 'home';
   const parts = hash.split('/');
   const routeKey = parts[0];
 
@@ -57,6 +57,7 @@ async function router() {
     await loadRepoViewer(parts);
     updateNavActive(null);
     updateTopBarTitle('Repository');
+    syncThemeColor();
     return;
   }
 
@@ -67,7 +68,7 @@ async function router() {
     return;
   }
 
-  // Determine slide direction
+  // Slide direction
   const prevIdx = NAV_ORDER.indexOf(currentRoute);
   const nextIdx = NAV_ORDER.indexOf(routeKey);
   if (prevIdx !== -1 && nextIdx !== -1) {
@@ -80,6 +81,7 @@ async function router() {
   await loadPage(route.page);
   updateNavActive(route.nav);
   updateTopBarTitle(route.title);
+  syncThemeColor();
 }
 
 // ==========================================
@@ -89,7 +91,6 @@ async function loadPage(pageName) {
   const appContent = document.getElementById('app-content');
   if (!appContent) return;
 
-  // Show spinner
   appContent.innerHTML = `<div class="page-loading"><div class="spinner"></div></div>`;
 
   try {
@@ -99,29 +100,32 @@ async function loadPage(pageName) {
 
     appContent.innerHTML = html;
 
-    // Page transition animation
+    // Animate
     const wrapper = appContent.firstElementChild;
     if (wrapper) {
       wrapper.classList.add(lastDirection === 'back' ? 'page-enter-back' : 'page-enter');
     }
 
-    // Ripple + scroll reveal
     applyRippleToButtons(appContent);
     initScrollReveal(appContent);
 
-    // Run page-specific init
-    const initFn = await getPageInit(pageName);
-    if (typeof initFn === 'function') {
-      await initFn();
-    }
+    // Scroll to top on navigation
+    window.scrollTo({ top: 0, behavior: 'instant' });
 
-  } catch (e) {
+    const initFn = await getPageInit(pageName);
+    if (typeof initFn === 'function') await initFn();
+
+  } catch {
     appContent.innerHTML = `
       <div class="not-found page-enter">
+        <div class="not-found-illustration">
+          <div class="not-found-circle-1"></div>
+          <div class="not-found-circle-2"></div>
+        </div>
         <div class="not-found-code">404</div>
         <h2>Page not found</h2>
-        <p>This page is under construction.</p>
-        <a href="#home" class="md-btn-filled">← Go Home</a>
+        <p>This page is under construction or doesn't exist.</p>
+        <a href="#home" class="md-btn-filled" style="margin-top:8px;">← Go Home</a>
       </div>
     `;
   }
@@ -143,6 +147,7 @@ async function loadRepoViewer(parts) {
     if (wrapper) wrapper.classList.add('page-enter');
 
     applyRippleToButtons(appContent);
+    window.scrollTo({ top: 0, behavior: 'instant' });
 
     const { init } = await import('./repo-viewer.js');
     init?.({ owner: parts[1], repo: parts[2], path: parts.slice(3).join('/') });
@@ -163,10 +168,14 @@ async function loadRepoViewer(parts) {
 function show404() {
   document.getElementById('app-content').innerHTML = `
     <div class="not-found page-enter">
+      <div class="not-found-illustration">
+        <div class="not-found-circle-1"></div>
+        <div class="not-found-circle-2"></div>
+      </div>
       <div class="not-found-code">404</div>
       <h2>Page not found</h2>
       <p>The page you're looking for doesn't exist.</p>
-      <a href="#home" class="md-btn-filled">← Go Home</a>
+      <a href="#home" class="md-btn-filled" style="margin-top:8px;">← Go Home</a>
     </div>
   `;
 }
@@ -175,12 +184,12 @@ function show404() {
 // NAV HELPERS
 // ==========================================
 function updateNavActive(activeNav) {
-  document.querySelectorAll('.nav-item').forEach(item => {
-    item.classList.toggle('active', item.dataset.route === activeNav);
-  });
-  document.querySelectorAll('.sidebar-nav-item').forEach(item => {
-    item.classList.toggle('active', item.dataset.route === activeNav);
-  });
+  document.querySelectorAll('.nav-item').forEach(item =>
+    item.classList.toggle('active', item.dataset.route === activeNav)
+  );
+  document.querySelectorAll('.sidebar-nav-item').forEach(item =>
+    item.classList.toggle('active', item.dataset.route === activeNav)
+  );
 }
 
 function updateTopBarTitle(title) {
@@ -188,18 +197,25 @@ function updateTopBarTitle(title) {
   if (el) el.textContent = title || 'Portfolio';
 }
 
+// Sync theme-color meta tag with current theme
+function syncThemeColor() {
+  const meta   = document.getElementById('meta-theme-color');
+  const isDark = getTheme() === 'dark';
+  if (meta) meta.content = isDark ? '#1e1e24' : '#6750A4';
+}
+
 // ==========================================
-// SIDEBAR PROFILE
+// SIDEBAR PROFILE LOADER
 // ==========================================
 async function loadSidebarProfile() {
   try {
-    const res = await fetch('data/profile.json');
+    const res     = await fetch('data/profile.json');
     const profile = await res.json();
 
-    const nameEl   = document.getElementById('sidebar-name');
-    const bioEl    = document.getElementById('sidebar-bio');
+    const nameEl  = document.getElementById('sidebar-name');
+    const bioEl   = document.getElementById('sidebar-bio');
     const avatarEl = document.getElementById('sidebar-avatar');
-    const phEl     = document.getElementById('sidebar-avatar-placeholder');
+    const phEl    = document.getElementById('sidebar-avatar-placeholder');
 
     if (nameEl) nameEl.textContent = profile.name || 'Your Name';
     if (bioEl)  bioEl.textContent  = profile.bio  || '';
@@ -209,7 +225,10 @@ async function loadSidebarProfile() {
       avatarEl.style.display = 'block';
       avatarEl.onerror = () => {
         avatarEl.style.display = 'none';
-        if (phEl) phEl.style.display = 'flex';
+        if (phEl) {
+          phEl.style.display = 'flex';
+          phEl.textContent = (profile.name || 'U').charAt(0).toUpperCase();
+        }
       };
       if (phEl) phEl.style.display = 'none';
     } else if (phEl) {
@@ -222,19 +241,20 @@ async function loadSidebarProfile() {
 // INIT
 // ==========================================
 async function init() {
+  // Theme (must be first to prevent flash)
   initTheme();
 
-  // Overlay closes sheets
+  // Overlay
   document.getElementById('overlay')?.addEventListener('click', closeAllBottomSheets);
 
-  // Bottom nav clicks
+  // Bottom nav
   document.querySelectorAll('.nav-item').forEach(item => {
     item.addEventListener('click', () => {
       if (item.dataset.route) window.location.hash = item.dataset.route;
     });
   });
 
-  // Sidebar nav clicks
+  // Sidebar nav
   document.querySelectorAll('.sidebar-nav-item').forEach(item => {
     item.addEventListener('click', () => {
       if (item.dataset.route) window.location.hash = item.dataset.route;
@@ -242,8 +262,24 @@ async function init() {
   });
 
   applyRippleToButtons();
+
+  // Sidebar profile
   loadSidebarProfile();
 
+  // PWA features
+  initPWAInstallBanner();
+  initPullToRefresh();
+  initSWUpdateDetection();
+
+  // Sync theme color on theme change
+  document.getElementById('theme-toggle')?.addEventListener('click', () => {
+    setTimeout(syncThemeColor, 50);
+  });
+  document.getElementById('sidebar-theme-toggle')?.addEventListener('click', () => {
+    setTimeout(syncThemeColor, 50);
+  });
+
+  // Route listener
   window.addEventListener('hashchange', router);
   await router();
 }
