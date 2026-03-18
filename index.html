@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" id="meta-theme-color" content="#6750A4" />
+  <meta name="description" content="M Rayhan — Aspiring AI Engineer | CSE Student at North Western University, Khulna" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+
+  <title>M Rayhan — Portfolio</title>
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Material Symbols Rounded -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+
+  <!-- Highlight.js (Syntax Highlighting) -->
+  <link id="hl-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css" />
+  <link id="hl-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" disabled />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+  <!-- Marked.js (Markdown Rendering) -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="assets/css/reset.css" />
+  <link rel="stylesheet" href="assets/css/variables.css" />
+  <link rel="stylesheet" href="assets/css/theme.css" />
+  <link rel="stylesheet" href="assets/css/animations.css" />
+  <link rel="stylesheet" href="assets/css/components.css" />
+  <link rel="stylesheet" href="assets/css/pages/pages.css" />
+
+  <style>
+    /* Inline critical: prevent FOUC */
+    html { background: #e8eaf0; }
+    html[data-theme="dark"] { background: #1e1e24; }
+    .material-symbols-rounded {
+      font-family: 'Material Symbols Rounded';
+      font-weight: normal;
+      font-style: normal;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      display: inline-block;
+      white-space: nowrap;
+      direction: ltr;
+      -webkit-font-smoothing: antialiased;
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      user-select: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ===== TOP APP BAR ===== -->
+  <header id="top-bar">
+    <span id="top-bar-title" class="top-bar-title">Portfolio</span>
+    <button id="theme-toggle" class="icon-btn" aria-label="Toggle theme" title="Toggle theme">
+      <span id="theme-icon" class="material-symbols-rounded">dark_mode</span>
+    </button>
+  </header>
+
+  <!-- ===== DESKTOP SIDEBAR ===== -->
+  <nav id="sidebar" aria-label="Main navigation">
+    <!-- Avatar -->
+    <div id="sidebar-avatar-placeholder" class="sidebar-avatar-placeholder">R</div>
+    <img id="sidebar-avatar" class="sidebar-avatar" src="" alt="Avatar" style="display:none;" />
+
+    <div id="sidebar-name" class="sidebar-name">M Rayhan</div>
+    <div id="sidebar-bio" class="sidebar-bio">Aspiring AI Engineer · CSE Student</div>
+
+    <!-- Nav Links -->
+    <nav class="sidebar-nav">
+      <button class="sidebar-nav-item active" data-route="home">
+        <span class="material-symbols-rounded">home</span>
+        Home
+      </button>
+      <button class="sidebar-nav-item" data-route="projects">
+        <span class="material-symbols-rounded">code</span>
+        Projects
+      </button>
+      <button class="sidebar-nav-item" data-route="blog">
+        <span class="material-symbols-rounded">article</span>
+        Blog
+      </button>
+      <button class="sidebar-nav-item" data-route="skills">
+        <span class="material-symbols-rounded">psychology_alt</span>
+        Skills
+      </button>
+      <button class="sidebar-nav-item" data-route="profile">
+        <span class="material-symbols-rounded">person</span>
+        Profile
+      </button>
+
+      <div class="sidebar-divider"></div>
+
+      <button class="sidebar-nav-item" data-route="certifications">
+        <span class="material-symbols-rounded">workspace_premium</span>
+        Certifications
+      </button>
+      <button class="sidebar-nav-item" data-route="contact">
+        <span class="material-symbols-rounded">mail</span>
+        Contact
+      </button>
+
+      <div class="sidebar-divider"></div>
+
+      <button class="sidebar-nav-item sidebar-admin-btn" data-route="admin">
+        <span class="material-symbols-rounded">admin_panel_settings</span>
+        Admin
+      </button>
+    </nav>
+
+    <!-- Bottom: Theme Toggle -->
+    <div class="sidebar-bottom">
+      <button id="sidebar-theme-toggle" class="sidebar-nav-item">
+        <span id="sidebar-theme-icon" class="material-symbols-rounded">dark_mode</span>
+        <span id="sidebar-theme-label">Dark Mode</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main id="app-content" role="main">
+    <!-- SPA content injected here -->
+    <div class="page-loading">
+      <div class="spinner"></div>
+    </div>
+  </main>
+
+  <!-- ===== BOTTOM NAV (Mobile) ===== -->
+  <nav id="bottom-nav" aria-label="Bottom navigation">
+    <button class="nav-item active" data-route="home" aria-label="Home">
+      <div class="nav-icon-wrap">
+        <span class="material-symbols-rounded">home</span>
+      </div>
+      <span class="nav-label">Home</span>
+    </button>
+
+    <button class="nav-item" data-route="projects" aria-label="Projects">
+      <div class="nav-icon-wrap">
+        <span class="material-symbols-rounded">code</span>
+      </div>
+      <span class="nav-label">Projects</span>
+    </button>
+
+    <button class="nav-item" data-route="blog" aria-label="Blog">
+      <div class="nav-icon-wrap">
+        <span class="material-symbols-rounded">article</span>
+      </div>
+      <span class="nav-label">Blog</span>
+    </button>
+
+    <button class="nav-item" data-route="skills" aria-label="Skills">
+      <div class="nav-icon-wrap">
+        <span class="material-symbols-rounded">psychology_alt</span>
+      </div>
+      <span class="nav-label">Skills</span>
+    </button>
+
+    <button class="nav-item" data-route="profile" aria-label="Profile">
+      <div class="nav-icon-wrap">
+        <span class="material-symbols-rounded">person</span>
+      </div>
+      <span class="nav-label">Profile</span>
+    </button>
+  </nav>
+
+  <!-- ===== GLOBAL OVERLAY (for bottom sheets) ===== -->
+  <div id="overlay" class="overlay" role="presentation"></div>
+
+  <!-- ===== TOAST CONTAINER ===== -->
+  <div id="toast-container" aria-live="polite"></div>
+
+  <!-- ===== SPA ROUTER ===== -->
+  <script type="module" src="assets/js/app.js"></script>
+
+  <!-- ===== SERVICE WORKER ===== -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch(() => {});
+      });
+    }
+  </script>
+
+</body>
+</html>

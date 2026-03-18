@@ -1,0 +1,40 @@
+/* Pages CSS — will be populated in Phase 2-5 */
+
+/* === 404 Page === */
+.not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60dvh;
+  text-align: center;
+  gap: var(--space-md);
+}
+
+.not-found-code {
+  font-family: var(--font-heading);
+  font-size: 96px;
+  font-weight: 800;
+  color: var(--md-outline-variant);
+  line-height: 1;
+}
+
+.not-found h2 {
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--md-on-surface-variant);
+}
+
+.not-found p {
+  font-size: 14px;
+  color: var(--md-outline);
+}
+
+/* === Page Loading === */
+.page-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50dvh;
+}

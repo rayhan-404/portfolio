@@ -1,0 +1,18 @@
+{
+  "username": "",
+  "name": "M Rayhan",
+  "bio": "B.Sc. CSE student at North Western University, Khulna. Driven by a dream to become an AI Engineer.",
+  "avatar": "https://rayhan.iam.bd/image/1772015520268_image.png",
+  "roles": ["AI Engineer (Aspiring)", "CSE Student", "Python Developer", "Problem Solver"],
+  "location": "Khulna, Bangladesh",
+  "university": "North Western University, Khulna",
+  "social": {
+    "github": "",
+    "facebook": "https://www.facebook.com/m.rayhan303",
+    "whatsapp": "https://wa.me/8801948199059",
+    "linkedin": "",
+    "twitter": ""
+  },
+  "formspree": "",
+  "skills": ["Python", "C++", "C", "HTML", "CSS", "JavaScript", "AI/ML", "Git"]
+}
