@@ -1,100 +1,43 @@
-<div class="projects-page page-wrapper">
-
-  <!-- Top bar -->
+<div class="inner-page root-content">
+  <div class="page-hdr reveal">
+    <p class="section-label">// My Projects</p>
+    <h2 class="section-h2">What I've <em>Built...</em></h2>
+  </div>
   <div class="projects-topbar">
-    <h1 class="page-title">Projects</h1>
-    <button class="icon-btn" id="filter-btn" aria-label="Filter projects" title="Filter &amp; Sort">
-      <span class="material-symbols-rounded">tune</span>
+    <span style="font-size:13px;color:var(--on-sv);" id="repos-count"></span>
+    <button class="filter-btn" id="filter-btn">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;"><path stroke-linecap="round" stroke-linejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L13 13.414V19a1 1 0 01-.553.894l-4 2A1 1 0 017 21v-7.586L3.293 6.707A1 1 0 013 6V4z"/></svg>
+      Filter
     </button>
   </div>
-
-  <!-- Active filters display -->
-  <div id="filter-indicator" class="filter-indicator" style="display:none;">
-    <span id="active-lang-chip" class="active-filter-chip" style="display:none;">
-      <span class="lang-dot" id="active-lang-dot"></span>
-      <span id="active-lang-text"></span>
-      <span class="material-symbols-rounded">close</span>
-    </span>
-    <span id="active-sort-chip" class="active-filter-chip" style="display:none;">
-      <span class="material-symbols-rounded">sort</span>
-      <span id="active-sort-text"></span>
-    </span>
-  </div>
-
-  <!-- Repos Grid -->
-  <div id="repos-grid" class="repos-grid">
-    <!-- Skeleton -->
-    <div class="project-card-skeleton nm-card section-hidden stagger-1">
-      <div class="skeleton skeleton-text w-60" style="height:16px;"></div>
-      <div class="skeleton skeleton-text w-100" style="height:12px; margin-top:4px;"></div>
-      <div class="skeleton skeleton-text w-80" style="height:12px;"></div>
-      <div class="skeleton skeleton-text w-40" style="height:12px; margin-top:8px;"></div>
-    </div>
-    <div class="project-card-skeleton nm-card section-hidden stagger-2">
-      <div class="skeleton skeleton-text w-80" style="height:16px;"></div>
-      <div class="skeleton skeleton-text w-100" style="height:12px; margin-top:4px;"></div>
-      <div class="skeleton skeleton-text w-60" style="height:12px;"></div>
-      <div class="skeleton skeleton-text w-40" style="height:12px; margin-top:8px;"></div>
-    </div>
-    <div class="project-card-skeleton nm-card section-hidden stagger-3">
-      <div class="skeleton skeleton-text w-70" style="height:16px;"></div>
-      <div class="skeleton skeleton-text w-100" style="height:12px; margin-top:4px;"></div>
-      <div class="skeleton skeleton-text w-80" style="height:12px;"></div>
-      <div class="skeleton skeleton-text w-40" style="height:12px; margin-top:8px;"></div>
-    </div>
-    <div class="project-card-skeleton nm-card section-hidden stagger-4" style="display:none;">
-      <div class="skeleton skeleton-text w-50" style="height:16px;"></div>
-      <div class="skeleton skeleton-text w-100" style="height:12px; margin-top:4px;"></div>
-      <div class="skeleton skeleton-text w-70" style="height:12px;"></div>
-      <div class="skeleton skeleton-text w-40" style="height:12px; margin-top:8px;"></div>
-    </div>
-    <div class="project-card-skeleton nm-card section-hidden stagger-5" style="display:none;">
-      <div class="skeleton skeleton-text w-90" style="height:16px;"></div>
-      <div class="skeleton skeleton-text w-100" style="height:12px; margin-top:4px;"></div>
-      <div class="skeleton skeleton-text w-50" style="height:12px;"></div>
-      <div class="skeleton skeleton-text w-40" style="height:12px; margin-top:8px;"></div>
-    </div>
-  </div>
-
-  <!-- Load More -->
+  <div id="repos-grid" class="repos-grid"></div>
   <div id="load-more-wrap" class="load-more-wrap" style="display:none;">
-    <button id="load-more-btn" class="md-btn-text">
-      <span class="material-symbols-rounded">expand_more</span>
-      Load More
-    </button>
+    <button id="load-more-btn" class="btn-ghost">Load More</button>
   </div>
-
 </div>
 
-<!-- ===== FILTER BOTTOM SHEET ===== -->
-<div id="filter-sheet" class="bottom-sheet" role="dialog" aria-label="Filter projects">
-  <div class="sheet-handle"></div>
-  <div class="sheet-title">Filter &amp; Sort</div>
-
-  <div class="sheet-content">
-    <!-- Language filter -->
-    <div>
-      <div class="filter-group-label">Language</div>
-      <div id="lang-filter-chips" class="filter-chips">
-        <button class="md-chip active" data-lang="">All</button>
+<div class="sheet-scrim" id="filter-scrim">
+  <div class="m3-sheet">
+    <div class="sheet-handle"></div>
+    <div style="padding:0 20px 20px;">
+      <div class="sheet-headline">Filter &amp; Sort</div>
+      <div style="margin-top:16px;">
+        <div class="filter-group-label">Language</div>
+        <div id="lang-chips" class="filter-chips"></div>
       </div>
-    </div>
-
-    <!-- Sort -->
-    <div>
-      <div class="filter-group-label">Sort By</div>
-      <div id="sort-chips" class="filter-chips">
-        <button class="md-chip active" data-sort="updated">Recent</button>
-        <button class="md-chip" data-sort="stars">Stars</button>
-        <button class="md-chip" data-sort="forks">Forks</button>
-        <button class="md-chip" data-sort="name">Name</button>
+      <div style="margin-top:16px;">
+        <div class="filter-group-label">Sort By</div>
+        <div class="filter-chips" id="sort-chips">
+          <button class="chip active" data-sort="updated">Recent</button>
+          <button class="chip" data-sort="stars">Stars</button>
+          <button class="chip" data-sort="forks">Forks</button>
+          <button class="chip" data-sort="name">Name A-Z</button>
+        </div>
       </div>
-    </div>
-
-    <!-- Actions -->
-    <div class="filter-sheet-actions">
-      <button id="filter-reset-btn" class="md-btn-outlined">Reset</button>
-      <button id="filter-apply-btn" class="md-btn-filled">Apply</button>
+      <div class="filter-apply-row">
+        <button id="filter-reset-btn" class="btn-ghost">Reset</button>
+        <button id="filter-apply-btn" class="btn-filled">Apply</button>
+      </div>
     </div>
   </div>
 </div>

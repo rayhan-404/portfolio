@@ -1,92 +1,35 @@
-<div class="contact-page page-wrapper">
-
-  <!-- Profile hero (reuses contact-page layout) -->
-  <div class="contact-hero section-hidden stagger-1">
-    <div id="profile-avatar-wrap" style="margin: 0 auto var(--space-md);">
-      <div id="profile-avatar-placeholder" class="sidebar-avatar-placeholder" style="width:80px;height:80px;font-size:28px;margin:0 auto;">R</div>
-      <img id="profile-avatar" src="" alt="Avatar"
-           style="display:none; width:80px;height:80px;border-radius:50%;object-fit:cover;
-                  box-shadow: 0 0 0 4px var(--md-primary), 0 0 0 8px var(--nm-bg), var(--nm-raised-sm);
-                  margin:0 auto;" />
+<div class="inner-page root-content">
+  <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;padding-bottom:24px;" class="reveal">
+    <div id="prof-avatar-wrap">
+      <div id="prof-avatar-ph" style="width:96px;height:96px;border-radius:50%;background:var(--pri-c);color:var(--on-pri-c);display:flex;align-items:center;justify-content:center;font-family:var(--font-heading);font-size:36px;font-weight:800;box-shadow:0 0 0 4px var(--pri),0 0 0 8px var(--bg),var(--neu-out);">R</div>
+      <img id="prof-avatar" src="" alt="" style="display:none;width:96px;height:96px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 4px var(--pri),0 0 0 8px var(--bg),var(--neu-out);" />
     </div>
-    <h1 id="profile-name" style="font-family:var(--font-heading);font-size:24px;font-weight:800;color:var(--md-on-surface);margin-bottom:4px;">M Rayhan</h1>
-    <p id="profile-bio" style="font-size:14px;color:var(--md-on-surface-variant);max-width:300px;margin:0 auto;line-height:1.6;"></p>
-  </div>
-
-  <!-- Info card -->
-  <div class="nm-card section-hidden stagger-2">
-    <div style="display:flex;flex-direction:column;gap:var(--space-md);">
-
-      <div id="profile-location" style="display:none; align-items:center; gap:8px; font-size:14px; color:var(--md-on-surface-variant);">
-        <span class="material-symbols-rounded" style="font-size:18px; color:var(--md-primary);">location_on</span>
-        <span id="profile-location-text"></span>
-      </div>
-
-      <div id="profile-university" style="display:none; align-items:center; gap:8px; font-size:14px; color:var(--md-on-surface-variant);">
-        <span class="material-symbols-rounded" style="font-size:18px; color:var(--md-primary);">school</span>
-        <span id="profile-university-text"></span>
-      </div>
-
-      <div id="profile-roles-wrap" style="display:none;">
-        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px;color:var(--md-outline);margin-bottom:8px;">Roles</div>
-        <div id="profile-roles" class="tags-row"></div>
-      </div>
-
-      <div id="profile-skills-wrap" style="display:none;">
-        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px;color:var(--md-outline);margin-bottom:8px;">Skills</div>
-        <div id="profile-skills" class="tags-row"></div>
-      </div>
+    <div>
+      <h1 id="prof-name" style="font-family:var(--font-heading);font-size:26px;font-weight:800;color:var(--on-s);margin-bottom:4px;">M Rayhan</h1>
+      <p id="prof-bio" style="font-size:14px;color:var(--on-sv);max-width:340px;margin:0 auto;line-height:1.6;"></p>
     </div>
+    <div id="prof-chips" style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;"></div>
   </div>
-
-  <!-- Quick links -->
-  <div class="social-links-section section-hidden stagger-3">
-    <h2 class="social-links-title">Quick Links</h2>
-    <div class="social-links-grid">
-      <button class="social-link-card pressable" onclick="window.location.hash='projects'">
-        <div class="social-link-icon" style="background:var(--md-primary-container);color:var(--md-primary);">
-          <span class="material-symbols-rounded" style="font-size:22px;">code</span>
-        </div>
-        <div class="social-link-info">
-          <div class="social-link-name">Projects</div>
-          <div class="social-link-handle">Browse my repositories</div>
-        </div>
-        <span class="material-symbols-rounded social-link-arrow">chevron_right</span>
-      </button>
-
-      <button class="social-link-card pressable" onclick="window.location.hash='blog'">
-        <div class="social-link-icon" style="background:var(--md-secondary-container);color:var(--md-secondary);">
-          <span class="material-symbols-rounded" style="font-size:22px;">article</span>
-        </div>
-        <div class="social-link-info">
-          <div class="social-link-name">Blog</div>
-          <div class="social-link-handle">Read my posts</div>
-        </div>
-        <span class="material-symbols-rounded social-link-arrow">chevron_right</span>
-      </button>
-
-      <button class="social-link-card pressable" onclick="window.location.hash='certifications'">
-        <div class="social-link-icon" style="background:var(--md-tertiary-container);color:var(--md-tertiary);">
-          <span class="material-symbols-rounded" style="font-size:22px;">workspace_premium</span>
-        </div>
-        <div class="social-link-info">
-          <div class="social-link-name">Certifications</div>
-          <div class="social-link-handle">View my credentials</div>
-        </div>
-        <span class="material-symbols-rounded social-link-arrow">chevron_right</span>
-      </button>
-
-      <button class="social-link-card pressable" onclick="window.location.hash='contact'">
-        <div class="social-link-icon" style="background:var(--md-surface-variant);color:var(--md-on-surface-variant);">
-          <span class="material-symbols-rounded" style="font-size:22px;">mail</span>
-        </div>
-        <div class="social-link-info">
-          <div class="social-link-name">Contact</div>
-          <div class="social-link-handle">Get in touch</div>
-        </div>
-        <span class="material-symbols-rounded social-link-arrow">chevron_right</span>
-      </button>
-    </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;" class="reveal d2">
+    <button onclick="window.location.hash='projects'" class="neu-card" style="border:none;cursor:pointer;padding:20px;text-align:center;background:var(--s1);">
+      <div style="font-size:28px;margin-bottom:8px;">💻</div>
+      <div style="font-family:var(--font-heading);font-size:14px;font-weight:700;color:var(--on-s);">Projects</div>
+      <div style="font-size:12px;color:var(--on-sv);margin-top:3px;">Browse repos</div>
+    </button>
+    <button onclick="window.location.hash='blog'" class="neu-card" style="border:none;cursor:pointer;padding:20px;text-align:center;background:var(--s1);">
+      <div style="font-size:28px;margin-bottom:8px;">📝</div>
+      <div style="font-family:var(--font-heading);font-size:14px;font-weight:700;color:var(--on-s);">Blog</div>
+      <div style="font-size:12px;color:var(--on-sv);margin-top:3px;">Read posts</div>
+    </button>
+    <button onclick="window.location.hash='certifications'" class="neu-card" style="border:none;cursor:pointer;padding:20px;text-align:center;background:var(--s1);">
+      <div style="font-size:28px;margin-bottom:8px;">🏆</div>
+      <div style="font-family:var(--font-heading);font-size:14px;font-weight:700;color:var(--on-s);">Certs</div>
+      <div style="font-size:12px;color:var(--on-sv);margin-top:3px;">View credentials</div>
+    </button>
+    <button onclick="window.location.hash='contact'" class="neu-card" style="border:none;cursor:pointer;padding:20px;text-align:center;background:var(--s1);">
+      <div style="font-size:28px;margin-bottom:8px;">📬</div>
+      <div style="font-family:var(--font-heading);font-size:14px;font-weight:700;color:var(--on-s);">Contact</div>
+      <div style="font-size:12px;color:var(--on-sv);margin-top:3px;">Get in touch</div>
+    </button>
   </div>
-
 </div>

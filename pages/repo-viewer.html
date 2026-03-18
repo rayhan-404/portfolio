@@ -1,45 +1,22 @@
-<div class="repo-viewer-page page-wrapper">
-
-  <!-- Top bar -->
-  <div class="repo-topbar">
-    <button class="back-btn pressable" id="rv-back-btn" aria-label="Go back">
-      <span class="material-symbols-rounded">arrow_back</span>
+<div class="inner-page root-content">
+  <div class="rv-topbar">
+    <button class="rv-back-btn" id="rv-back" aria-label="Back">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:18px;height:18px;"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
     </button>
-    <span class="repo-topbar-title" id="rv-repo-title">Loading...</span>
-    <div class="branch-selector-wrap">
-      <button class="branch-chip pressable" id="rv-branch-btn" aria-label="Switch branch">
-        <span class="material-symbols-rounded">account_tree</span>
+    <span class="rv-title" id="rv-title">Loading...</span>
+    <div class="branch-selector-wrap" style="position:relative;flex-shrink:0;">
+      <button class="branch-chip" id="rv-branch-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:12px;height:12px;"><path stroke-linecap="round" stroke-linejoin="round" d="M8 9l4-4 4 4m0 6l-4 4-4-4"/></svg>
         <span id="rv-branch-name">main</span>
-        <span class="material-symbols-rounded">expand_more</span>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:12px;height:12px;"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
       </button>
-      <div id="rv-branch-dropdown" class="branch-dropdown" role="listbox">
-        <!-- Injected by JS -->
-      </div>
+      <div id="rv-branch-dropdown" style="display:none;position:absolute;top:calc(100% + 6px);right:0;background:var(--s2);border-radius:12px;box-shadow:var(--neu-out);min-width:160px;overflow:hidden;z-index:50;animation:scaleIn .15s ease;transform-origin:top right;"></div>
     </div>
   </div>
-
-  <!-- Breadcrumb -->
-  <div id="rv-breadcrumb" class="breadcrumb-bar" aria-label="File path">
-    <!-- Injected by JS -->
-  </div>
-
-  <!-- Main Content (file tree or file view) -->
-  <div id="rv-content">
-    <div class="page-loading"><div class="spinner"></div></div>
-  </div>
-
-  <!-- README (shown at repo root) -->
+  <div id="rv-breadcrumb" class="breadcrumb"></div>
+  <div id="rv-content"><div class="page-loading"><div class="spinner"></div></div></div>
   <div id="rv-readme" class="readme-section" style="display:none;">
-    <div class="readme-label">
-      <span class="material-symbols-rounded">description</span>
-      README.md
-    </div>
-    <div id="rv-readme-body" class="readme-body">
-      <div class="skeleton skeleton-text w-80" style="height:20px; margin-bottom:16px;"></div>
-      <div class="skeleton skeleton-text w-100" style="margin-bottom:8px;"></div>
-      <div class="skeleton skeleton-text w-100" style="margin-bottom:8px;"></div>
-      <div class="skeleton skeleton-text w-60"></div>
-    </div>
+    <div class="readme-label">📄 README.md</div>
+    <div id="rv-readme-body" class="readme-body"></div>
   </div>
-
 </div>

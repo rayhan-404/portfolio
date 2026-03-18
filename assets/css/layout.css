@@ -1,0 +1,88 @@
+/* ==========================================
+   layout.css — Page Structure & Responsive
+   ========================================== */
+
+/* ── ROOT CONTENT ── */
+.root-content {
+  position: relative; z-index: 1;
+  padding-top: calc(var(--nav-h) + var(--nav-top) + 12px);
+  padding-bottom: calc(var(--bnav-h) + env(safe-area-inset-bottom, 0px) + 16px);
+}
+
+/* ── SECTION WRAPPER ── */
+.section-wrap {
+  position: relative; z-index: 1; width: 100%;
+  padding: clamp(50px, 8vh, 100px) clamp(16px, 5vw, 80px);
+}
+
+/* ── APP CONTENT (SPA injection target) ── */
+#app-content {
+  position: relative; z-index: 1;
+  min-height: 80vh;
+}
+
+/* ── PAGE LOADING ── */
+.page-loading {
+  display: flex; align-items: center; justify-content: center;
+  min-height: 60vh;
+}
+
+/* ── NOT FOUND ── */
+.not-found {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; min-height: 70vh;
+  text-align: center; gap: 16px; padding: 24px;
+  animation: fadeIn .4s ease;
+}
+.not-found-code {
+  font-family: var(--font-heading); font-size: 88px; font-weight: 800;
+  color: var(--out-v); line-height: 1; letter-spacing: -4px;
+}
+.not-found h2 { font-size: 20px; font-weight: 700; color: var(--on-sv); }
+.not-found p { font-size: 14px; color: var(--out); max-width: 260px; }
+
+/* ── RESPONSIVE ── */
+@media (min-width: 769px) {
+  /* Hide bottom nav on desktop */
+  #bottom-nav { display: none !important; }
+  /* Show desktop nav links */
+  .nav-links  { display: flex !important; }
+  .hamburger  { display: none !important; }
+
+  .root-content {
+    padding-bottom: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Show bottom nav */
+  #bottom-nav { display: block !important; }
+  /* Hide desktop nav links */
+  .nav-links  { display: none !important; }
+  .hamburger  { display: flex !important; }
+
+  /* Toast above bottom nav */
+  .toast-bar { bottom: calc(var(--bnav-h) + 12px); }
+  .fab       { bottom: calc(var(--bnav-h) + 14px); }
+}
+
+@media (max-width: 480px) {
+  nav#main-nav { height: 50px; margin-top: 8px; width: calc(100% - 16px); padding: 0 10px; }
+  :root { --nav-h: 50px; --nav-top: 8px; }
+}
+
+/* Desktop sheet as centered modal */
+@media (min-width: 769px) {
+  .sheet-scrim { display: flex; align-items: center; justify-content: center; }
+  .m3-sheet {
+    position: relative; bottom: auto; left: auto; right: auto;
+    max-width: 560px; width: 100%; border-radius: 28px;
+    transform: scale(.92) translateY(0); opacity: 0;
+    transition: transform .35s var(--ease), opacity .3s ease;
+    max-height: 90vh; overflow-y: auto;
+  }
+  .sheet-scrim.open .m3-sheet { transform: scale(1) translateY(0); opacity: 1; }
+  .sheet-handle { display: none; }
+  .fab { bottom: 32px; right: 32px; }
+  .toast-bar { bottom: 24px; }
+}

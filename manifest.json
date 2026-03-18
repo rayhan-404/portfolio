@@ -1,21 +1,18 @@
 {
   "name": "M Rayhan — Portfolio",
-  "short_name": "Rayhan",
+  "short_name": "Portfolio",
   "description": "M Rayhan — Aspiring AI Engineer | CSE Student at NWU Khulna",
   "start_url": "./",
-  "scope": "./",
   "display": "standalone",
   "orientation": "portrait-primary",
   "theme_color": "#6750A4",
   "background_color": "#e8eaf0",
-  "lang": "en",
-  "categories": ["portfolio", "developer", "education"],
   "icons": [
     {
       "src": "assets/img/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any"
+      "purpose": "any maskable"
     },
     {
       "src": "assets/img/icon-512.png",
@@ -24,27 +21,6 @@
       "purpose": "any maskable"
     }
   ],
-  "screenshots": [
-    {
-      "src": "assets/img/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
-  ],
-  "shortcuts": [
-    {
-      "name": "Projects",
-      "short_name": "Projects",
-      "description": "Browse GitHub repositories",
-      "url": "./#projects",
-      "icons": [{ "src": "assets/img/icon-192.png", "sizes": "192x192" }]
-    },
-    {
-      "name": "Blog",
-      "short_name": "Blog",
-      "description": "Read blog posts",
-      "url": "./#blog",
-      "icons": [{ "src": "assets/img/icon-192.png", "sizes": "192x192" }]
-    }
-  ]
+  "categories": ["portfolio", "developer"],
+  "lang": "en"
 }

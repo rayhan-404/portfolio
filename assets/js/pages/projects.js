@@ -262,7 +262,7 @@ function initFilterSheet() {
   document.getElementById('filter-btn')?.addEventListener('click', () => {
     buildLangChips();
     syncSheetToState();
-    openBottomSheet('filter-sheet');
+    openBottomSheet('filter-scrim');
   });
 
   // Apply
@@ -271,7 +271,7 @@ function initFilterSheet() {
     const activeSort = document.querySelector('#sort-chips .md-chip.active');
     selectedLang = activeLang?.dataset.lang || '';
     selectedSort = activeSort?.dataset.sort || 'updated';
-    closeBottomSheet('filter-sheet');
+    closeBottomSheet('filter-scrim');
     applyFilters();
   });
 

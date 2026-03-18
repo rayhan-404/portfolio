@@ -1,137 +1,92 @@
-<div class="home-page page-wrapper">
+<!-- HOME PAGE — Full Screen Hero + Sections -->
+<div class="root-content">
 
-  <!-- ===== HERO SECTION ===== -->
-  <section class="hero-section section-hidden stagger-1">
-    <div class="hero-avatar-wrap">
-      <div id="hero-avatar-placeholder" class="hero-avatar-placeholder">R</div>
-      <img id="hero-avatar" class="hero-avatar" src="" alt="Avatar" style="display:none;" />
-      <div class="hero-status-dot" title="Available for opportunities"></div>
-    </div>
+  <!-- ══ HERO ══ -->
+  <section class="hero" id="home-hero">
 
-    <div class="hero-content">
-      <h1 id="hero-name" class="hero-name">M Rayhan</h1>
-
-      <div class="hero-role-wrap">
-        <span id="hero-role" class="hero-role"></span>
-        <span class="typewriter-cursor"></span>
-      </div>
-
-      <p id="hero-bio" class="hero-bio">
-        B.Sc. CSE student at North Western University, Khulna. Driven by a dream to become an AI Engineer.
+    <!-- Text side (left desktop / bottom mobile) -->
+    <div class="hero-text">
+      <p class="hero-greeting">Hello, I'm</p>
+      <h1 class="hero-name" id="hero-typed">Rayhan<em>.</em></h1>
+      <div class="hero-role-chip" id="hero-chip">🎓 B.Sc. CSE — NWU Khulna</div>
+      <p class="hero-sub">
+        Computer Science &amp; Engineering student, passionate about
+        <strong style="color:var(--on-s);">AI &amp; Machine Learning</strong> and building things from scratch.
       </p>
-
-      <div id="hero-location" class="hero-location" style="display:none;">
-        <span class="material-symbols-rounded">location_on</span>
-        <span id="hero-location-text"></span>
+      <div class="hero-cta">
+        <a href="#projects" class="btn-filled">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:18px;height:18px;">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+          </svg>
+          View Projects
+        </a>
+        <a href="#contact" class="btn-ghost">Contact Me</a>
       </div>
+    </div>
 
-      <div id="hero-socials" class="hero-socials" style="margin-top: 12px;"></div>
+    <!-- Photo (right desktop / top mobile) -->
+    <div class="hero-photo-glow"></div>
+    <div class="photo-frame" id="photo-frame">
+      <div class="mob-orb mob-orb1"></div>
+      <div class="mob-orb mob-orb2"></div>
+      <div class="mob-orb mob-orb3"></div>
+      <div class="mob-scanline"></div>
+      <div class="hero-photo-wrap">
+        <img id="hero-photo" src="https://rayhan.iam.bd/image/1772015520268_image.png" alt="M Rayhan" />
+      </div>
+    </div>
+
+    <div class="scroll-indicator">
+      <span class="si-line"></span>Scroll down
     </div>
   </section>
 
-  <!-- ===== CURRENTLY LEARNING ===== -->
-  <section class="tracking-card nm-card section-hidden stagger-2">
-    <div class="tracking-label">
-      <span>🧠</span> Currently Learning
+  <!-- ══ CURRENTLY LEARNING ══ -->
+  <div class="learning-card reveal" id="learning-section">
+    <div class="lc-inner">
+      <div class="lc-label">🧠 Currently Learning</div>
+      <div class="lc-topic" id="lc-topic">Loading...</div>
+      <div class="lc-progress-track">
+        <div class="lc-progress-fill" id="lc-bar" style="width:0%"></div>
+      </div>
+      <div class="lc-meta">
+        <span class="lc-date" id="lc-date"></span>
+        <span class="lc-pct" id="lc-pct">0%</span>
+        <a id="lc-resource" href="#" target="_blank" rel="noopener"
+           style="display:none;font-size:13px;font-weight:700;color:var(--pri);text-decoration:none;">
+          Resource →
+        </a>
+      </div>
     </div>
-    <div id="tracking-topic" class="tracking-topic">Loading...</div>
+  </div>
 
-    <div class="progress-wrap">
-      <div class="progress-header">
-        <span class="progress-label">Progress</span>
-        <span id="tracking-pct" class="progress-pct">0%</span>
-      </div>
-      <div class="progress-track">
-        <div id="tracking-bar" class="progress-fill" style="width: 0%"></div>
-      </div>
-    </div>
-
-    <div class="tracking-meta">
-      <span id="tracking-date" class="tracking-date">
-        <span class="material-symbols-rounded">calendar_today</span>
-        <span></span>
-      </span>
-      <a id="tracking-resource" href="#" target="_blank" rel="noopener noreferrer"
-         class="md-btn-text" style="padding: 4px 12px; font-size: 13px; display:none;">
-        <span class="material-symbols-rounded" style="font-size:16px;">open_in_new</span>
-        Resource
-      </a>
-    </div>
-  </section>
-
-  <!-- ===== GITHUB STATS ===== -->
-  <section class="stats-section section-hidden stagger-2">
-    <div class="section-header">
-      <h2 class="section-title">GitHub Stats</h2>
-      <a id="github-profile-link" href="#" target="_blank" rel="noopener"
-         class="md-btn-text" style="font-size:13px; display:none;">
-        View Profile →
-      </a>
-    </div>
-    <div id="stats-row" class="stats-row">
-      <!-- Skeleton -->
-      <div class="stat-chip">
-        <div class="skeleton" style="width:40px; height:28px; border-radius:8px;"></div>
-        <div class="skeleton skeleton-text w-60" style="height:12px;"></div>
-      </div>
-      <div class="stat-chip">
-        <div class="skeleton" style="width:40px; height:28px; border-radius:8px;"></div>
-        <div class="skeleton skeleton-text w-60" style="height:12px;"></div>
-      </div>
-      <div class="stat-chip">
-        <div class="skeleton" style="width:40px; height:28px; border-radius:8px;"></div>
-        <div class="skeleton skeleton-text w-60" style="height:12px;"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== FEATURED PROJECTS ===== -->
-  <section class="featured-section section-hidden stagger-3">
-    <div class="section-header">
-      <h2 class="section-title">Featured Projects</h2>
-      <a href="#projects" class="md-btn-text" style="font-size:13px;">See All →</a>
-    </div>
-
-    <div id="featured-repos" class="featured-repos-scroll">
-      <!-- Skeleton cards -->
-      <div class="nm-card repo-card-skeleton" style="min-width:260px;">
-        <div class="skeleton skeleton-text w-60" style="height:16px;"></div>
-        <div class="skeleton skeleton-text w-100" style="height:12px; margin-top:8px;"></div>
-        <div class="skeleton skeleton-text w-80" style="height:12px;"></div>
-        <div class="skeleton skeleton-text w-40" style="height:12px; margin-top:8px;"></div>
-      </div>
-      <div class="nm-card repo-card-skeleton" style="min-width:260px;">
-        <div class="skeleton skeleton-text w-80" style="height:16px;"></div>
-        <div class="skeleton skeleton-text w-100" style="height:12px; margin-top:8px;"></div>
-        <div class="skeleton skeleton-text w-60" style="height:12px;"></div>
-        <div class="skeleton skeleton-text w-40" style="height:12px; margin-top:8px;"></div>
-      </div>
-      <div class="nm-card repo-card-skeleton" style="min-width:260px;">
-        <div class="skeleton skeleton-text w-70" style="height:16px;"></div>
-        <div class="skeleton skeleton-text w-100" style="height:12px; margin-top:8px;"></div>
-        <div class="skeleton skeleton-text w-80" style="height:12px;"></div>
-        <div class="skeleton skeleton-text w-40" style="height:12px; margin-top:8px;"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== SKILLS PREVIEW ===== -->
-  <section class="skills-section section-hidden stagger-4">
-    <div class="section-header">
-      <h2 class="section-title">Skills</h2>
-      <a href="#skills" class="md-btn-text" style="font-size:13px;">See All →</a>
-    </div>
-    <div id="skills-chips" class="skills-chips-scroll">
+  <!-- ══ GITHUB STATS ══ -->
+  <section class="section-wrap" id="stats-section" style="padding-top:0;padding-bottom:0;">
+    <div id="stats-row" class="stats-row" style="flex-wrap:wrap;gap:10px;">
       <!-- Injected by JS -->
     </div>
   </section>
 
-  <!-- ===== CONTACT CTA ===== -->
-  <section class="cta-section section-hidden stagger-5">
-    <a href="#contact" class="md-btn-filled contact-cta">
-      <span class="material-symbols-rounded">waving_hand</span>
-      Let's Connect
-    </a>
+  <!-- ══ FEATURED PROJECTS ══ -->
+  <section class="section-wrap" id="featured-section">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+      <p class="section-label" style="margin:0;">// Featured Projects</p>
+      <a href="#projects" style="font-size:13px;font-weight:700;color:var(--pri);">See All →</a>
+    </div>
+    <div id="featured-repos" class="repo-scroll">
+      <!-- Skeleton -->
+      <div class="repo-card-h" style="min-width:240px;"><div class="sk sk-line w-60" style="height:14px;margin-bottom:8px;"></div><div class="sk sk-line w-100" style="height:12px;margin-bottom:4px;"></div><div class="sk sk-line w-80" style="height:12px;"></div></div>
+      <div class="repo-card-h" style="min-width:240px;"><div class="sk sk-line w-80" style="height:14px;margin-bottom:8px;"></div><div class="sk sk-line w-100" style="height:12px;margin-bottom:4px;"></div><div class="sk sk-line w-60" style="height:12px;"></div></div>
+    </div>
+  </section>
+
+  <!-- ══ SKILLS PREVIEW ══ -->
+  <section class="section-wrap" id="skills-preview-section" style="padding-top:0;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+      <p class="section-label" style="margin:0;">// Skills</p>
+      <a href="#skills" style="font-size:13px;font-weight:700;color:var(--pri);">See All →</a>
+    </div>
+    <div id="skills-preview-chips" style="display:flex;flex-wrap:wrap;gap:8px;"></div>
   </section>
 
 </div>

@@ -1,120 +1,151 @@
+/* ==========================================
+   variables.css — Design Tokens
+   M3 Green Palette + Neumorphism
+   Fonts: Syne + Plus Jakarta Sans + JetBrains Mono
+   ========================================== */
+
 :root {
-  /* === Material Design 3 Color Tokens === */
-  --md-primary: #6750A4;
-  --md-primary-container: #EADDFF;
-  --md-on-primary: #FFFFFF;
-  --md-on-primary-container: #21005D;
+  /* Easing */
+  --ease:   cubic-bezier(0.2, 0, 0, 1);
+  --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --t:      0.3s cubic-bezier(0.2, 0, 0, 1);
 
-  --md-secondary: #625B71;
-  --md-secondary-container: #E8DEF8;
-  --md-on-secondary: #FFFFFF;
-  --md-on-secondary-container: #1D192B;
+  /* Neumorphism (recalculated on theme change) */
+  --neu-d:   rgba(140, 170, 145, .55);
+  --neu-l:   rgba(255, 255, 255, .90);
+  --neu-out: 6px 6px 16px var(--neu-d), -6px -6px 16px var(--neu-l);
+  --neu-in:  inset 4px 4px 8px var(--neu-d), inset -4px -4px 8px var(--neu-l);
+  --neu-sm:  3px 3px 10px var(--neu-d), -3px -3px 10px var(--neu-l);
 
-  --md-tertiary: #7D5260;
-  --md-tertiary-container: #FFD8E4;
+  /* Fonts */
+  --font-heading: 'Syne', sans-serif;
+  --font-body:    'Plus Jakarta Sans', sans-serif;
+  --font-code:    'JetBrains Mono', monospace;
 
-  --md-error: #B3261E;
-  --md-error-container: #F9DEDC;
+  /* Radius */
+  --r-xs:   6px;
+  --r-sm:   8px;
+  --r-md:   12px;
+  --r-lg:   16px;
+  --r-xl:   20px;
+  --r-2xl:  24px;
+  --r-3xl:  28px;
+  --r-full: 100px;
 
-  --md-surface: #FFFBFE;
-  --md-surface-variant: #E7E0EC;
-  --md-surface-container: #F3EDF7;
-  --md-surface-container-high: #ECE6F0;
+  /* Spacing */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
 
-  --md-on-surface: #1C1B1F;
-  --md-on-surface-variant: #49454F;
+  /* Z-layers */
+  --z-base:    0;
+  --z-card:    10;
+  --z-sticky:  50;
+  --z-nav:     300;
+  --z-overlay: 400;
+  --z-sheet:   500;
+  --z-modal:   600;
+  --z-toast:   700;
+  --z-loader:  9999;
 
-  --md-outline: #79747E;
-  --md-outline-variant: #CAC4D0;
-
-  --md-inverse-surface: #313033;
-  --md-inverse-on-surface: #F4EFF4;
-
-  /* === Neumorphism Tokens === */
-  --nm-bg: #e8eaf0;
-  --nm-shadow-light: #ffffff;
-  --nm-shadow-dark: #c5c8d0;
-  --nm-raised: 6px 6px 12px #c5c8d0, -6px -6px 12px #ffffff;
-  --nm-raised-sm: 3px 3px 7px #c5c8d0, -3px -3px 7px #ffffff;
-  --nm-inset: inset 4px 4px 8px #c5c8d0, inset -4px -4px 8px #ffffff;
-  --nm-inset-sm: inset 2px 2px 5px #c5c8d0, inset -2px -2px 5px #ffffff;
-
-  /* === Spacing === */
-  --space-xs: 4px;
-  --space-sm: 8px;
-  --space-md: 16px;
-  --space-lg: 24px;
-  --space-xl: 32px;
-  --space-2xl: 48px;
-
-  /* === Radius === */
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 20px;
-  --radius-xl: 28px;
-  --radius-full: 100px;
-
-  /* === Typography === */
-  --font-heading: 'Sora', sans-serif;
-  --font-body: 'DM Sans', sans-serif;
-  --font-code: 'JetBrains Mono', monospace;
-
-  /* === Z-index layers === */
-  --z-base: 0;
-  --z-raised: 10;
-  --z-nav: 100;
-  --z-fab: 110;
-  --z-overlay: 190;
-  --z-sheet: 200;
-  --z-toast: 300;
-
-  /* === Transitions === */
-  --transition-fast: 150ms ease;
-  --transition-normal: 280ms ease;
-  --transition-spring: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-
-  /* === Bottom Nav Height === */
-  --bottom-nav-height: 72px;
-  --top-bar-height: 64px;
+  /* Layout */
+  --nav-h:      58px;
+  --nav-top:    10px;
+  --bnav-h:     68px;
+  --content-max: 1200px;
 }
 
-/* === Dark Mode === */
+/* ══ LIGHT THEME ══ */
+[data-theme="light"] {
+  --pri:      #1A6B3F;
+  --on-pri:   #FFFFFF;
+  --pri-c:    #AAEFC8;
+  --on-pri-c: #002111;
+
+  --sec-c:    #CCE8D2;
+  --on-sec-c: #071F0D;
+
+  --ter-c:    #9CF0F2;
+  --on-ter-c: #002021;
+
+  --bg:   #EEF5EA;
+  --s1:   #EAF4E6;
+  --s2:   #E2EFDD;
+  --s3:   #DAEBD5;
+  --s4:   #D7E8D2;
+  --s5:   #D2E4CC;
+
+  --on-s:   #0F1F12;
+  --on-sv:  #3D5040;
+  --out:    #527558;
+  --out-v:  #BCCFBE;
+
+  --inv-s:  #243528;
+  --inv-on: #EAF4E6;
+
+  --scrim:  rgba(0, 0, 0, .42);
+
+  --sh:  0 1px 2px rgba(0,0,0,.10), 0 1px 3px rgba(0,0,0,.07);
+  --sh2: 0 2px 4px rgba(0,0,0,.10), 0 2px 6px rgba(0,0,0,.07);
+  --sh3: 0 4px 8px rgba(0,0,0,.12), 0 2px 4px rgba(0,0,0,.07);
+
+  --sk-b: #DCE9D8;
+  --sk-s: #E6F0E2;
+
+  /* RGB for rgba() usage */
+  --ba: 114, 219, 160;
+  --bb: 126, 212, 214;
+
+  --neu-d: rgba(140, 170, 145, .55);
+  --neu-l: rgba(255, 255, 255, .90);
+}
+
+/* ══ DARK THEME ══ */
 [data-theme="dark"] {
-  --md-primary: #D0BCFF;
-  --md-primary-container: #4F378B;
-  --md-on-primary: #381E72;
-  --md-on-primary-container: #EADDFF;
+  --pri:      #72DBA0;
+  --on-pri:   #003920;
+  --pri-c:    #0A5230;
+  --on-pri-c: #A0EFBF;
 
-  --md-secondary: #CCC2DC;
-  --md-secondary-container: #4A4458;
-  --md-on-secondary: #332D41;
-  --md-on-secondary-container: #E8DEF8;
+  --sec-c:    #304A37;
+  --on-sec-c: #C4E4CB;
 
-  --md-tertiary: #EFB8C8;
-  --md-tertiary-container: #633B48;
+  --ter-c:    #004F52;
+  --on-ter-c: #A2EFF1;
 
-  --md-error: #F2B8B5;
-  --md-error-container: #8C1D18;
+  --bg:   #0C1410;
+  --s1:   #161F19;
+  --s2:   #1B261E;
+  --s3:   #202D23;
+  --s4:   #223026;
+  --s5:   #25342A;
 
-  --md-surface: #1C1B1F;
-  --md-surface-variant: #49454F;
-  --md-surface-container: #211F26;
-  --md-surface-container-high: #2B2930;
+  --on-s:   #DCE8DC;
+  --on-sv:  #ADBCAF;
+  --out:    #7A9880;
+  --out-v:  #3A4E3D;
 
-  --md-on-surface: #E6E1E5;
-  --md-on-surface-variant: #CAC4D0;
+  --inv-s:  #DCE8DC;
+  --inv-on: #2A3A2C;
 
-  --md-outline: #938F99;
-  --md-outline-variant: #49454F;
+  --scrim:  rgba(0, 0, 0, .65);
 
-  --md-inverse-surface: #E6E1E5;
-  --md-inverse-on-surface: #313033;
+  --sh:  0 1px 2px rgba(0,0,0,.35), 0 1px 3px rgba(0,0,0,.18);
+  --sh2: 0 2px 4px rgba(0,0,0,.35), 0 2px 6px rgba(0,0,0,.18);
+  --sh3: 0 4px 8px rgba(0,0,0,.35), 0 2px 4px rgba(0,0,0,.18);
 
-  --nm-bg: #1e1e24;
-  --nm-shadow-light: #2a2a32;
-  --nm-shadow-dark: #12121a;
-  --nm-raised: 6px 6px 12px #12121a, -6px -6px 12px #2a2a32;
-  --nm-raised-sm: 3px 3px 7px #12121a, -3px -3px 7px #2a2a32;
-  --nm-inset: inset 4px 4px 8px #12121a, inset -4px -4px 8px #2a2a32;
-  --nm-inset-sm: inset 2px 2px 5px #12121a, inset -2px -2px 5px #2a2a32;
+  --sk-b: #161F19;
+  --sk-s: #202D23;
+
+  --ba: 114, 219, 160;
+  --bb: 126, 212, 214;
+
+  --neu-d: rgba(0, 0, 0, .45);
+  --neu-l: rgba(255, 255, 255, .04);
 }
