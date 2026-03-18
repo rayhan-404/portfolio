@@ -1,7 +1,45 @@
-<div class="page-wrapper">
-  <div class="empty-state">
-    <span class="material-symbols-rounded">construction</span>
-    <h3>Coming Soon</h3>
-    <p>This page will be built in the next phase.</p>
+<div class="repo-viewer-page page-wrapper">
+
+  <!-- Top bar -->
+  <div class="repo-topbar">
+    <button class="back-btn pressable" id="rv-back-btn" aria-label="Go back">
+      <span class="material-symbols-rounded">arrow_back</span>
+    </button>
+    <span class="repo-topbar-title" id="rv-repo-title">Loading...</span>
+    <div class="branch-selector-wrap">
+      <button class="branch-chip pressable" id="rv-branch-btn" aria-label="Switch branch">
+        <span class="material-symbols-rounded">account_tree</span>
+        <span id="rv-branch-name">main</span>
+        <span class="material-symbols-rounded">expand_more</span>
+      </button>
+      <div id="rv-branch-dropdown" class="branch-dropdown" role="listbox">
+        <!-- Injected by JS -->
+      </div>
+    </div>
   </div>
+
+  <!-- Breadcrumb -->
+  <div id="rv-breadcrumb" class="breadcrumb-bar" aria-label="File path">
+    <!-- Injected by JS -->
+  </div>
+
+  <!-- Main Content (file tree or file view) -->
+  <div id="rv-content">
+    <div class="page-loading"><div class="spinner"></div></div>
+  </div>
+
+  <!-- README (shown at repo root) -->
+  <div id="rv-readme" class="readme-section" style="display:none;">
+    <div class="readme-label">
+      <span class="material-symbols-rounded">description</span>
+      README.md
+    </div>
+    <div id="rv-readme-body" class="readme-body">
+      <div class="skeleton skeleton-text w-80" style="height:20px; margin-bottom:16px;"></div>
+      <div class="skeleton skeleton-text w-100" style="margin-bottom:8px;"></div>
+      <div class="skeleton skeleton-text w-100" style="margin-bottom:8px;"></div>
+      <div class="skeleton skeleton-text w-60"></div>
+    </div>
+  </div>
+
 </div>
