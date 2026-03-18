@@ -1,7 +1,30 @@
-<div class="page-wrapper">
-  <div class="empty-state">
-    <span class="material-symbols-rounded">construction</span>
-    <h3>Coming Soon</h3>
-    <p>This page will be built in the next phase.</p>
+<div class="blog-page page-wrapper">
+
+  <!-- Header -->
+  <div class="page-header section-hidden stagger-1">
+    <h1 class="page-title">Blog</h1>
   </div>
+
+  <!-- Tag filter chips -->
+  <div id="tag-filter-row" class="tag-filter-row section-hidden stagger-2">
+    <button class="md-chip active" data-tag="">All</button>
+  </div>
+
+  <!-- Posts list -->
+  <div id="posts-list" class="posts-list">
+    <!-- Skeleton -->
+    <div class="nm-card section-hidden stagger-2" style="display:flex; flex-direction:column; gap:10px;">
+      <div class="skeleton skeleton-text w-80" style="height:18px;"></div>
+      <div class="skeleton skeleton-text w-40" style="height:12px;"></div>
+      <div class="skeleton skeleton-text w-100" style="height:13px;"></div>
+      <div class="skeleton skeleton-text w-80" style="height:13px;"></div>
+    </div>
+    <div class="nm-card section-hidden stagger-3" style="display:flex; flex-direction:column; gap:10px;">
+      <div class="skeleton skeleton-text w-60" style="height:18px;"></div>
+      <div class="skeleton skeleton-text w-40" style="height:12px;"></div>
+      <div class="skeleton skeleton-text w-100" style="height:13px;"></div>
+      <div class="skeleton skeleton-text w-70" style="height:13px;"></div>
+    </div>
+  </div>
+
 </div>

@@ -1,7 +1,54 @@
-<div class="page-wrapper">
-  <div class="empty-state">
-    <span class="material-symbols-rounded">construction</span>
-    <h3>Coming Soon</h3>
-    <p>This page will be built in the next phase.</p>
+<div class="contact-page page-wrapper">
+
+  <!-- Hero -->
+  <div class="contact-hero section-hidden stagger-1">
+    <div class="contact-hero-icon">
+      <span class="material-symbols-rounded">waving_hand</span>
+    </div>
+    <h1>Get In Touch</h1>
+    <p>Have a question, opportunity, or just want to say hello? I'd love to hear from you!</p>
   </div>
+
+  <!-- Contact Form -->
+  <div class="contact-form-card nm-card section-hidden stagger-2">
+    <!-- Notice shown when formspree not configured -->
+    <div id="contact-notice" class="contact-notice" style="display:none;">
+      <span class="material-symbols-rounded">info</span>
+      <span>Contact form not configured. Set your <a href="https://formspree.io" target="_blank" rel="noopener">Formspree</a> URL in Admin → Profile.</span>
+    </div>
+
+    <form id="contact-form" class="contact-form" novalidate>
+      <div class="form-group">
+        <label class="form-label" for="contact-name">Your Name</label>
+        <input id="contact-name" name="name" type="text" class="nm-input"
+               placeholder="M Rayhan" required autocomplete="name" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="contact-email">Email Address</label>
+        <input id="contact-email" name="email" type="email" class="nm-input"
+               placeholder="you@example.com" required autocomplete="email" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="contact-message">Message</label>
+        <textarea id="contact-message" name="message" class="nm-input"
+                  rows="5" placeholder="Hello! I wanted to reach out about..." required></textarea>
+      </div>
+
+      <button id="contact-submit" type="submit" class="md-btn-filled" style="width:100%; padding:14px;">
+        <span class="material-symbols-rounded">send</span>
+        Send Message
+      </button>
+    </form>
+  </div>
+
+  <!-- Social links -->
+  <div class="social-links-section section-hidden stagger-3">
+    <h2 class="social-links-title">Find Me Online</h2>
+    <div id="social-links-grid" class="social-links-grid">
+      <!-- Injected by JS -->
+    </div>
+  </div>
+
 </div>
