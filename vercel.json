@@ -1,0 +1,13 @@
+{
+  "rewrites": [
+    {
+      "source": "/cover",
+      "destination": "https://portfolio-cover-rayhan.vercel.app"
+    },
+    {
+      "source": "/cover/:path*",
+      "destination": "https://portfolio-cover-rayhan.vercel.app/:path*"
+    }
+  ],
+  "trailingSlash": false
+}
