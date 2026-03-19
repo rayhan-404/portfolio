@@ -18,7 +18,7 @@ function generateShareLink() {
     });
 
     const encoded = LZString.compressToEncodedURIComponent(JSON.stringify(data));
-    const url = location.origin + '/index.html?s=' + encoded;
+    const url = location.origin + '/cover/index.html?s=' + encoded;
 
 
     const outputEl = document.getElementById('shareLinkOutput');
