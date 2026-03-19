@@ -1,1 +1,161 @@
-
+{
+  "profile": {
+    "name": "Developer",
+    "role": "Full-Stack Developer · UI Designer",
+    "bio": "",
+    "status": "Available for work"
+  },
+  "contact": {
+    "email": "",
+    "whatsapp": "",
+    "facebook": ""
+  },
+  "skills": [],
+  "education": {},
+  "tracking": {
+    "title": "",
+    "subtitle": "",
+    "pct": 0,
+    "log": []
+  },
+  "featuredProjects": [],
+  "repos": [
+    {
+      "full_name": "rayhan-404/portfolio",
+      "name": "portfolio",
+      "description": "",
+      "language": "HTML",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "private": false
+    },
+    {
+      "full_name": "rayhan-404/portfolio-data",
+      "name": "portfolio-data",
+      "description": "",
+      "language": "",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "private": false
+    },
+    {
+      "full_name": "rayhan-404/Test-repo",
+      "name": "Test-repo",
+      "description": "Restring aghsje sjsjaj",
+      "language": "",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "private": false
+    },
+    {
+      "full_name": "rayhan-404/testui",
+      "name": "testui",
+      "description": "",
+      "language": "",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "private": false
+    },
+    {
+      "full_name": "rayhan-404/cover",
+      "name": "cover",
+      "description": "A cover page generator",
+      "language": "HTML",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "private": false
+    },
+    {
+      "full_name": "rayhan-404/code_from_portfolio__metadata",
+      "name": "code_from_portfolio__metadata",
+      "description": "",
+      "language": "",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "private": false
+    },
+    {
+      "full_name": "rayhan-404/Random_Password_Generator",
+      "name": "Random_Password_Generator",
+      "description": "A random password generator",
+      "language": "C++",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "private": false
+    },
+    {
+      "full_name": "rayhan-404/Number-Guessing-Game",
+      "name": "Number-Guessing-Game",
+      "description": "A simple Number Guessing Game",
+      "language": "C++",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "private": false
+    },
+    {
+      "full_name": "rayhan-404/test",
+      "name": "test",
+      "description": "nsdjvnjv",
+      "language": "C++",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "private": false
+    },
+    {
+      "full_name": "rayhan-404/Encrypt-Decrypt-Message",
+      "name": "Encrypt-Decrypt-Message",
+      "description": "",
+      "language": "Python",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "private": false
+    },
+    {
+      "full_name": "rayhan-404/Prime-Number-Using-function",
+      "name": "Prime-Number-Using-function",
+      "description": "",
+      "language": "Python",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "private": false
+    },
+    {
+      "full_name": "rayhan-404/rock-paper-scissors-game",
+      "name": "rock-paper-scissors-game",
+      "description": "using random function random number generator",
+      "language": "Python",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "private": false
+    },
+    {
+      "full_name": "rayhan-404/love-calculator",
+      "name": "love-calculator",
+      "description": "",
+      "language": "Python",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "private": false
+    },
+    {
+      "full_name": "rayhan-404/Sum-of-two-digit-number",
+      "name": "Sum-of-two-digit-number",
+      "description": "",
+      "language": "Python",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "private": false
+    }
+  ],
+  "hiddenRepos": [],
+  "github_stats": {
+    "username": "rayhan-404",
+    "public_repos": 14,
+    "followers": 0,
+    "total_stars": 0
+  },
+  "heroImage": "",
+  "theme": "light",
+  "password": "admin123",
+  "last_saved": 1773902525966
+}
