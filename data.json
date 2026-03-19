@@ -1,8 +1,8 @@
 {
   "profile": {
     "name": "Rayhan",
-    "role": "",
-    "bio": "",
+    "role": "Bsc Student & Ai enthusiast",
+    "bio": "I'm a B.Sc. Computer Science & Engineering student at North Western University, Khulna. Driven by a dream to become an AI Engineer, I'm currently exploring the frontiers of Artificial Intelligence and Machine Learning while building strong fundamentals in Python, C++, and C.",
     "status": ""
   },
   "contact": {
@@ -166,8 +166,8 @@
     "followers": 0,
     "total_stars": 0
   },
-  "heroImage": "",
+  "heroImage": "https://raw.githubusercontent.com/rayhan-404/portfolio/main/images/hero-1773902787181.png",
   "theme": "light",
   "password": "admin123",
-  "last_saved": 1773902730260
+  "last_saved": 1773902850542
 }
