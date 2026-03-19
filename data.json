@@ -23,7 +23,14 @@
     "pct": 0,
     "log": []
   },
-  "featuredProjects": [],
+  "featuredProjects": [
+    {
+      "name": "NWU Cover Page Generator 📄",
+      "description": "A simple and easy tool to generate assignment or lab report cover page for North Western University.",
+      "url": "http://rayhan.iam.bd/cover",
+      "thumbnail": "https://raw.githubusercontent.com/rayhan-404/portfolio/main/images/feat-1773902727880.jpg"
+    }
+  ],
   "repos": [
     {
       "full_name": "rayhan-404/portfolio",
@@ -162,5 +169,5 @@
   "heroImage": "",
   "theme": "light",
   "password": "admin123",
-  "last_saved": 1773902595652
+  "last_saved": 1773902730260
 }
