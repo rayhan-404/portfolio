@@ -2153,7 +2153,7 @@
         function openSheet(d, i) {
             sheetLabel.textContent = 'Template 0' + (i + 1);
             sheetTitle.textContent = d.name;
-            sheetUse.href = 'form.html?design=' + d.id + (sP ? '&s=' + sP : '');
+            sheetUse.href = 'cover/form.html?design=' + d.id + (sP ? '&s=' + sP : '');
             if (prevImg) { prevImg.remove(); prevImg = null; }
             sheetPh.style.display = 'flex';
             if (d.preview) {
