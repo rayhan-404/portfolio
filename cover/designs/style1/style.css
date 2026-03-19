@@ -1,0 +1,83 @@
+/* ══════════════════════════════════════════
+   designs/nwu/style.css
+   North Western University — A4 Cover Styles
+═══════════════════════════════════════════ */
+
+.a4-sheet {
+  width: 794px; height: 1123px;
+  background: white; padding: 60px;
+  position: relative; box-sizing: border-box;
+  font-family: "Times New Roman", Times, serif;
+}
+
+.a4-sheet::before {
+  content: "";
+  position: absolute;
+  top: 48px; left: 48px; right: 48px; bottom: 48px;
+  pointer-events: none;
+}
+
+.border-simple::before     { border: 2px solid #000; }
+.border-double::before     { border: 6px double #000; }
+.border-thick-blue::before { border: 5px solid #fb9b00; }
+.border-dotted::before     { border: 3px dotted #333; }
+.border-none::before       { border: none; }
+
+.header-section {
+  width: 100%; display: flex; justify-content: center; margin-top: 10px;
+}
+
+.header-logo {
+  max-width: 98%; height: auto; display: block; margin: 0 auto;
+}
+
+.dept-line {
+  text-align: center;
+  margin-top: -10px; margin-left: 6px; margin-bottom: 100px;
+}
+.dept-line span {
+  font-size: 16pt; font-weight: bold; color: #000000cf;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.logo-container { text-align: center; margin-top: 40px; }
+#main-logo { width: 160px; height: auto; }
+
+.work-type-container { text-align: center; margin-top: 40px; }
+.work-type-text {
+  font-size: 28pt; font-weight: bold;
+  text-decoration: underline; text-transform: uppercase; color: #000;
+}
+
+.course-info { margin-top: 50px; line-height: 1.15; text-align: center; }
+.info-row { display: flex; justify-content: center; gap: 5px; margin-bottom: 12px; }
+.info-label { font-size: 16pt; font-weight: bold; color: #000; }
+.info-val   { font-size: 16pt; color: #000; }
+
+.submission-area {
+  margin-top: 60px; display: flex; justify-content: center;
+  background-color: #f8f9fa; border: 1px solid #e0e0e0;
+  border-radius: 6px; padding: 25px 40px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  width: 85%; margin-left: auto; margin-right: auto;
+}
+
+.sub-col { width: 48%; text-align: left; }
+.sub-col:first-child { border-right: 1px solid #ced4da; padding-right: 30px; }
+.sub-col:last-child  { padding-left: 30px; }
+
+.sub-head {
+  font-size: 12pt; font-weight: bold; color: #555;
+  text-transform: uppercase; letter-spacing: 1px;
+  margin-bottom: 15px; display: inline-block;
+  border-bottom: 2px solid #000408; padding-bottom: 3px;
+}
+
+.name-bold { font-weight: bold; font-size: 16pt; color: #000; margin-bottom: 8px; display: block; }
+.sub-content div { font-size: 13pt; color: #444; margin-bottom: 3px; line-height: 1.5; }
+
+.date-section {
+  position: absolute; bottom: 80px;
+  width: calc(100% - 120px);
+  text-align: center; font-size: 14pt; font-weight: bold; color: #000;
+}
