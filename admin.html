@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Admin Panel</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+<style>
+[data-theme="light"]{--bg:#f3eefa;--bg2:#ede5f7;--bg3:#e4d8f0;--nl:#ffffff;--nd:#cdbfe0;--surface:rgba(243,238,250,0.92);--text:#1c0030;--text2:#6d4c80;--text3:#a07cb8;}
+[data-theme="dark"]{--bg:#120820;--bg2:#1c1130;--bg3:#261640;--nl:#2d1f45;--nd:#0a0414;--surface:rgba(18,8,32,0.92);--text:#f0e6ff;--text2:#c9a8f0;--text3:#8a6aaa;}
+:root{--primary:#9c27b0;--primary2:#ab47bc;--accent:#e040fb;--success:#4caf50;--warn:#ff9800;--error:#f44336;--radius-sm:12px;--radius-md:18px;--radius-lg:24px;--radius-xl:32px;--shadow-neu:6px 6px 14px var(--nd),-6px -6px 14px var(--nl);--shadow-neu-sm:4px 4px 10px var(--nd),-4px -4px 10px var(--nl);--shadow-neu-in:inset 4px 4px 10px var(--nd),inset -4px -4px 10px var(--nl);--transition:all 0.32s cubic-bezier(0.34,1.2,0.64,1);--transition-fast:all 0.18s ease;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;min-height:100vh;transition:background 0.4s,color 0.4s;}
+.mi{font-family:'Material Icons Round';font-style:normal;font-size:20px;line-height:1;user-select:none;display:inline-flex;align-items:center;justify-content:center;}
+
+/* ── LOGIN SCREEN ── */
+#login-screen{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:var(--bg);z-index:100;transition:opacity 0.4s;}
+#login-screen.hide{opacity:0;pointer-events:none;}
+.login-wrap{width:90%;max-width:380px;}
+.login-logo{width:72px;height:72px;border-radius:22px;background:var(--primary);box-shadow:0 8px 24px rgba(156,39,176,0.4);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;}
+.login-logo .mi{font-size:36px;color:#fff;}
+.login-title{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--text);text-align:center;margin-bottom:6px;}
+.login-sub{font-size:13px;color:var(--text3);text-align:center;margin-bottom:32px;}
+.login-card{background:var(--bg);border-radius:var(--radius-xl);box-shadow:var(--shadow-neu);padding:28px;}
+.field-label{font-size:11px;font-weight:700;color:var(--text2);letter-spacing:0.05em;margin-bottom:6px;display:flex;align-items:center;gap:4px;}
+.field-label .mi{font-size:14px;color:var(--primary);}
+.neu-input{width:100%;padding:14px 16px;border:none;border-radius:var(--radius-md);background:var(--bg2);box-shadow:var(--shadow-neu-in);font-family:'Nunito',sans-serif;font-size:15px;color:var(--text);outline:none;transition:box-shadow 0.2s;}
+.neu-input:focus{box-shadow:inset 4px 4px 10px var(--nd),inset -4px -4px 10px var(--nl),0 0 0 2px rgba(156,39,176,0.25);}
+.neu-textarea{width:100%;padding:13px 16px;border:none;border-radius:var(--radius-md);background:var(--bg2);box-shadow:var(--shadow-neu-in);font-family:'Nunito',sans-serif;font-size:13px;color:var(--text);outline:none;resize:vertical;min-height:90px;transition:box-shadow 0.2s;}
+.login-btn{width:100%;margin-top:16px;padding:15px;border-radius:var(--radius-md);background:var(--primary);color:#fff;border:none;font-family:'Nunito',sans-serif;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(156,39,176,0.4);transition:var(--transition);display:flex;align-items:center;justify-content:center;gap:8px;}
+.login-btn:active{transform:scale(0.97);}
+.login-error{font-size:12px;color:var(--error);text-align:center;margin-top:12px;min-height:18px;}
+.login-theme{position:fixed;top:16px;right:16px;width:40px;height:40px;border-radius:14px;background:var(--bg2);box-shadow:var(--shadow-neu-sm);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text2);}
+
+/* ── ADMIN PAGE ── */
+#admin-page{display:none;min-height:100vh;padding-bottom:40px;}
+#admin-page.show{display:block;}
+
+/* TOPBAR */
+.adm-topbar{position:sticky;top:0;z-index:50;background:var(--surface);backdrop-filter:blur(24px);padding:13px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(156,39,176,0.12);}
+.adm-topbar-left{display:flex;align-items:center;gap:10px;}
+.adm-brand{font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:var(--primary);}
+.adm-topbar-right{display:flex;gap:8px;}
+.adm-btn{height:36px;border-radius:12px;background:var(--bg2);box-shadow:var(--shadow-neu-sm);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;padding:0 12px;color:var(--text2);font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;transition:var(--transition-fast);}
+.adm-btn:active{box-shadow:var(--shadow-neu-in);}
+.adm-btn .mi{font-size:18px;}
+.adm-save-btn{background:var(--primary);color:#fff;box-shadow:0 4px 12px rgba(156,39,176,0.35);padding:0 16px;}
+.adm-save-btn:active{transform:scale(0.97);}
+
+/* TABS */
+.tab-bar{display:flex;gap:0;padding:12px 16px 0;background:var(--surface);border-bottom:1px solid rgba(156,39,176,0.1);overflow-x:auto;scrollbar-width:none;}
+.tab-bar::-webkit-scrollbar{display:none;}
+.tab-item{padding:10px 16px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;color:var(--text3);border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;display:flex;align-items:center;gap:5px;transition:var(--transition-fast);}
+.tab-item .mi{font-size:16px;}
+.tab-item.active{color:var(--primary);border-bottom-color:var(--primary);}
+
+/* CONTENT */
+.adm-content{max-width:640px;margin:0 auto;padding:20px 16px;}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+
+/* SECTION */
+.sec-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--text);margin:20px 0 12px;padding-bottom:8px;border-bottom:2px solid var(--bg3);display:flex;align-items:center;gap:8px;}
+.sec-title .mi{color:var(--primary);}
+.sec-title:first-child{margin-top:4px;}
+
+/* CARD */
+.adm-card{background:var(--bg);border-radius:var(--radius-lg);box-shadow:var(--shadow-neu-sm);padding:16px;margin-bottom:14px;}
+
+/* FIELD */
+.input-group{margin-bottom:14px;}
+.field-label{font-size:11px;font-weight:700;color:var(--text2);letter-spacing:0.04em;margin-bottom:6px;display:flex;align-items:center;gap:4px;}
+
+/* BUTTONS */
+.btn-primary{width:100%;padding:13px;border-radius:var(--radius-md);background:var(--primary);color:#fff;border:none;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;cursor:pointer;box-shadow:0 4px 14px rgba(156,39,176,0.3);transition:var(--transition);display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:8px;}
+.btn-primary:active{transform:scale(0.97);}
+.btn-neu{width:100%;padding:12px;border-radius:var(--radius-md);background:var(--bg);color:var(--primary);border:none;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;cursor:pointer;box-shadow:var(--shadow-neu-sm);transition:var(--transition-fast);display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:8px;}
+.btn-neu:active{box-shadow:var(--shadow-neu-in);}
+
+/* IMG UPLOAD */
+.img-upload-area{width:100%;height:130px;border-radius:var(--radius-md);background:var(--bg2);box-shadow:var(--shadow-neu-in);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;transition:var(--transition-fast);position:relative;overflow:hidden;}
+.img-upload-area .mi{font-size:32px;color:var(--primary);opacity:0.6;}
+.img-upload-area span{font-size:12px;color:var(--text3);font-weight:600;}
+.img-upload-area img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+
+/* TOKEN CARD */
+.token-card{background:var(--bg2);border-radius:var(--radius-md);padding:14px;margin-bottom:14px;}
+.token-card .config-note{font-size:11px;color:var(--text3);margin-top:6px;line-height:1.6;}
+.token-card a{color:var(--primary);font-weight:700;}
+.token-status{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:8px 12px;border-radius:10px;background:var(--bg);margin-top:8px;}
+.token-status.ok{color:var(--success);}
+.token-status.fail{color:var(--error);}
+.token-status .mi{font-size:16px;}
+
+/* REPO MANAGER */
+.repo-search-wrap{display:flex;align-items:center;gap:8px;background:var(--bg2);border-radius:var(--radius-md);padding:10px 14px;box-shadow:var(--shadow-neu-in);margin-bottom:14px;}
+.repo-search-wrap .mi{color:var(--text3);}
+.repo-search{flex:1;border:none;background:transparent;font-family:'Nunito',sans-serif;font-size:14px;color:var(--text);outline:none;}
+.repo-list{display:flex;flex-direction:column;gap:8px;}
+.repo-row{background:var(--bg);border-radius:var(--radius-md);box-shadow:var(--shadow-neu-sm);padding:12px 14px;display:flex;align-items:center;gap:10px;position:relative;overflow:hidden;}
+.repo-row::before{content:'';position:absolute;width:40px;height:40px;border-radius:50%;background:var(--primary);opacity:0.05;top:-10px;right:-10px;}
+.repo-row-icon{width:36px;height:36px;border-radius:10px;background:var(--bg2);box-shadow:var(--shadow-neu-sm);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--primary);}
+.repo-row-icon .mi{font-size:18px;}
+.repo-row-info{flex:1;min-width:0;}
+.repo-row-name{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.repo-row-meta{font-size:10px;color:var(--text3);margin-top:2px;}
+.repo-row-actions{display:flex;gap:6px;flex-shrink:0;}
+.repo-action-btn{width:32px;height:32px;border-radius:10px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:var(--transition-fast);}
+.repo-action-btn .mi{font-size:17px;}
+.hide-btn{background:rgba(156,39,176,0.1);color:var(--primary);}
+.hide-btn.hidden{background:rgba(156,39,176,0.2);}
+.delete-btn{background:rgba(244,67,54,0.1);color:#f44336;}
+.delete-btn:active{background:rgba(244,67,54,0.2);}
+.repo-hidden-badge{font-size:9px;font-weight:700;color:var(--primary);background:rgba(156,39,176,0.12);padding:2px 7px;border-radius:6px;margin-left:4px;}
+.repo-empty{text-align:center;padding:40px 20px;color:var(--text3);}
+.repo-empty .mi{font-size:40px;opacity:0.3;display:block;margin-bottom:8px;}
+
+/* FEATURED LIST */
+.feat-row{display:flex;align-items:center;gap:10px;padding:10px;background:var(--bg2);border-radius:var(--radius-md);margin-bottom:8px;}
+.feat-thumb{width:40px;height:40px;border-radius:8px;background:var(--bg);overflow:hidden;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.feat-thumb img{width:100%;height:100%;object-fit:cover;}
+.feat-info{flex:1;min-width:0;}
+.feat-name{font-size:13px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.feat-desc{font-size:11px;color:var(--text3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.del-btn{width:32px;height:32px;border-radius:8px;border:none;background:rgba(244,67,54,0.1);color:#f44336;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.del-btn .mi{font-size:18px;}
+
+/* CONFIRM MODAL */
+#confirm-modal{position:fixed;inset:0;background:rgba(18,8,32,0.7);backdrop-filter:blur(12px);z-index:200;display:none;align-items:center;justify-content:center;}
+#confirm-modal.show{display:flex;}
+.confirm-box{background:var(--bg);border-radius:var(--radius-xl);box-shadow:var(--shadow-neu);padding:28px;width:88%;max-width:340px;text-align:center;}
+.confirm-icon{width:56px;height:56px;border-radius:16px;background:rgba(244,67,54,0.12);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;}
+.confirm-icon .mi{font-size:28px;color:#f44336;}
+.confirm-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--text);margin-bottom:8px;}
+.confirm-msg{font-size:13px;color:var(--text3);line-height:1.6;margin-bottom:22px;}
+.confirm-actions{display:flex;gap:10px;}
+.confirm-cancel{flex:1;padding:12px;border-radius:var(--radius-md);background:var(--bg2);box-shadow:var(--shadow-neu-sm);border:none;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;color:var(--text2);cursor:pointer;}
+.confirm-ok{flex:1;padding:12px;border-radius:var(--radius-md);background:#f44336;color:#fff;border:none;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(244,67,54,0.3);}
+
+/* TOAST */
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--bg3);color:var(--text);padding:11px 22px;border-radius:20px;font-size:13px;font-weight:600;opacity:0;transition:all 0.3s;z-index:900;white-space:nowrap;box-shadow:var(--shadow-neu);display:flex;align-items:center;gap:7px;}
+#toast .mi{font-size:16px;color:var(--primary);}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* LOADING SPINNER */
+.spinner{width:32px;height:32px;border-radius:50%;border:3px solid var(--bg3);border-top:3px solid var(--primary);animation:spin 0.8s linear infinite;margin:30px auto;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* STATS PILL */
+.stat-pills{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+.stat-pill{background:var(--bg);border-radius:var(--radius-md);box-shadow:var(--shadow-neu-sm);padding:10px 14px;flex:1;min-width:80px;text-align:center;}
+.stat-pill-n{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--primary);}
+.stat-pill-l{font-size:10px;color:var(--text3);font-weight:600;margin-top:2px;}
+
+@media(min-width:768px){
+  .adm-content{padding:24px 40px;}
+  .tab-bar{padding:12px 40px 0;}
+  .adm-topbar{padding:14px 40px;}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div id="login-screen">
+  <button class="login-theme" onclick="toggleTheme()" title="Toggle theme">
+    <span class="mi" id="theme-icon">light_mode</span>
+  </button>
+  <div class="login-wrap">
+    <div class="login-logo"><span class="mi">admin_panel_settings</span></div>
+    <div class="login-title">Admin Panel</div>
+    <div class="login-sub">Portfolio management dashboard</div>
+    <div class="login-card">
+      <div class="input-group">
+        <div class="field-label"><span class="mi">lock</span>Password</div>
+        <input class="neu-input" type="password" id="login-input" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()" autocomplete="current-password">
+      </div>
+      <button class="login-btn" onclick="doLogin()"><span class="mi">login</span>Sign In</button>
+      <div class="login-error" id="login-error"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN PAGE -->
+<div id="admin-page">
+  <!-- Topbar -->
+  <div class="adm-topbar">
+    <div class="adm-topbar-left">
+      <span class="mi" style="color:var(--primary);font-size:22px;">admin_panel_settings</span>
+      <span class="adm-brand">Admin Panel</span>
+    </div>
+    <div class="adm-topbar-right">
+      <button class="adm-btn" onclick="toggleTheme()"><span class="mi" id="theme-icon2">light_mode</span></button>
+      <button class="adm-btn" onclick="window.location.href='index.html'"><span class="mi">open_in_new</span>Portfolio</button>
+      <button class="adm-btn adm-save-btn" onclick="saveAdmin()"><span class="mi">save</span>Save</button>
+    </div>
+  </div>
+
+  <!-- Tab Bar -->
+  <div class="tab-bar">
+    <button class="tab-item active" onclick="switchTab('profile')"><span class="mi">badge</span>Profile</button>
+    <button class="tab-item" onclick="switchTab('github')"><span class="mi">hub</span>GitHub</button>
+    <button class="tab-item" onclick="switchTab('repos')"><span class="mi">folder</span>Repos</button>
+    <button class="tab-item" onclick="switchTab('tracking')"><span class="mi">trending_up</span>Tracking</button>
+    <button class="tab-item" onclick="switchTab('projects')"><span class="mi">star</span>Featured</button>
+    <button class="tab-item" onclick="switchTab('security')"><span class="mi">lock</span>Security</button>
+  </div>
+
+  <div class="adm-content">
+
+    <!-- ── TAB: PROFILE ── -->
+    <div class="tab-panel active" id="tab-profile">
+      <div class="sec-title"><span class="mi">image</span>Hero Image</div>
+      <div class="input-group">
+        <div class="img-upload-area" onclick="document.getElementById('img-file-input').click()">
+          <span class="mi">add_photo_alternate</span>
+          <span>Tap to upload image</span>
+          <img id="admin-img-preview" src="" alt="" style="display:none;">
+        </div>
+        <input type="file" id="img-file-input" accept="image/*" style="display:none;" onchange="handleImgUpload(this)">
+      </div>
+
+      <div class="sec-title"><span class="mi">badge</span>Profile</div>
+      <div class="input-group"><div class="field-label"><span class="mi">person</span>Your Name</div><input class="neu-input" id="a-name" placeholder="Rafid Hassan"></div>
+      <div class="input-group"><div class="field-label"><span class="mi">work_outline</span>Role / Title</div><input class="neu-input" id="a-role" placeholder="Full-Stack Developer"></div>
+      <div class="input-group"><div class="field-label"><span class="mi">notes</span>Short Bio</div><textarea class="neu-textarea" id="a-bio" placeholder="Building clean digital experiences…"></textarea></div>
+      <div class="input-group"><div class="field-label"><span class="mi">fiber_manual_record</span>Status Badge</div><input class="neu-input" id="a-status" placeholder="Available for work"></div>
+
+      <div class="sec-title"><span class="mi">contacts</span>Contact Info</div>
+      <div class="input-group"><div class="field-label"><span class="mi">mail</span>Email</div><input class="neu-input" id="a-email" placeholder="your@email.com"></div>
+      <div class="input-group"><div class="field-label"><span class="mi">chat</span>WhatsApp</div><input class="neu-input" id="a-whatsapp" placeholder="+880 1XXX-XXXXXX"></div>
+      <div class="input-group"><div class="field-label"><span class="mi">facebook</span>Facebook</div><input class="neu-input" id="a-facebook" placeholder="facebook.com/username"></div>
+
+      <div class="sec-title"><span class="mi">build</span>Skills</div>
+      <div class="input-group"><div class="field-label"><span class="mi">tag</span>Skills (comma separated)</div><textarea class="neu-textarea" id="a-skills" placeholder="React, Node.js, TypeScript…"></textarea></div>
+
+      <div class="sec-title"><span class="mi">school</span>Education</div>
+      <div class="input-group"><div class="field-label"><span class="mi">school</span>Degree / Certificate</div><input class="neu-input" id="a-edu-degree" placeholder="BSc in Computer Science"></div>
+      <div class="input-group"><div class="field-label"><span class="mi">business</span>Institution</div><input class="neu-input" id="a-edu-institution" placeholder="University of Dhaka"></div>
+      <div class="input-group"><div class="field-label"><span class="mi">calendar_today</span>Year / Duration</div><input class="neu-input" id="a-edu-year" placeholder="2020 - 2024"></div>
+      <div class="input-group"><div class="field-label"><span class="mi">notes</span>Description</div><textarea class="neu-textarea" id="a-edu-desc" placeholder="Additional details…"></textarea></div>
+    </div>
+
+    <!-- ── TAB: GITHUB ── -->
+    <div class="tab-panel" id="tab-github">
+      <div class="sec-title"><span class="mi">hub</span>Admin Token</div>
+      <div class="token-card">
+        <div class="field-label"><span class="mi">key</span>Personal Access Token</div>
+        <input class="neu-input" id="a-token" type="password" placeholder="ghp_xxxxxxxxxxxx">
+        <div class="config-note">Token required to save changes. Get from: <a href="https://github.com/settings/tokens/new" target="_blank">GitHub Settings</a><br>Required scope: <strong>repo</strong></div>
+        <div id="token-status" class="token-status" style="display:none;"></div>
+      </div>
+      <button class="btn-primary" onclick="testGitHub()"><span class="mi">sync</span>Connect Token</button>
+
+      <div class="sec-title"><span class="mi">code</span>GitHub Username</div>
+      <div class="adm-card">
+        <div class="input-group" style="margin-bottom:10px;">
+          <div class="field-label"><span class="mi">person</span>Username</div>
+          <input class="neu-input" id="a-username" placeholder="e.g. rayhan-404">
+        </div>
+        <div class="stat-pills">
+          <div class="stat-pill"><div class="stat-pill-n" id="stat-repos">—</div><div class="stat-pill-l">Repos</div></div>
+          <div class="stat-pill"><div class="stat-pill-n" id="stat-stars">—</div><div class="stat-pill-l">Stars</div></div>
+          <div class="stat-pill"><div class="stat-pill-n" id="stat-followers">—</div><div class="stat-pill-l">Followers</div></div>
+        </div>
+        <button class="btn-neu" onclick="syncRepos()"><span class="mi">sync</span>Sync Repositories</button>
+      </div>
+
+      <div class="sec-title"><span class="mi">info</span>Portfolio Config</div>
+      <div class="adm-card" style="font-size:12px;color:var(--text2);line-height:1.8;">
+        <strong>Owner:</strong> <span id="config-owner" style="color:var(--primary);">—</span><br>
+        <strong>Repo:</strong> <span id="config-repo" style="color:var(--primary);">—</span><br>
+        <strong>Branch:</strong> <span style="color:var(--primary);" id="config-branch">—</span>
+      </div>
+    </div>
+
+    <!-- ── TAB: REPOS ── -->
+    <div class="tab-panel" id="tab-repos">
+      <div class="sec-title"><span class="mi">folder</span>Manage Repositories</div>
+      <div style="font-size:12px;color:var(--text3);margin-bottom:14px;padding:10px 14px;background:var(--bg2);border-radius:var(--radius-md);">
+        <strong style="color:var(--text2);">Hide</strong> — removes from portfolio display (reversible)<br>
+        <strong style="color:#f44336;">Delete</strong> — permanently deletes from GitHub (irreversible)
+      </div>
+      <div class="repo-search-wrap">
+        <span class="mi">search</span>
+        <input class="repo-search" id="repo-search" placeholder="Search repos…" oninput="filterAdminRepos(this.value)">
+      </div>
+      <div id="admin-repo-list">
+        <div class="repo-empty">
+          <span class="mi">folder_open</span>
+          <div>Sync repos from GitHub tab first</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── TAB: TRACKING ── -->
+    <div class="tab-panel" id="tab-tracking">
+      <div class="sec-title"><span class="mi">trending_up</span>Currently Learning</div>
+      <div class="input-group"><div class="field-label"><span class="mi">my_location</span>Topic</div><input class="neu-input" id="a-track-title" placeholder="Advanced React Patterns"></div>
+      <div class="input-group"><div class="field-label"><span class="mi">menu_book</span>Subtitle / Resource</div><input class="neu-input" id="a-track-sub" placeholder="Reading: React docs"></div>
+      <div class="input-group"><div class="field-label"><span class="mi">percent</span>Progress (0–100)</div><input class="neu-input" id="a-track-pct" type="number" min="0" max="100" placeholder="65"></div>
+
+      <div class="sec-title"><span class="mi">edit_note</span>Add Log Entry</div>
+      <div class="input-group"><textarea class="neu-textarea" id="a-track-entry" placeholder="What did you learn today?"></textarea></div>
+      <button class="btn-neu" onclick="addTrackEntry()"><span class="mi">add_circle_outline</span>Add Entry</button>
+
+      <div class="sec-title"><span class="mi">history</span>Log History</div>
+      <div id="track-log-list" style="font-size:12px;color:var(--text3);"></div>
+    </div>
+
+    <!-- ── TAB: FEATURED ── -->
+    <div class="tab-panel" id="tab-projects">
+      <div class="sec-title"><span class="mi">star</span>Add Featured Project</div>
+      <div class="input-group">
+        <div class="field-label"><span class="mi">image</span>Thumbnail</div>
+        <div class="img-upload-area" id="featured-thumb-upload" onclick="document.getElementById('featured-thumb-input').click()" style="height:80px;">
+          <span class="mi" id="featured-thumb-icon">add_photo_alternate</span>
+          <span id="featured-thumb-text">Tap to upload</span>
+          <img id="featured-thumb-preview" src="" alt="" style="display:none;">
+        </div>
+        <input type="file" id="featured-thumb-input" accept="image/*" style="display:none;" onchange="handleFeaturedThumb(this)">
+      </div>
+      <div class="input-group"><div class="field-label"><span class="mi">title</span>Project Name</div><input class="neu-input" id="a-featured-name" placeholder="Portfolio Website"></div>
+      <div class="input-group"><div class="field-label"><span class="mi">link</span>URL (optional)</div><input class="neu-input" id="a-featured-url" placeholder="https://github.com/user/project"></div>
+      <div class="input-group"><div class="field-label"><span class="mi">description</span>Description</div><textarea class="neu-textarea" id="a-featured-desc" placeholder="Brief description…"></textarea></div>
+      <button class="btn-primary" onclick="addFeaturedProject()"><span class="mi">add_circle</span>Add Project</button>
+
+      <div class="sec-title"><span class="mi">list</span>Featured Projects</div>
+      <div id="featured-list"></div>
+    </div>
+
+    <!-- ── TAB: SECURITY ── -->
+    <div class="tab-panel" id="tab-security">
+      <div class="sec-title"><span class="mi">lock</span>Change Password</div>
+      <div class="adm-card">
+        <div class="input-group"><div class="field-label"><span class="mi">password</span>New Password (min 6 chars)</div><input class="neu-input" id="a-newpass" type="password" placeholder="New password"></div>
+        <div class="input-group"><div class="field-label"><span class="mi">password</span>Confirm Password</div><input class="neu-input" id="a-confirmpass" type="password" placeholder="Confirm new password"></div>
+        <button class="btn-neu" onclick="changePassword()"><span class="mi">update</span>Update Password</button>
+      </div>
+
+      <div class="sec-title"><span class="mi">info</span>Security Notes</div>
+      <div class="adm-card" style="font-size:12px;color:var(--text3);line-height:1.9;">
+        ✅ Password stored as <strong style="color:var(--text2);">SHA-256 hash</strong> — never plaintext<br>
+        ✅ Token stored in <strong style="color:var(--text2);">sessionStorage</strong> — cleared on tab close<br>
+        ✅ Admin page <strong style="color:var(--text2);">not linked</strong> from portfolio<br>
+        ✅ Featured project URLs validated (<strong style="color:var(--text2);">https:// only</strong>)<br>
+        ⚠️ Keep this page URL <strong style="color:var(--text2);">private</strong>
+      </div>
+      <div class="sec-title"><span class="mi">logout</span>Session</div>
+      <button class="btn-neu" onclick="logout()" style="color:#f44336;"><span class="mi" style="color:#f44336;">logout</span>Log Out</button>
+    </div>
+
+  </div><!-- /adm-content -->
+</div><!-- /admin-page -->
+
+<!-- CONFIRM MODAL -->
+<div id="confirm-modal">
+  <div class="confirm-box">
+    <div class="confirm-icon"><span class="mi">delete_forever</span></div>
+    <div class="confirm-title" id="confirm-title">Delete Repo?</div>
+    <div class="confirm-msg" id="confirm-msg">This action cannot be undone.</div>
+    <div class="confirm-actions">
+      <button class="confirm-cancel" onclick="closeConfirm()">Cancel</button>
+      <button class="confirm-ok" id="confirm-ok-btn">Delete</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"><span class="mi" id="toast-icon">info</span><span id="toast-msg"></span></div>
+
+<script>
+// ══════════════════════════════════════════
+// PORTFOLIO CONFIG — must match index.html
+// ══════════════════════════════════════════
+const PORTFOLIO_CONFIG = {
+  owner: 'rayhan-404',
+  repo: 'portfolio-data',
+  dataBranch: 'main',
+  dataPath: 'data.json',
+  imagePath: 'images'
+};
+
+let ADMIN_TOKEN = '';
+let S = {};
+let allRepos = [];
+let currentFeaturedThumb = '';
+
+const DEFAULT_DATA = {
+  github: { username: '' },
+  profile: { name: 'Developer', role: 'Full-Stack Developer', bio: '', status: 'Available for work' },
+  contact: { email: '', whatsapp: '', facebook: '' },
+  tracking: { title: '', subtitle: '', pct: 0, log: [] },
+  education: { degree: '', institution: '', year: '', description: '' },
+  featuredProjects: [],
+  hiddenRepos: [],
+  skills: [],
+  password: 'admin123',
+  heroImage: '',
+  theme: 'light'
+};
+
+// ══════════════════════════════════════════
+// THEME
+// ══════════════════════════════════════════
+function applyTheme(t) {
+  document.documentElement.setAttribute('data-theme', t);
+  const icon = t === 'dark' ? 'dark_mode' : 'light_mode';
+  document.getElementById('theme-icon').textContent = icon;
+  const i2 = document.getElementById('theme-icon2');
+  if (i2) i2.textContent = icon;
+}
+function toggleTheme() {
+  const cur = document.documentElement.getAttribute('data-theme');
+  const next = cur === 'dark' ? 'light' : 'dark';
+  applyTheme(next);
+  if (S.theme !== undefined) { S.theme = next; }
+  localStorage.setItem('adm_theme', next);
+}
+
+// ══════════════════════════════════════════
+// GITHUB API
+// ══════════════════════════════════════════
+async function getFile(path) {
+  const { owner, repo, dataBranch } = PORTFOLIO_CONFIG;
+  if (!owner || !repo || owner === 'your-github-username') return null;
+  try {
+    const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}?ref=${dataBranch}`;
+    const headers = { 'Accept': 'application/vnd.github.v3+json' };
+    if (ADMIN_TOKEN) headers['Authorization'] = `token ${ADMIN_TOKEN}`;
+    const res = await fetch(url, { headers });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return { content: data.content.replace(/\n/g, ''), sha: data.sha };
+  } catch (e) { return null; }
+}
+
+async function saveFile(path, content, message = 'Update portfolio data') {
+  const { owner, repo, dataBranch } = PORTFOLIO_CONFIG;
+  if (!ADMIN_TOKEN) { showToast('warning', 'Token required'); return false; }
+  try {
+    const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}?ref=${dataBranch}`;
+    let sha = null;
+    const shaRes = await fetch(apiUrl, {
+      headers: { 'Authorization': `token ${ADMIN_TOKEN}`, 'Accept': 'application/vnd.github.v3+json' }
+    });
+    if (shaRes.ok) { const d = await shaRes.json(); sha = d.sha; }
+    const body = { message, content: btoa(unescape(encodeURIComponent(content))), branch: dataBranch };
+    if (sha) body.sha = sha;
+    const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
+      method: 'PUT',
+      headers: { 'Authorization': `token ${ADMIN_TOKEN}`, 'Accept': 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    if (res.ok) return true;
+    const err = await res.json();
+    showToast('error', err.message || 'Save failed');
+    return false;
+  } catch (e) { showToast('error', 'Save failed'); return false; }
+}
+
+async function uploadImage(filename, base64Data) {
+  const { owner, repo, dataBranch, imagePath } = PORTFOLIO_CONFIG;
+  if (!ADMIN_TOKEN) return null;
+  const path = `${imagePath}/${filename}`;
+  try {
+    const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
+      method: 'PUT',
+      headers: { 'Authorization': `token ${ADMIN_TOKEN}`, 'Accept': 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: `Upload: ${filename}`, content: base64Data.split(',')[1], branch: dataBranch })
+    });
+    if (res.ok) return `https://raw.githubusercontent.com/${owner}/${repo}/${dataBranch}/${path}`;
+    return null;
+  } catch (e) { return null; }
+}
+
+async function deleteGitHubRepo(fullName) {
+  if (!ADMIN_TOKEN) return false;
+  try {
+    const res = await fetch(`https://api.github.com/repos/${fullName}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': `token ${ADMIN_TOKEN}`, 'Accept': 'application/vnd.github.v3+json' }
+    });
+    return res.status === 204;
+  } catch (e) { return false; }
+}
+
+function decodeBase64(b) {
+  try { return decodeURIComponent(escape(atob(b))); } catch (e) { return atob(b); }
+}
+
+async function hashPassword(pw) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pw));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+// ══════════════════════════════════════════
+// DATA
+// ══════════════════════════════════════════
+async function loadData() {
+  const file = await getFile(PORTFOLIO_CONFIG.dataPath);
+  if (file) {
+    try {
+      const data = JSON.parse(decodeBase64(file.content));
+      S = { ...DEFAULT_DATA, ...data };
+    } catch (e) { S = { ...DEFAULT_DATA }; }
+  } else {
+    S = { ...DEFAULT_DATA };
+  }
+  populateForm();
+}
+
+async function saveData() {
+  const content = JSON.stringify(S, null, 2);
+  return await saveFile(PORTFOLIO_CONFIG.dataPath, content, 'Update portfolio data');
+}
+
+// ══════════════════════════════════════════
+// LOGIN
+// ══════════════════════════════════════════
+async function doLogin() {
+  const pw = document.getElementById('login-input').value;
+  const errEl = document.getElementById('login-error');
+  errEl.textContent = '';
+  if (!pw) { errEl.textContent = 'Enter password'; return; }
+
+  const inputHash = await hashPassword(pw);
+  const storedHash = S.password && S.password.length === 64 ? S.password : await hashPassword(S.password || 'admin123');
+
+  if (inputHash === storedHash) {
+    document.getElementById('login-screen').classList.add('hide');
+    document.getElementById('admin-page').classList.add('show');
+    const saved = sessionStorage.getItem('admin_token');
+    if (saved) { ADMIN_TOKEN = saved; updateTokenStatus(true); }
+    renderFeaturedList();
+    renderTrackLog();
+  } else {
+    errEl.textContent = 'Wrong password. Try again.';
+    document.getElementById('login-input').value = '';
+    document.getElementById('login-input').focus();
+  }
+}
+
+function logout() {
+  sessionStorage.removeItem('admin_token');
+  ADMIN_TOKEN = '';
+  document.getElementById('admin-page').classList.remove('show');
+  document.getElementById('login-screen').classList.remove('hide');
+  document.getElementById('login-input').value = '';
+  document.getElementById('login-input').focus();
+  showToast('logout', 'Logged out');
+}
+
+// ══════════════════════════════════════════
+// TABS
+// ══════════════════════════════════════════
+function switchTab(name) {
+  document.querySelectorAll('.tab-item').forEach((t, i) => {
+    const tabs = ['profile','github','repos','tracking','projects','security'];
+    t.classList.toggle('active', tabs[i] === name);
+  });
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  if (name === 'repos') renderAdminRepoList(allRepos);
+}
+
+// ══════════════════════════════════════════
+// FORM
+// ══════════════════════════════════════════
+function populateForm() {
+  document.getElementById('a-name').value = S.profile?.name || '';
+  document.getElementById('a-role').value = S.profile?.role || '';
+  document.getElementById('a-bio').value = S.profile?.bio || '';
+  document.getElementById('a-status').value = S.profile?.status || '';
+  document.getElementById('a-email').value = S.contact?.email || '';
+  document.getElementById('a-whatsapp').value = S.contact?.whatsapp || '';
+  document.getElementById('a-facebook').value = S.contact?.facebook || '';
+  document.getElementById('a-track-title').value = S.tracking?.title || '';
+  document.getElementById('a-track-sub').value = S.tracking?.subtitle || '';
+  document.getElementById('a-track-pct').value = S.tracking?.pct || 0;
+  document.getElementById('a-skills').value = (S.skills || []).join(', ');
+  document.getElementById('a-edu-degree').value = S.education?.degree || '';
+  document.getElementById('a-edu-institution').value = S.education?.institution || '';
+  document.getElementById('a-edu-year').value = S.education?.year || '';
+  document.getElementById('a-edu-desc').value = S.education?.description || '';
+  document.getElementById('a-username').value = S.github?.username || '';
+  document.getElementById('config-owner').textContent = PORTFOLIO_CONFIG.owner;
+  document.getElementById('config-repo').textContent = PORTFOLIO_CONFIG.repo;
+  document.getElementById('config-branch').textContent = PORTFOLIO_CONFIG.dataBranch;
+  if (S.heroImage) {
+    const p = document.getElementById('admin-img-preview');
+    p.src = S.heroImage; p.style.display = 'block';
+  }
+  renderFeaturedList();
+  renderTrackLog();
+}
+
+async function saveAdmin() {
+  if (!ADMIN_TOKEN) { showToast('warning', 'Connect token first!'); switchTab('github'); return; }
+  S.profile = {
+    name: document.getElementById('a-name').value.trim() || 'Developer',
+    role: document.getElementById('a-role').value.trim(),
+    bio: document.getElementById('a-bio').value.trim(),
+    status: document.getElementById('a-status').value.trim()
+  };
+  S.contact = {
+    email: document.getElementById('a-email').value.trim(),
+    whatsapp: document.getElementById('a-whatsapp').value.trim(),
+    facebook: document.getElementById('a-facebook').value.trim()
+  };
+  S.tracking = {
+    ...S.tracking,
+    title: document.getElementById('a-track-title').value.trim(),
+    subtitle: document.getElementById('a-track-sub').value.trim(),
+    pct: parseInt(document.getElementById('a-track-pct').value) || 0
+  };
+  S.skills = document.getElementById('a-skills').value.split(',').map(s => s.trim()).filter(Boolean);
+  S.education = {
+    degree: document.getElementById('a-edu-degree').value.trim(),
+    institution: document.getElementById('a-edu-institution').value.trim(),
+    year: document.getElementById('a-edu-year').value.trim(),
+    description: document.getElementById('a-edu-desc').value.trim()
+  };
+  S.github = { ...S.github, username: document.getElementById('a-username').value.trim() };
+  showToast('sync', 'Saving…');
+  const ok = await saveData();
+  if (ok) showToast('check_circle', 'Saved successfully!');
+  else showToast('error', 'Save failed. Check token.');
+}
+
+// ══════════════════════════════════════════
+// GITHUB
+// ══════════════════════════════════════════
+function updateTokenStatus(ok, msg = '') {
+  const el = document.getElementById('token-status');
+  el.style.display = 'flex';
+  el.className = 'token-status ' + (ok ? 'ok' : 'fail');
+  el.innerHTML = `<span class="mi">${ok ? 'check_circle' : 'error'}</span> ${msg || (ok ? 'Token connected' : 'Invalid token')}`;
+}
+
+async function testGitHub() {
+  const token = document.getElementById('a-token').value.trim();
+  if (!token) { showToast('warning', 'Enter token first'); return; }
+  showToast('sync', 'Testing token…');
+  try {
+    const res = await fetch('https://api.github.com/user', {
+      headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }
+    });
+    if (res.ok) {
+      const user = await res.json();
+      ADMIN_TOKEN = token;
+      sessionStorage.setItem('admin_token', token);
+      updateTokenStatus(true, `Connected as ${user.login}`);
+      showToast('check_circle', `Connected as ${user.login}!`);
+    } else {
+      const err = await res.json();
+      updateTokenStatus(false, err.message || 'Invalid token');
+      showToast('error', 'Invalid token');
+    }
+  } catch (e) { updateTokenStatus(false, 'Connection failed'); showToast('error', 'Connection failed'); }
+}
+
+async function syncRepos() {
+  const username = document.getElementById('a-username').value.trim();
+  if (!username) { showToast('warning', 'Enter GitHub username first'); return; }
+  S.github = { ...S.github, username };
+  showToast('sync', 'Syncing repos…');
+  try {
+    const [userRes, reposRes] = await Promise.all([
+      fetch(`https://api.github.com/users/${username}`),
+      fetch(`https://api.github.com/users/${username}/repos?per_page=100&sort=updated`)
+    ]);
+    if (!userRes.ok) { showToast('error', 'User not found'); return; }
+    const user = await userRes.json();
+    const repos = await reposRes.json();
+    document.getElementById('stat-repos').textContent = user.public_repos || 0;
+    document.getElementById('stat-followers').textContent = user.followers || 0;
+    if (repos.length) {
+      allRepos = repos;
+      const stars = repos.reduce((a, r) => a + (r.stargazers_count || 0), 0);
+      document.getElementById('stat-stars').textContent = stars;
+      renderAdminRepoList(repos);
+      showToast('check_circle', `${repos.length} repos synced!`);
+    }
+  } catch (e) { showToast('error', 'Sync failed'); }
+}
+
+// ══════════════════════════════════════════
+// REPO MANAGER
+// ══════════════════════════════════════════
+function renderAdminRepoList(repos) {
+  const el = document.getElementById('admin-repo-list');
+  const hidden = S.hiddenRepos || [];
+  if (!repos.length) {
+    el.innerHTML = `<div class="repo-empty"><span class="mi">folder_open</span><div>No repos loaded. Go to GitHub tab and sync.</div></div>`;
+    return;
+  }
+  el.innerHTML = repos.map(r => {
+    const isHidden = hidden.includes(r.full_name);
+    return `
+    <div class="repo-row" id="rr-${r.name.replace(/[^a-zA-Z0-9]/g,'-')}">
+      <div class="repo-row-icon"><span class="mi">folder_open</span></div>
+      <div class="repo-row-info">
+        <div class="repo-row-name">${r.name}${isHidden ? '<span class="repo-hidden-badge">hidden</span>' : ''}</div>
+        <div class="repo-row-meta">⭐ ${r.stargazers_count || 0} · ${r.language || 'N/A'} · ${r.private ? 'Private' : 'Public'}</div>
+      </div>
+      <div class="repo-row-actions">
+        <button class="repo-action-btn hide-btn ${isHidden ? 'hidden' : ''}" onclick="toggleHideRepo('${r.full_name}', this)" title="${isHidden ? 'Show in portfolio' : 'Hide from portfolio'}">
+          <span class="mi">${isHidden ? 'visibility_off' : 'visibility'}</span>
+        </button>
+        <button class="repo-action-btn delete-btn" onclick="confirmDeleteRepo('${r.full_name}', '${r.name}')" title="Delete from GitHub">
+          <span class="mi">delete</span>
+        </button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function filterAdminRepos(q) {
+  const filtered = q ? allRepos.filter(r =>
+    r.name.toLowerCase().includes(q.toLowerCase()) ||
+    (r.description || '').toLowerCase().includes(q.toLowerCase())
+  ) : allRepos;
+  renderAdminRepoList(filtered);
+}
+
+async function toggleHideRepo(fullName, btn) {
+  if (!S.hiddenRepos) S.hiddenRepos = [];
+  const idx = S.hiddenRepos.indexOf(fullName);
+  const willHide = idx === -1;
+  if (willHide) {
+    S.hiddenRepos.push(fullName);
+  } else {
+    S.hiddenRepos.splice(idx, 1);
+  }
+  // Update button UI immediately
+  const icon = btn.querySelector('.mi');
+  icon.textContent = willHide ? 'visibility_off' : 'visibility';
+  btn.classList.toggle('hidden', willHide);
+  // Update badge
+  const row = btn.closest('.repo-row');
+  const nameEl = row.querySelector('.repo-row-name');
+  const existing = nameEl.querySelector('.repo-hidden-badge');
+  if (willHide) {
+    if (!existing) nameEl.insertAdjacentHTML('beforeend', '<span class="repo-hidden-badge">hidden</span>');
+  } else {
+    if (existing) existing.remove();
+  }
+  // Save
+  showToast('sync', 'Saving…');
+  const ok = await saveData();
+  if (ok) showToast(willHide ? 'visibility_off' : 'visibility', willHide ? 'Repo hidden from portfolio' : 'Repo visible in portfolio');
+  else showToast('error', 'Save failed');
+}
+
+let pendingDeleteRepo = null;
+function confirmDeleteRepo(fullName, name) {
+  pendingDeleteRepo = fullName;
+  document.getElementById('confirm-title').textContent = `Delete "${name}"?`;
+  document.getElementById('confirm-msg').textContent = `This will permanently delete the repository "${fullName}" from GitHub. This action cannot be undone.`;
+  document.getElementById('confirm-ok-btn').onclick = executeDeleteRepo;
+  document.getElementById('confirm-modal').classList.add('show');
+}
+
+function closeConfirm() {
+  document.getElementById('confirm-modal').classList.remove('show');
+  pendingDeleteRepo = null;
+}
+
+async function executeDeleteRepo() {
+  if (!pendingDeleteRepo) return;
+  closeConfirm();
+  if (!ADMIN_TOKEN) { showToast('warning', 'Token required to delete'); return; }
+  showToast('sync', 'Deleting repo…');
+  const ok = await deleteGitHubRepo(pendingDeleteRepo);
+  if (ok) {
+    allRepos = allRepos.filter(r => r.full_name !== pendingDeleteRepo);
+    S.hiddenRepos = (S.hiddenRepos || []).filter(r => r !== pendingDeleteRepo);
+    await saveData();
+    renderAdminRepoList(allRepos);
+    showToast('check_circle', 'Repository deleted');
+  } else {
+    showToast('error', 'Delete failed. Check token has delete_repo scope.');
+  }
+  pendingDeleteRepo = null;
+}
+
+// ══════════════════════════════════════════
+// TRACKING
+// ══════════════════════════════════════════
+async function addTrackEntry() {
+  const text = document.getElementById('a-track-entry').value.trim();
+  if (!text) { showToast('warning', 'Enter something'); return; }
+  if (!S.tracking) S.tracking = { title: '', subtitle: '', pct: 0, log: [] };
+  if (!S.tracking.log) S.tracking.log = [];
+  S.tracking.log.push({
+    text,
+    date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+    tag: document.getElementById('a-track-title').value.trim() || ''
+  });
+  document.getElementById('a-track-entry').value = '';
+  const ok = await saveData();
+  if (ok) { renderTrackLog(); showToast('add_circle', 'Entry added!'); }
+}
+
+function renderTrackLog() {
+  const el = document.getElementById('track-log-list');
+  const log = (S.tracking?.log || []).slice().reverse();
+  if (!log.length) { el.innerHTML = '<div style="color:var(--text3);font-size:12px;padding:10px 0;">No entries yet.</div>'; return; }
+  el.innerHTML = log.map(e => `
+    <div style="padding:10px;background:var(--bg2);border-radius:var(--radius-md);margin-bottom:8px;">
+      <div style="font-size:10px;color:var(--text3);font-weight:600;">${e.date}</div>
+      <div style="font-size:13px;color:var(--text);margin-top:2px;">${e.text}</div>
+      ${e.tag ? `<span style="display:inline-block;margin-top:4px;padding:2px 8px;border-radius:6px;font-size:10px;font-weight:700;background:rgba(156,39,176,0.12);color:var(--primary);">${e.tag}</span>` : ''}
+    </div>`).join('');
+}
+
+// ══════════════════════════════════════════
+// FEATURED PROJECTS
+// ══════════════════════════════════════════
+function handleFeaturedThumb(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    currentFeaturedThumb = e.target.result;
+    const preview = document.getElementById('featured-thumb-preview');
+    preview.src = currentFeaturedThumb;
+    preview.style.display = 'block';
+    document.getElementById('featured-thumb-icon').style.display = 'none';
+    document.getElementById('featured-thumb-text').style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+}
+
+async function addFeaturedProject() {
+  const name = document.getElementById('a-featured-name').value.trim();
+  const desc = document.getElementById('a-featured-desc').value.trim();
+  const url = document.getElementById('a-featured-url').value.trim();
+  if (!name) { showToast('warning', 'Project name required'); return; }
+  if (!S.featuredProjects) S.featuredProjects = [];
+  let thumbnailUrl = currentFeaturedThumb;
+  if (currentFeaturedThumb && ADMIN_TOKEN) {
+    const filename = `featured-${Date.now()}.jpg`;
+    const uploaded = await uploadImage(filename, currentFeaturedThumb);
+    if (uploaded) thumbnailUrl = uploaded;
+  }
+  const safeUrl = url.match(/^https?:\/\//) ? url : '';
+  S.featuredProjects.push({ name, description: desc, url: safeUrl, thumbnail: thumbnailUrl });
+  document.getElementById('a-featured-name').value = '';
+  document.getElementById('a-featured-desc').value = '';
+  document.getElementById('a-featured-url').value = '';
+  currentFeaturedThumb = '';
+  document.getElementById('featured-thumb-preview').style.display = 'none';
+  document.getElementById('featured-thumb-icon').style.display = '';
+  document.getElementById('featured-thumb-text').style.display = '';
+  renderFeaturedList();
+  showToast('check_circle', 'Project added!');
+  await saveData();
+}
+
+function deleteFeaturedProject(i) {
+  S.featuredProjects.splice(i, 1);
+  renderFeaturedList();
+  saveData();
+  showToast('check_circle', 'Removed');
+}
+
+function renderFeaturedList() {
+  const el = document.getElementById('featured-list');
+  const projects = S.featuredProjects || [];
+  if (!projects.length) {
+    el.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text3);font-size:12px;">No featured projects yet</div>';
+    return;
+  }
+  el.innerHTML = projects.map((p, i) => `
+    <div class="feat-row">
+      <div class="feat-thumb">
+        ${p.thumbnail ? `<img src="${p.thumbnail}" alt="">` : '<span class="mi" style="color:var(--primary);opacity:0.5;font-size:18px;">folder</span>'}
+      </div>
+      <div class="feat-info">
+        <div class="feat-name">${p.name}</div>
+        <div class="feat-desc">${p.description || 'No description'}</div>
+      </div>
+      <button class="del-btn" onclick="deleteFeaturedProject(${i})"><span class="mi">delete</span></button>
+    </div>`).join('');
+}
+
+// ══════════════════════════════════════════
+// IMAGE UPLOAD
+// ══════════════════════════════════════════
+async function handleImgUpload(input) {
+  const file = input.files[0];
+  if (!file || !file.type.startsWith('image/')) { showToast('error', 'Select an image file'); return; }
+  showToast('sync', 'Loading image…');
+  const reader = new FileReader();
+  reader.onload = async e => {
+    const base64 = e.target.result;
+    const preview = document.getElementById('admin-img-preview');
+    preview.src = base64; preview.style.display = 'block';
+    if (ADMIN_TOKEN) {
+      showToast('sync', 'Uploading to GitHub…');
+      const ext = file.name.split('.').pop() || 'jpg';
+      const url = await uploadImage(`hero-${Date.now()}.${ext}`, base64);
+      S.heroImage = url || base64;
+      showToast('check_circle', url ? 'Uploaded to GitHub!' : 'Using local image');
+    } else {
+      S.heroImage = base64;
+      showToast('check_circle', 'Image loaded!');
+    }
+  };
+  reader.onerror = () => showToast('error', 'Failed to read image');
+  reader.readAsDataURL(file);
+}
+
+// ══════════════════════════════════════════
+// SECURITY
+// ══════════════════════════════════════════
+async function changePassword() {
+  const np = document.getElementById('a-newpass').value;
+  const cp = document.getElementById('a-confirmpass').value;
+  if (np.length < 6) { showToast('warning', 'Min 6 characters'); return; }
+  if (np !== cp) { showToast('error', 'Passwords do not match'); return; }
+  S.password = await hashPassword(np);
+  document.getElementById('a-newpass').value = '';
+  document.getElementById('a-confirmpass').value = '';
+  const ok = await saveData();
+  if (ok) showToast('lock', 'Password updated!');
+}
+
+// ══════════════════════════════════════════
+// TOAST
+// ══════════════════════════════════════════
+let toastTimer;
+function showToast(icon, msg) {
+  document.getElementById('toast-icon').textContent = icon;
+  document.getElementById('toast-msg').textContent = msg;
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2600);
+}
+
+// ══════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════
+window.addEventListener('load', async () => {
+  const savedTheme = localStorage.getItem('adm_theme') || 'light';
+  applyTheme(savedTheme);
+  await loadData();
+  document.getElementById('login-input').focus();
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeConfirm();
+});
+</script>
+</body>
+</html>
