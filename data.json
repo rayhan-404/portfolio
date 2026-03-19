@@ -27,7 +27,13 @@
     "title": "",
     "subtitle": "",
     "pct": 0,
-    "log": []
+    "log": [
+      {
+        "text": "...",
+        "date": "Mar 19, 2026",
+        "tag": "Numpy & Pandas"
+      }
+    ]
   },
   "featuredProjects": [
     {
@@ -175,5 +181,5 @@
   "heroImage": "https://raw.githubusercontent.com/rayhan-404/portfolio/main/images/hero-1773902998762.png",
   "theme": "light",
   "password": "admin123",
-  "last_saved": 1773903139796
+  "last_saved": 1773903255059
 }
