@@ -10,12 +10,18 @@
     "whatsapp": "01948199059",
     "facebook": ""
   },
-  "skills": [],
+  "skills": [
+    "C++",
+    "C",
+    "Python",
+    "HTML",
+    "CSS"
+  ],
   "education": {
-    "degree": "",
-    "institution": "",
-    "year": "",
-    "description": ""
+    "degree": "Bsc in Computer science and engineering 💻🎓",
+    "institution": "North Western University, Khulna",
+    "year": "2024-2028",
+    "description": "I am a B.Sc. student in Computer Science and Engineering at North Western University, Second year, First semester"
   },
   "tracking": {
     "title": "",
@@ -166,8 +172,8 @@
     "followers": 0,
     "total_stars": 0
   },
-  "heroImage": "https://raw.githubusercontent.com/rayhan-404/portfolio/main/images/hero-1773902787181.png",
+  "heroImage": "https://raw.githubusercontent.com/rayhan-404/portfolio/main/images/hero-1773902998762.png",
   "theme": "light",
   "password": "admin123",
-  "last_saved": 1773902850542
+  "last_saved": 1773903139796
 }
