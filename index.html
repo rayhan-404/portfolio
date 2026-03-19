@@ -1,0 +1,3209 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+<style>
+/* Material Colors - Random on each refresh */
+:root {
+  --mc-purple: #9c27b0;
+  --mc-indigo: #3f51b5;
+  --mc-teal: #009688;
+  --mc-deep-orange: #ff5722;
+  --mc-pink: #e91e63;
+  --mc-cyan: #00bcd4;
+  --mc-amber: #ff9800;
+  --mc-deep-purple: #673ab7;
+  --mc-green: #4caf50;
+  --mc-blue: #2196f3;
+}
+
+[data-theme="light"]{--bg:#f3eefa;--bg2:#ede5f7;--bg3:#e4d8f0;--nl:#ffffff;--nd:#cdbfe0;--surface:rgba(243,238,250,0.88);--text:#1c0030;--text2:#6d4c80;--text3:#a07cb8;--loader-bg:#f3eefa;--code-bg:#1a0a2e;}
+[data-theme="dark"]{--bg:#120820;--bg2:#1c1130;--bg3:#261640;--nl:#2d1f45;--nd:#0a0414;--surface:rgba(18,8,32,0.88);--text:#f0e6ff;--text2:#c9a8f0;--text3:#8a6aaa;--loader-bg:#120820;--code-bg:#0d0418;}
+:root{--primary:#9c27b0;--primary2:#ab47bc;--accent:#e040fb;--on-pri:#ffffff;--success:#4caf50;--warn:#ff9800;--info:#2196f3;--radius-sm:12px;--radius-md:18px;--radius-lg:28px;--radius-xl:36px;--shadow-neu:6px 6px 14px var(--nd),-6px -6px 14px var(--nl);--shadow-neu-sm:4px 4px 10px var(--nd),-4px -4px 10px var(--nl);--shadow-neu-in:inset 4px 4px 10px var(--nd),inset -4px -4px 10px var(--nl);--transition:all 0.32s cubic-bezier(0.34,1.2,0.64,1);--transition-fast:all 0.18s ease;--transition-theme:background 0.4s ease,color 0.4s ease,box-shadow 0.4s ease;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;min-height:100vh;overflow-x:hidden;transition:var(--transition-theme);}
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:var(--bg2);}::-webkit-scrollbar-thumb{background:var(--nd);border-radius:4px;}
+.mi{font-family:'Material Icons Round';font-style:normal;font-size:20px;line-height:1;user-select:none;display:inline-flex;align-items:center;justify-content:center;}
+
+/* Card Soft Shape Background */
+.card-shape-bg {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.08;
+  pointer-events: none;
+  filter: blur(2px);
+}
+
+.card-shape-1 {
+  width: 120px;
+  height: 120px;
+  top: -30px;
+  right: -30px;
+  background: var(--primary);
+}
+
+.card-shape-2 {
+  width: 80px;
+  height: 80px;
+  bottom: -20px;
+  left: -20px;
+  background: var(--accent);
+}
+
+.card-shape-3 {
+  width: 60px;
+  height: 60px;
+  top: 50%;
+  left: 60%;
+  background: var(--primary2);
+  transform: translateY(-50%);
+}
+
+/* Color Cycle Animation */
+@keyframes colorPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.color-cycle-btn {
+  position: relative;
+}
+
+.color-cycle-btn:active {
+  animation: colorPulse 0.3s ease;
+}
+
+.color-cycle-btn::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.3s ease;
+}
+
+.color-cycle-btn:hover::after {
+  opacity: 0.2;
+}
+
+/* LOADER */
+#loader{position:fixed;inset:0;background:var(--loader-bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;transition:opacity 0.6s ease,transform 0.6s ease;}
+#loader.hide{opacity:0;transform:scale(1.04);pointer-events:none;}
+.loader-orb{width:72px;height:72px;border-radius:50%;position:relative;background:conic-gradient(var(--primary) 0deg,var(--accent) 120deg,transparent 120deg);animation:orbSpin 1.2s linear infinite;}
+.loader-orb::after{content:'';position:absolute;inset:8px;border-radius:50%;background:var(--loader-bg);}
+.loader-orb::before{content:'';position:absolute;inset:-4px;border-radius:50%;background:conic-gradient(transparent 0deg,rgba(224,64,251,0.18) 120deg,transparent 240deg);animation:orbSpin 2s linear infinite reverse;}
+@keyframes orbSpin{to{transform:rotate(360deg);}}
+.loader-name{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--primary);margin-top:20px;letter-spacing:0.04em;animation:breathe 1.6s ease-in-out infinite;}
+.loader-sub{font-size:12px;color:var(--text3);margin-top:6px;letter-spacing:0.08em;}
+@keyframes breathe{0%,100%{opacity:0.5;}50%{opacity:1;}}
+.loader-dots{display:flex;gap:6px;margin-top:16px;}
+.loader-dot{width:7px;height:7px;border-radius:50%;background:var(--primary);animation:dotBounce 1.2s ease-in-out infinite;}
+.loader-dot:nth-child(2){animation-delay:0.15s;background:var(--accent);}
+.loader-dot:nth-child(3){animation-delay:0.30s;background:var(--primary2);}
+@keyframes dotBounce{0%,80%,100%{transform:scale(0.6);opacity:0.4;}40%{transform:scale(1);opacity:1;}}
+
+/* APP */
+#app{max-width:420px;margin:0 auto;min-height:100vh;position:relative;background:var(--bg);transition:var(--transition-theme);}
+
+/* Desktop Sidebar - Hidden on mobile */
+.desktop-sidebar {
+  display: none;
+}
+
+/* TOPBAR */
+.topbar{position:sticky;top:0;z-index:100;background:var(--surface);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);padding:12px 16px 10px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(156,39,176,0.12);transition:var(--transition-theme);}
+.topbar-left{display:flex;align-items:center;gap:10px;}
+.topbar-avatar{width:36px;height:36px;border-radius:12px;background:var(--bg2);box-shadow:var(--shadow-neu-sm);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--primary);overflow:hidden;transition:var(--transition-theme);}
+.topbar-avatar img{width:100%;height:100%;object-fit:cover;}
+.topbar-name{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--text);}
+.topbar-right{display:flex;gap:8px;align-items:center;}
+.topbar-btn{width:36px;height:36px;border-radius:12px;background:var(--bg2);box-shadow:var(--shadow-neu-sm);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:var(--transition-fast);color:var(--text2);}
+.topbar-btn:active{box-shadow:var(--shadow-neu-in);}
+
+/* THEME TOGGLE */
+.theme-toggle{width:64px;height:32px;border-radius:16px;background:var(--bg2);box-shadow:var(--shadow-neu-in);border:none;cursor:pointer;position:relative;display:flex;align-items:center;padding:0 4px;transition:var(--transition-fast);}
+.theme-thumb{width:24px;height:24px;border-radius:10px;background:var(--primary);box-shadow:0 2px 8px rgba(156,39,176,0.4);display:flex;align-items:center;justify-content:center;position:absolute;left:4px;transition:transform 0.35s cubic-bezier(0.34,1.4,0.64,1);}
+[data-theme="dark"] .theme-thumb{transform:translateX(32px);}
+.theme-thumb .mi{font-size:14px;color:#fff;}
+
+/* PAGES */
+.section{padding:0 16px 20px;}
+
+/* MAIN CONTENT */
+.main-content{padding-bottom:100px;}
+
+/* SCROLL REVEAL */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.55s ease,transform 0.55s cubic-bezier(0.34,1.1,0.64,1);}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.reveal-delay-1{transition-delay:0.06s;}.reveal-delay-2{transition-delay:0.12s;}.reveal-delay-3{transition-delay:0.18s;}.reveal-delay-4{transition-delay:0.24s;}.reveal-delay-5{transition-delay:0.30s;}
+
+/* BOTTOM NAV */
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:420px;background:var(--surface);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-top:1px solid rgba(156,39,176,0.12);padding:6px 0 16px;display:flex;justify-content:space-around;z-index:100;}
+.bnav-item{display:flex;flex-direction:column;align-items:center;gap:2px;border:none;background:none;cursor:pointer;padding:6px 14px;border-radius:16px;transition:var(--transition-fast);color:var(--text3);}
+.bnav-item.active{color:var(--primary);}
+.bnav-item.active .bnav-icon-wrap{background:rgba(156,39,176,0.12);border-radius:12px;transform:scale(1.08);}
+.bnav-icon-wrap{width:32px;height:24px;display:flex;align-items:center;justify-content:center;border-radius:12px;transition:var(--transition);}
+.bnav-icon-wrap .mi{font-size:22px;}
+.bnav-label{font-size:10px;font-weight:600;letter-spacing:0.02em;}
+
+/* CARDS */
+.card{background:var(--bg);border-radius:var(--radius-lg);box-shadow:var(--shadow-neu);padding:20px;margin-bottom:14px;transition:var(--transition-theme);position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;width:100px;height:100px;border-radius:50%;background:var(--primary);opacity:0.06;top:-25px;right:-25px;filter:blur(1px);pointer-events:none;}
+.card::after{content:'';position:absolute;width:60px;height:60px;border-radius:50%;background:var(--accent);opacity:0.05;bottom:-15px;left:-15px;filter:blur(1px);pointer-events:none;}
+.card-inset{background:var(--bg2);border-radius:var(--radius-md);box-shadow:var(--shadow-neu-in);padding:14px 16px;transition:var(--transition-theme);position:relative;overflow:hidden;}
+.card-inset::before{content:'';position:absolute;width:50px;height:50px;border-radius:50%;background:var(--primary);opacity:0.04;top:-10px;left:50%;filter:blur(1px);pointer-events:none;}
+
+/* HERO */
+.hero-card{background:var(--bg);border-radius:var(--radius-xl);box-shadow:var(--shadow-neu);margin-top:14px;margin-bottom:14px;overflow:hidden;position:relative;transition:var(--transition-theme);}
+.hero-card::before{content:'';position:absolute;width:150px;height:150px;border-radius:50%;background:var(--primary);opacity:0.05;top:10%;right:-50px;filter:blur(2px);pointer-events:none;z-index:1;}
+.hero-card::after{content:'';position:absolute;width:100px;height:100px;border-radius:50%;background:var(--accent);opacity:0.04;bottom:20%;left:-30px;filter:blur(2px);pointer-events:none;z-index:1;}
+.hero-img-wrap{width:100%;height:200px;position:relative;overflow:hidden;background:linear-gradient(135deg,var(--bg3) 0%,var(--bg2) 100%);}
+.hero-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform 0.6s ease;}
+.hero-card:hover .hero-img-wrap img{transform:scale(1.03);}
+.hero-img-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;}
+.hero-img-placeholder .mi{font-size:40px;color:var(--primary);opacity:0.4;}
+.hero-img-placeholder span{font-size:12px;color:var(--text3);}
+.hero-img-overlay{position:absolute;bottom:0;left:0;right:0;height:80px;background:linear-gradient(transparent,var(--bg));}
+.hero-body{padding:20px 24px 24px;position:relative;z-index:2;}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--bg2);box-shadow:var(--shadow-neu-sm);padding:5px 12px;border-radius:20px;font-size:11px;color:var(--success);font-weight:600;margin-bottom:16px;letter-spacing:0.03em;}
+.hero-badge-dot{width:7px;height:7px;border-radius:50%;background:var(--success);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(1.3);}}
+.hero-name{font-family:'Syne',sans-serif;font-size:30px;font-weight:800;color:var(--text);line-height:1.1;margin-bottom:5px;}
+.hero-name span{color:var(--primary);}
+.hero-role{font-size:14px;color:var(--text2);font-weight:500;margin-bottom:14px;}
+.hero-bio{font-size:13px;color:var(--text3);line-height:1.7;margin-bottom:20px;}
+.hero-actions{display:flex;gap:10px;}
+
+/* BUTTONS */
+.btn-primary{flex:1;padding:13px;border-radius:var(--radius-md);background:var(--primary);color:#fff;border:none;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(156,39,176,0.35);transition:var(--transition);letter-spacing:0.03em;display:flex;align-items:center;justify-content:center;gap:6px;position:relative;overflow:hidden;}
+.btn-primary::before{content:'';position:absolute;width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,0.1);top:-30px;right:-20px;pointer-events:none;}
+.btn-primary:active{transform:scale(0.97);}
+.btn-neu{flex:1;padding:12px;border-radius:var(--radius-md);background:var(--bg);color:var(--primary);border:none;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;cursor:pointer;box-shadow:var(--shadow-neu-sm);transition:var(--transition-fast);letter-spacing:0.03em;display:flex;align-items:center;justify-content:center;gap:6px;position:relative;overflow:hidden;}
+.btn-neu::before{content:'';position:absolute;width:40px;height:40px;border-radius:50%;background:var(--primary);opacity:0.05;top:-15px;left:-15px;pointer-events:none;}
+.btn-neu:active{box-shadow:var(--shadow-neu-in);}
+
+/* STATS */
+.stat-row{display:flex;gap:10px;margin-bottom:14px;}
+.stat-chip{flex:1;background:var(--bg);border-radius:var(--radius-md);box-shadow:var(--shadow-neu-sm);padding:14px 10px;text-align:center;transition:var(--transition-theme);position:relative;overflow:hidden;}
+.stat-chip::before{content:'';position:absolute;width:50px;height:50px;border-radius:50%;background:var(--primary);opacity:0.06;top:-20px;right:-15px;pointer-events:none;}
+.stat-chip::after{content:'';position:absolute;width:30px;height:30px;border-radius:50%;background:var(--accent);opacity:0.05;bottom:-10px;left:-10px;pointer-events:none;}
+.stat-chip-n{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--primary);position:relative;z-index:1;}
+.stat-chip-l{font-size:10px;color:var(--text3);font-weight:600;margin-top:3px;letter-spacing:0.04em;position:relative;z-index:1;}
+
+/* SKILLS */
+.skills-wrap{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;}
+.skill-pill{padding:7px 14px;border-radius:20px;background:var(--bg2);box-shadow:var(--shadow-neu-sm);font-size:11px;font-weight:700;color:var(--primary);letter-spacing:0.03em;transition:var(--transition-theme);}
+
+/* SKILL CARDS */
+.skills-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:4px;}
+.skill-card{background:var(--bg);border-radius:var(--radius-md);box-shadow:var(--shadow-neu-sm);padding:16px 10px;text-align:center;transition:var(--transition),var(--transition-theme);position:relative;overflow:hidden;}
+.skill-card::before{content:'';position:absolute;width:50px;height:50px;border-radius:50%;background:var(--primary);opacity:0.06;top:-20px;right:-15px;pointer-events:none;}
+.skill-card:active{box-shadow:var(--shadow-neu-in);transform:scale(0.97);}
+.skill-icon{width:44px;height:44px;border-radius:14px;background:var(--bg2);box-shadow:var(--shadow-neu-sm);display:flex;align-items:center;justify-content:center;margin:0 auto 10px;color:var(--primary);transition:var(--transition-theme);}
+.skill-icon .mi{font-size:22px;}
+.skill-name{font-size:11px;font-weight:700;color:var(--text);letter-spacing:0.02em;}
+
+/* FEATURED PROJECT CARDS */
+.featured-card{background:var(--bg);border-radius:var(--radius-lg);box-shadow:var(--shadow-neu);padding:0;margin-bottom:12px;display:flex;overflow:hidden;transition:var(--transition-fast),background 0.4s ease,box-shadow 0.4s ease;position:relative;cursor:pointer;}
+.featured-card::before{content:'';position:absolute;width:80px;height:80px;border-radius:50%;background:var(--primary);opacity:0.05;top:-25px;right:-25px;pointer-events:none;}
+.featured-card:active{box-shadow:var(--shadow-neu-in);transform:scale(0.98);}
+.featured-thumb{width:100px;height:100px;flex-shrink:0;background:var(--bg2);display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.featured-thumb img{width:100%;height:100%;object-fit:cover;}
+.featured-thumb .mi{font-size:32px;color:var(--primary);opacity:0.4;}
+.featured-content{flex:1;padding:14px 16px;display:flex;flex-direction:column;justify-content:center;min-width:0;}
+.featured-name{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.featured-desc{font-size:12px;color:var(--text3);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+
+/* SECTION */
+.sec-header{display:flex;align-items:center;justify-content:space-between;margin:20px 0 12px;}
+.sec-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--text);}
+.sec-more{font-size:12px;color:var(--primary);font-weight:700;background:var(--bg2);border:none;cursor:pointer;padding:8px 14px;border-radius:20px;box-shadow:var(--shadow-neu-sm);transition:var(--transition-fast);display:flex;align-items:center;gap:4px;}
+.sec-more:active{box-shadow:var(--shadow-neu-in);}
+.sec-more .mi{font-size:14px;}
+
+/* PROJECT CARD */
+.proj-card{background:var(--bg);border-radius:var(--radius-lg);box-shadow:var(--shadow-neu);padding:18px 20px;margin-bottom:12px;cursor:pointer;transition:var(--transition-fast),var(--transition-theme);position:relative;overflow:hidden;}
+.proj-card::before{content:'';position:absolute;width:80px;height:80px;border-radius:50%;background:var(--primary);opacity:0.05;top:-20px;right:-20px;filter:blur(1px);pointer-events:none;}
+.proj-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--primary),var(--accent));opacity:0;transition:var(--transition-fast);z-index:2;}
+.proj-card:hover::after{opacity:1;}
+.proj-card:hover{transform:translateY(-2px);}
+.proj-card:active{transform:scale(0.98);box-shadow:var(--shadow-neu-in);}
+.proj-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;position:relative;z-index:1;}
+.proj-icon{width:42px;height:42px;border-radius:14px;background:var(--bg2);box-shadow:var(--shadow-neu-sm);display:flex;align-items:center;justify-content:center;color:var(--primary);transition:var(--transition-theme);position:relative;overflow:hidden;}
+.proj-icon::before{content:'';position:absolute;width:30px;height:30px;border-radius:50%;background:var(--primary);opacity:0.08;bottom:-10px;right:-10px;}
+.proj-icon .mi{font-size:22px;position:relative;z-index:1;}
+.proj-stars{display:flex;align-items:center;gap:4px;font-size:12px;color:var(--text3);font-weight:600;}
+.proj-stars .mi{font-size:14px;color:#f9a825;}
+.proj-name{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--text);margin-bottom:5px;position:relative;z-index:1;}
+.proj-desc{font-size:12px;color:var(--text3);line-height:1.6;margin-bottom:12px;position:relative;z-index:1;}
+.proj-meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;position:relative;z-index:1;}
+.proj-tag{padding:4px 10px;border-radius:10px;background:var(--bg2);box-shadow:var(--shadow-neu-sm);font-size:10px;color:var(--text2);font-weight:700;}
+.proj-lang{display:flex;align-items:center;gap:5px;padding:4px 10px;border-radius:10px;font-size:10px;font-weight:700;}
+.lang-dot{width:8px;height:8px;border-radius:50%;}
+
+/* TRACKING */
+.track-header{background:var(--bg);border-radius:var(--radius-xl);box-shadow:var(--shadow-neu);padding:20px;margin-bottom:14px;transition:var(--transition-theme);position:relative;overflow:hidden;}
+.track-header::before{content:'';position:absolute;width:120px;height:120px;border-radius:50%;background:var(--primary);opacity:0.05;top:-40px;right:-40px;filter:blur(2px);pointer-events:none;}
+.track-header::after{content:'';position:absolute;width:80px;height:80px;border-radius:50%;background:var(--accent);opacity:0.04;bottom:-30px;left:-20px;filter:blur(2px);pointer-events:none;}
+.track-label{font-size:11px;color:var(--text3);font-weight:600;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;gap:5px;position:relative;z-index:1;}
+.track-label .mi{font-size:15px;color:var(--primary);}
+.track-current{font-family:'Syne',sans-serif;font-size:20px;font-weight:700;color:var(--text);position:relative;z-index:1;}
+.track-sub{font-size:12px;color:var(--text2);margin-top:4px;position:relative;z-index:1;}
+.track-progress{margin-top:16px;background:var(--bg2);border-radius:20px;height:8px;box-shadow:var(--shadow-neu-in);overflow:hidden;position:relative;z-index:1;}
+.track-bar{height:100%;border-radius:20px;background:linear-gradient(90deg,var(--primary),var(--accent));transition:width 1.2s cubic-bezier(0.34,1.2,0.64,1);}
+.track-pct{font-size:12px;color:var(--primary);font-weight:700;margin-top:8px;text-align:right;position:relative;z-index:1;}
+.track-log{background:var(--bg);border-radius:var(--radius-lg);box-shadow:var(--shadow-neu);overflow:hidden;margin-bottom:14px;transition:var(--transition-theme);position:relative;}
+.track-log::before{content:'';position:absolute;width:60px;height:60px;border-radius:50%;background:var(--primary);opacity:0.04;top:20px;right:-20px;pointer-events:none;}
+.track-log-header{padding:16px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(156,39,176,0.1);position:relative;z-index:1;}
+.track-log-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--text);}
+.track-entry{padding:14px 20px;border-bottom:1px solid rgba(156,39,176,0.08);display:flex;gap:12px;align-items:flex-start;}
+.track-entry:last-child{border-bottom:none;}
+.track-entry-dot{width:10px;height:10px;border-radius:50%;background:var(--primary);flex-shrink:0;margin-top:5px;box-shadow:0 0 0 3px rgba(156,39,176,0.15);}
+.track-entry-date{font-size:10px;color:var(--text3);font-weight:600;margin-bottom:3px;}
+.track-entry-text{font-size:13px;color:var(--text);font-weight:500;}
+.track-entry-tag{display:inline-block;margin-top:5px;padding:3px 9px;border-radius:8px;font-size:10px;font-weight:700;background:rgba(156,39,176,0.12);color:var(--primary);}
+
+/* EXPERIENCE */
+.exp-card{background:var(--bg);border-radius:var(--radius-lg);box-shadow:var(--shadow-neu);padding:18px 20px;margin-bottom:12px;display:flex;gap:14px;transition:var(--transition-theme);}
+.exp-icon{width:44px;height:44px;flex-shrink:0;border-radius:14px;background:var(--bg2);box-shadow:var(--shadow-neu-sm);display:flex;align-items:center;justify-content:center;color:var(--primary);transition:var(--transition-theme);}
+.exp-icon .mi{font-size:22px;}
+.exp-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--text);}
+.exp-place{font-size:12px;color:var(--primary);font-weight:600;margin-top:2px;}
+.exp-date{font-size:11px;color:var(--text3);margin-top:4px;display:flex;align-items:center;gap:4px;}
+.exp-date .mi{font-size:13px;}
+.exp-desc{font-size:12px;color:var(--text2);line-height:1.6;margin-top:8px;}
+
+/* EDUCATION CARD - BIG */
+.edu-card{background:var(--bg);border-radius:var(--radius-xl);box-shadow:var(--shadow-neu);padding:24px;margin-bottom:12px;position:relative;overflow:hidden;transition:var(--transition-theme);}
+.edu-card::before{content:'';position:absolute;width:120px;height:120px;border-radius:50%;background:linear-gradient(135deg,#4267B2,#898F9C);opacity:0.08;top:-30px;right:-30px;pointer-events:none;}
+.edu-card::after{content:'';position:absolute;width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#4267B2,#898F9C);opacity:0.06;bottom:-20px;left:-20px;pointer-events:none;}
+.edu-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:16px;position:relative;z-index:1;}
+.edu-icon-wrap{width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,#4267B2,#898F9C);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 12px rgba(66,103,178,0.25);}
+.edu-icon-wrap .mi{font-size:28px;color:#fff;}
+.edu-info{flex:1;}
+.edu-degree{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--text);line-height:1.3;}
+.edu-school{font-size:14px;color:#4267B2;font-weight:600;margin-top:4px;}
+.edu-year{font-size:12px;color:var(--text3);margin-top:6px;display:flex;align-items:center;gap:4px;}
+.edu-year .mi{font-size:14px;}
+.edu-desc{font-size:13px;color:var(--text2);line-height:1.7;margin-top:12px;padding-top:12px;border-top:1px solid rgba(66,103,178,0.15);position:relative;z-index:1;}
+
+/* CONTACT */
+.contact-btn{background:var(--bg);border-radius:var(--radius-lg);box-shadow:var(--shadow-neu);padding:16px 20px;margin-bottom:10px;display:flex;align-items:center;gap:14px;border:none;cursor:pointer;width:100%;transition:var(--transition-fast),var(--transition-theme);position:relative;overflow:hidden;}
+.contact-btn:active{box-shadow:var(--shadow-neu-in);transform:scale(0.98);}
+.contact-btn:hover{transform:translateY(-2px);}
+
+/* Email Background Texture */
+.contact-btn.email::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(234,67,53,0.05) 0%,rgba(234,67,53,0.02) 100%);pointer-events:none;}
+.contact-btn.email .contact-icon{background:linear-gradient(135deg,#EA4335,#FBBC05);color:#fff;box-shadow:0 4px 12px rgba(234,67,53,0.3);}
+
+/* WhatsApp Background Texture */
+.contact-btn.whatsapp::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(37,211,102,0.06) 0%,rgba(37,211,102,0.02) 100%);pointer-events:none;}
+.contact-btn.whatsapp .contact-icon{background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;box-shadow:0 4px 12px rgba(37,211,102,0.3);}
+
+/* Facebook Background Texture */
+.contact-btn.facebook::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(24,119,242,0.06) 0%,rgba(24,119,242,0.02) 100%);pointer-events:none;}
+.contact-btn.facebook .contact-icon{background:linear-gradient(135deg,#1877F2,#4267B2);color:#fff;box-shadow:0 4px 12px rgba(24,119,242,0.3);}
+
+.contact-icon{width:46px;height:46px;border-radius:14px;background:var(--bg2);box-shadow:var(--shadow-neu-sm);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--primary);transition:var(--transition-theme);position:relative;z-index:1;}
+.contact-icon .mi{font-size:24px;}
+.contact-label{font-size:14px;font-weight:700;color:var(--text);text-align:left;position:relative;z-index:1;}
+.contact-val{font-size:12px;color:var(--text3);text-align:left;margin-top:2px;position:relative;z-index:1;}
+.contact-arrow{margin-left:auto;color:var(--text3);position:relative;z-index:1;}
+.contact-arrow .mi{font-size:20px;}
+
+/* REPO VIEWER */
+#repo-view{position:fixed;inset:0;background:var(--bg);z-index:500;transform:translateY(100%);transition:transform 0.42s cubic-bezier(0.34,1.15,0.64,1);overflow-y:auto;max-width:420px;margin:0 auto;}
+#repo-view.open{transform:translateY(0);}
+.rv-topbar{position:sticky;top:0;background:var(--surface);backdrop-filter:blur(20px);padding:12px 16px;display:flex;align-items:center;gap:12px;border-bottom:1px solid rgba(156,39,176,0.12);z-index:10;}
+.rv-back{width:36px;height:36px;border-radius:12px;background:var(--bg2);box-shadow:var(--shadow-neu-sm);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text2);transition:var(--transition-fast);}
+.rv-back:active{box-shadow:var(--shadow-neu-in);}
+.rv-repo-name{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--text);}
+.rv-content{padding:16px;}
+.rv-file-row{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:var(--radius-md);background:var(--bg);box-shadow:var(--shadow-neu-sm);margin-bottom:8px;cursor:pointer;transition:var(--transition-fast),var(--transition-theme);}
+.rv-file-row:active{box-shadow:var(--shadow-neu-in);}
+.rv-file-icon{display:flex;align-items:center;justify-content:center;color:var(--primary);}
+.rv-file-icon .mi{font-size:20px;}
+.rv-file-name{font-size:13px;font-weight:600;color:var(--text);}
+.rv-file-meta{font-size:11px;color:var(--text3);margin-top:2px;}
+.rv-breadcrumb{display:flex;align-items:center;gap:6px;padding:10px 0;margin-bottom:12px;overflow-x:auto;scrollbar-width:none;}
+.rv-breadcrumb::-webkit-scrollbar{display:none;}
+.rv-bc-item{font-size:12px;font-weight:600;color:var(--primary);cursor:pointer;white-space:nowrap;padding:4px 10px;border-radius:10px;background:var(--bg2);box-shadow:var(--shadow-neu-sm);}
+.rv-bc-sep{color:var(--text3);display:flex;align-items:center;}
+.rv-bc-sep .mi{font-size:16px;}
+
+/* ALL PROJECTS OVERLAY */
+#all-projects-view{position:fixed;inset:0;background:var(--bg);z-index:450;transform:translateY(100%);transition:transform 0.42s cubic-bezier(0.34,1.15,0.64,1);overflow:hidden;display:flex;flex-direction:column;max-width:420px;margin:0 auto;}
+#all-projects-view.open{transform:translateY(0);}
+.apv-topbar{position:sticky;top:0;background:var(--surface);backdrop-filter:blur(20px);padding:12px 16px;display:flex;align-items:center;gap:12px;border-bottom:1px solid rgba(156,39,176,0.12);z-index:10;}
+.apv-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--text);flex:1;}
+.apv-search{display:flex;align-items:center;gap:8px;padding:12px 16px;background:var(--bg2);margin:12px 16px;border-radius:var(--radius-md);box-shadow:var(--shadow-neu-in);}
+.apv-input{flex:1;border:none;background:transparent;font-family:'Nunito',sans-serif;font-size:14px;color:var(--text);outline:none;}
+.apv-input::placeholder{color:var(--text3);}
+.apv-content{flex:1;overflow-y:auto;padding:0 16px 100px;}
+.apv-card{background:var(--bg);border-radius:var(--radius-lg);box-shadow:var(--shadow-neu);padding:16px 18px;margin-bottom:12px;cursor:pointer;transition:var(--transition-fast),var(--transition-theme);position:relative;overflow:hidden;}
+.apv-card::before{content:'';position:absolute;width:80px;height:80px;border-radius:50%;background:var(--primary);opacity:0.05;top:-20px;right:-20px;pointer-events:none;}
+.apv-card:active{box-shadow:var(--shadow-neu-in);transform:scale(0.98);}
+.apv-card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px;}
+.apv-card-icon{width:40px;height:40px;border-radius:12px;background:var(--bg2);box-shadow:var(--shadow-neu-sm);display:flex;align-items:center;justify-content:center;color:var(--primary);}
+.apv-card-icon .mi{font-size:20px;}
+.apv-card-stars{display:flex;align-items:center;gap:4px;font-size:12px;color:var(--text3);font-weight:600;}
+.apv-card-stars .mi{font-size:14px;color:#f9a825;}
+.apv-card-name{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px;}
+.apv-card-desc{font-size:12px;color:var(--text3);line-height:1.5;margin-bottom:10px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.apv-card-meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.apv-card-lang{display:flex;align-items:center;gap:5px;padding:4px 10px;border-radius:10px;font-size:10px;font-weight:700;background:var(--bg2);box-shadow:var(--shadow-neu-sm);}
+.apv-card-tag{padding:4px 10px;border-radius:10px;background:var(--bg2);box-shadow:var(--shadow-neu-sm);font-size:10px;color:var(--text2);font-weight:700;}
+
+/* CODE VIEWER */
+#code-view{position:fixed;inset:0;background:var(--code-bg);z-index:600;transform:translateY(100%);transition:transform 0.42s cubic-bezier(0.34,1.15,0.64,1);overflow:hidden;display:flex;flex-direction:column;max-width:420px;margin:0 auto;}
+#code-view.open{transform:translateY(0);}
+.cv-topbar{background:rgba(0,0,0,0.3);padding:12px 16px;display:flex;align-items:center;gap:12px;border-bottom:1px solid rgba(255,255,255,0.08);flex-shrink:0;}
+.cv-back{width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,0.08);border:none;cursor:pointer;color:#fff;display:flex;align-items:center;justify-content:center;}
+.cv-filename{font-size:14px;font-weight:600;color:#e0d0ff;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.cv-copy{padding:6px 14px;border-radius:10px;background:var(--primary);color:#fff;border:none;font-size:12px;font-weight:700;cursor:pointer;transition:var(--transition-fast);display:flex;align-items:center;gap:4px;}
+.cv-copy:active{transform:scale(0.96);}
+.cv-copy .mi{font-size:14px;}
+.cv-code-wrap{flex:1;overflow-y:auto;padding:16px;}
+.cv-code-wrap pre{font-family:'Courier New',monospace;font-size:12px;line-height:1.7;color:#e0d0ff;white-space:pre-wrap;word-break:break-all;}
+.cv-line-nums{display:inline-block;width:32px;color:#6b4f8a;user-select:none;margin-right:12px;text-align:right;}
+
+/* ADMIN */
+#admin-panel{position:fixed;inset:0;background:var(--bg);z-index:700;transform:translateX(100%);transition:transform 0.42s cubic-bezier(0.34,1.15,0.64,1);overflow-y:auto;max-width:420px;margin:0 auto;}
+#admin-panel.open{transform:translateX(0);}
+.admin-topbar{position:sticky;top:0;background:var(--surface);backdrop-filter:blur(20px);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(156,39,176,0.12);z-index:10;}
+.admin-title{font-family:'Syne',sans-serif;font-size:17px;font-weight:800;color:var(--text);display:flex;align-items:center;gap:8px;}
+.admin-title .mi{color:var(--primary);}
+.admin-content{padding:16px 16px 100px;}
+.input-group{margin-bottom:14px;}
+.input-label{font-size:12px;font-weight:700;color:var(--text2);margin-bottom:6px;letter-spacing:0.04em;display:flex;align-items:center;gap:4px;}
+.input-label .mi{font-size:15px;color:var(--primary);}
+.neu-input{width:100%;padding:13px 16px;border:none;border-radius:var(--radius-md);background:var(--bg2);box-shadow:var(--shadow-neu-in);font-family:'Nunito',sans-serif;font-size:14px;color:var(--text);outline:none;transition:var(--transition-fast),var(--transition-theme);}
+.neu-input:focus{box-shadow:inset 4px 4px 10px var(--nd),inset -4px -4px 10px var(--nl),0 0 0 2px rgba(156,39,176,0.25);}
+.neu-textarea{width:100%;padding:13px 16px;border:none;border-radius:var(--radius-md);background:var(--bg2);box-shadow:var(--shadow-neu-in);font-family:'Nunito',sans-serif;font-size:13px;color:var(--text);outline:none;resize:vertical;min-height:90px;transition:var(--transition-fast),var(--transition-theme);}
+.admin-section-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--text);margin:20px 0 12px;padding-bottom:8px;border-bottom:2px solid var(--bg3);display:flex;align-items:center;gap:8px;}
+.admin-section-title .mi{color:var(--primary);}
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(156,39,176,0.1);}
+.toggle-label{font-size:13px;color:var(--text);font-weight:500;}
+.toggle{width:44px;height:24px;border-radius:12px;background:var(--bg2);box-shadow:var(--shadow-neu-in);position:relative;cursor:pointer;transition:var(--transition-fast);}
+.toggle.on{background:var(--primary);}
+.toggle-thumb{position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:2px 2px 6px rgba(0,0,0,0.2);transition:var(--transition);}
+.toggle.on .toggle-thumb{left:23px;}
+.img-upload-area{width:100%;height:130px;border-radius:var(--radius-md);background:var(--bg2);box-shadow:var(--shadow-neu-in);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;transition:var(--transition-fast);position:relative;overflow:hidden;}
+.img-upload-area:hover{box-shadow:var(--shadow-neu);}
+.img-upload-area .mi{font-size:32px;color:var(--primary);opacity:0.6;}
+.img-upload-area span{font-size:12px;color:var(--text3);font-weight:600;}
+.img-upload-area img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+#img-file-input{display:none;}
+
+/* GITHUB CONFIG */
+.github-config-section{background:var(--bg2);border-radius:var(--radius-md);padding:16px;margin-bottom:16px;box-shadow:var(--shadow-neu-sm);}
+.github-config-section .config-note{font-size:11px;color:var(--text3);margin-top:8px;line-height:1.5;}
+.github-config-section .config-link{color:var(--primary);font-weight:600;}
+
+/* LOGIN */
+#login-overlay{position:fixed;inset:0;background:rgba(18,8,32,0.72);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);z-index:800;display:none;align-items:center;justify-content:center;animation:fadeIn 0.3s ease;}
+#login-overlay.show{display:flex;}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.login-box{background:var(--bg);border-radius:var(--radius-xl);box-shadow:var(--shadow-neu);padding:32px 28px;width:85%;max-width:340px;text-align:center;}
+.login-icon{width:64px;height:64px;border-radius:20px;background:var(--bg2);box-shadow:var(--shadow-neu-sm);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;}
+.login-icon .mi{font-size:32px;color:var(--primary);}
+.login-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--text);margin-bottom:6px;}
+.login-sub{font-size:13px;color:var(--text3);margin-bottom:24px;}
+.login-input{width:100%;padding:14px 16px;border:none;border-radius:var(--radius-md);background:var(--bg2);box-shadow:var(--shadow-neu-in);font-family:'Nunito',sans-serif;font-size:15px;color:var(--text);outline:none;text-align:center;letter-spacing:0.15em;margin-bottom:16px;}
+.login-btn{width:100%;padding:14px;border-radius:var(--radius-md);background:var(--primary);color:#fff;border:none;font-family:'Nunito',sans-serif;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(156,39,176,0.35);transition:var(--transition);display:flex;align-items:center;justify-content:center;gap:8px;}
+.login-btn:active{transform:scale(0.97);}
+.login-btn .mi{font-size:18px;}
+.login-error{font-size:12px;color:#f44336;margin-top:10px;display:none;}
+
+/* TOAST */
+#toast{position:fixed;bottom:96px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--bg3);color:var(--text);padding:11px 22px;border-radius:20px;font-size:13px;font-weight:600;opacity:0;transition:all 0.3s ease;z-index:900;white-space:nowrap;box-shadow:var(--shadow-neu);display:flex;align-items:center;gap:7px;}
+#toast .mi{font-size:16px;color:var(--primary);}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* SKELETON */
+.skeleton{background:linear-gradient(90deg,var(--bg2) 25%,var(--bg3) 50%,var(--bg2) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:var(--radius-md);}
+@keyframes shimmer{to{background-position:-200% 0;}}
+
+/* RIPPLE */
+.ripple{position:absolute;border-radius:50%;background:rgba(156,39,176,0.18);transform:scale(0);animation:ripple 0.6s linear;pointer-events:none;}
+@keyframes ripple{to{transform:scale(4);opacity:0;}}
+
+.lang-js{background:#f7df1e;}.lang-ts{background:#3178c6;}.lang-py{background:#3572A5;}.lang-go{background:#00ADD8;}.lang-rust{background:#dea584;}.lang-css{background:#563d7c;}.lang-html{background:#e34c26;}.lang-cpp{background:#f34b7d;}.lang-java{background:#b07219;}.lang-default{background:#8b8b8b;}
+
+/* CHATTING ANIMATION */
+.chat-animation {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+  padding: 16px;
+  background: var(--bg2);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-neu-in);
+  position: relative;
+  overflow: hidden;
+}
+
+.chat-animation::before {
+  content: '';
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--primary);
+  opacity: 0.05;
+  top: -15px;
+  right: -15px;
+  pointer-events: none;
+}
+
+.chat-bubble {
+  max-width: 80%;
+  padding: 10px 14px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.5;
+  opacity: 0;
+  transform: translateY(10px) scale(0.9);
+  animation: bubbleIn 0.4s ease forwards;
+  position: relative;
+}
+
+.chat-bubble.sent {
+  align-self: flex-end;
+  background: var(--primary);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+  box-shadow: 0 2px 8px rgba(156, 39, 176, 0.25);
+}
+
+.chat-bubble.received {
+  align-self: flex-start;
+  background: var(--bg);
+  color: var(--text);
+  border-bottom-left-radius: 4px;
+  box-shadow: var(--shadow-neu-sm);
+}
+
+.chat-bubble:nth-child(1) { animation-delay: 0s; }
+.chat-bubble:nth-child(2) { animation-delay: 1.2s; }
+.chat-bubble:nth-child(3) { animation-delay: 2.4s; }
+.chat-bubble:nth-child(4) { animation-delay: 3.6s; }
+
+@keyframes bubbleIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Typing indicator */
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 14px;
+  background: var(--bg);
+  border-radius: 16px;
+  border-bottom-left-radius: 4px;
+  align-self: flex-start;
+  box-shadow: var(--shadow-neu-sm);
+  opacity: 0;
+  animation: fadeInTyping 0.3s ease forwards;
+  animation-delay: 4.5s;
+}
+
+@keyframes fadeInTyping {
+  to { opacity: 1; }
+}
+
+.typing-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--primary);
+  animation: typingBounce 1.4s ease-in-out infinite;
+}
+
+.typing-dot:nth-child(1) { animation-delay: 0s; }
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typingBounce {
+  0%, 60%, 100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  30% {
+    transform: translateY(-6px);
+    opacity: 1;
+  }
+}
+
+/* ========================================
+   DESKTOP RESPONSIVE STYLES (768px+)
+   ======================================== */
+
+/* Desktop Background with decorative elements */
+@media (min-width: 768px) {
+  body::before {
+    content: '';
+    position: fixed;
+    top: -50%;
+    right: -20%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(156, 39, 176, 0.08) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+  }
+  
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: -30%;
+    left: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(224, 64, 251, 0.06) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+  }
+}
+
+/* Main App Container - Desktop */
+@media (min-width: 768px) {
+  #app {
+    max-width: 100%;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    grid-template-rows: auto auto 1fr;
+    min-height: 100vh;
+    position: relative;
+  }
+  
+  /* Loader stays centered */
+  #loader {
+    z-index: 9999;
+    grid-column: 1 / -1;
+    grid-row: 1 / -1;
+  }
+}
+
+/* Desktop Topbar */
+@media (min-width: 768px) {
+  .topbar {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    position: sticky;
+    top: 0;
+    max-width: 100%;
+    padding: 16px 40px;
+    border-radius: 0;
+  }
+  
+  .topbar-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 14px;
+    font-size: 15px;
+  }
+  
+  .topbar-name {
+    font-size: 17px;
+  }
+  
+  .topbar-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 14px;
+  }
+  
+  .topbar-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-neu);
+  }
+}
+
+/* Desktop Navigation - Sidebar Style */
+@media (min-width: 768px) {
+  /* App layout with sidebar */
+  #app {
+    max-width: 100%;
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    grid-template-rows: auto 1fr;
+    min-height: 100vh;
+  }
+  
+  /* Desktop Sidebar */
+  .desktop-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 24px 16px;
+    background: var(--surface);
+    border-right: 1px solid rgba(156, 39, 176, 0.12);
+    position: sticky;
+    top: 74px;
+    height: calc(100vh - 74px);
+    overflow-y: auto;
+    grid-column: 1;
+    grid-row: 2;
+  }
+  
+  .sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    border-radius: var(--radius-md);
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    transition: var(--transition);
+    color: var(--text3);
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: left;
+  }
+  
+  .sidebar-item:hover {
+    background: var(--bg);
+    color: var(--text);
+    transform: translateX(4px);
+  }
+  
+  .sidebar-item.active {
+    background: var(--primary);
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(156, 39, 176, 0.35);
+  }
+  
+  .sidebar-item .mi {
+    font-size: 20px;
+  }
+  
+  .sidebar-label {
+    flex: 1;
+  }
+  
+  /* Hide bottom nav on desktop */
+  .bottom-nav {
+    display: none;
+  }
+  
+  /* Main content styling for desktop */
+  .main-content {
+    grid-column: 2;
+    grid-row: 2 / 4;
+    padding: 24px 40px 40px;
+    max-width: 900px;
+  }
+  
+  .section {
+    margin-bottom: 40px;
+  }
+}
+
+/* Desktop Hero Card */
+@media (min-width: 768px) {
+  .hero-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 0;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+  }
+  
+  .hero-img-wrap {
+    height: 100%;
+    min-height: 380px;
+  }
+  
+  .hero-img-placeholder .mi {
+    font-size: 60px;
+  }
+  
+  .hero-img-placeholder span {
+    font-size: 14px;
+  }
+  
+  .hero-body {
+    padding: 32px 36px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .hero-badge {
+    padding: 7px 16px;
+    font-size: 12px;
+    align-self: flex-start;
+  }
+  
+  .hero-name {
+    font-size: 42px;
+  }
+  
+  .hero-role {
+    font-size: 16px;
+    margin-bottom: 18px;
+  }
+  
+  .hero-bio {
+    font-size: 15px;
+    line-height: 1.8;
+    margin-bottom: 28px;
+  }
+  
+  .hero-actions {
+    gap: 14px;
+  }
+  
+  .btn-primary, .btn-neu {
+    padding: 15px 24px;
+    font-size: 14px;
+    transition: var(--transition);
+  }
+  
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(156, 39, 176, 0.45);
+  }
+  
+  .btn-neu:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-neu);
+  }
+}
+
+/* Desktop Stats */
+@media (min-width: 768px) {
+  .stat-row {
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  
+  .stat-chip {
+    padding: 20px 16px;
+    border-radius: var(--radius-lg);
+    transition: var(--transition);
+  }
+  
+  .stat-chip:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-neu);
+  }
+  
+  .stat-chip-n {
+    font-size: 32px;
+  }
+  
+  .stat-chip-l {
+    font-size: 11px;
+    margin-top: 6px;
+  }
+}
+
+/* Desktop Skills */
+@media (min-width: 768px) {
+  .skills-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  
+  .skill-card {
+    padding: 20px 14px;
+    border-radius: var(--radius-lg);
+    transition: var(--transition);
+  }
+  
+  .skill-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-neu);
+  }
+  
+  .skill-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    margin-bottom: 12px;
+  }
+  
+  .skill-icon .mi {
+    font-size: 26px;
+  }
+  
+  .skill-name {
+    font-size: 13px;
+  }
+}
+
+/* Desktop Section Headers */
+@media (min-width: 768px) {
+  .sec-header {
+    margin: 32px 0 20px;
+  }
+  
+  .sec-title {
+    font-size: 22px;
+  }
+  
+  .sec-more {
+    padding: 10px 18px;
+    font-size: 13px;
+    transition: var(--transition);
+  }
+  
+  .sec-more:hover {
+    transform: translateX(4px);
+  }
+}
+
+/* Desktop Cards */
+@media (min-width: 768px) {
+  .card {
+    padding: 28px;
+    margin-bottom: 20px;
+    border-radius: var(--radius-xl);
+    transition: var(--transition);
+  }
+  
+  .card-inset {
+    padding: 18px 22px;
+    border-radius: var(--radius-lg);
+  }
+  
+  .featured-card {
+    border-radius: var(--radius-xl);
+    transition: var(--transition);
+  }
+  
+  .featured-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-neu);
+  }
+  
+  .featured-thumb {
+    width: 120px;
+    height: 100px;
+  }
+  
+  .featured-content {
+    padding: 18px 20px;
+  }
+  
+  .featured-name {
+    font-size: 17px;
+  }
+  
+  .featured-desc {
+    font-size: 13px;
+    line-height: 1.6;
+  }
+}
+
+/* Desktop Project Cards */
+@media (min-width: 768px) {
+  #home-repos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  
+  #all-repos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+  }
+  
+  .proj-card {
+    margin-bottom: 0;
+    padding: 22px 24px;
+    border-radius: var(--radius-xl);
+    transition: var(--transition);
+  }
+  
+  .proj-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-neu);
+  }
+  
+  .proj-card:hover::after {
+    opacity: 1;
+  }
+  
+  .proj-card:active {
+    transform: translateY(-4px);
+  }
+  
+  .proj-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 16px;
+  }
+  
+  .proj-icon .mi {
+    font-size: 26px;
+  }
+  
+  .proj-name {
+    font-size: 18px;
+  }
+  
+  .proj-desc {
+    font-size: 13px;
+    line-height: 1.7;
+  }
+}
+
+/* Desktop Tracking Section */
+@media (min-width: 768px) {
+  .track-header {
+    padding: 28px 32px;
+    border-radius: var(--radius-xl);
+  }
+  
+  .track-label {
+    font-size: 12px;
+  }
+  
+  .track-current {
+    font-size: 26px;
+  }
+  
+  .track-sub {
+    font-size: 14px;
+  }
+  
+  .track-progress {
+    height: 10px;
+    margin-top: 20px;
+  }
+  
+  .track-pct {
+    font-size: 14px;
+    margin-top: 10px;
+  }
+  
+  .track-log {
+    border-radius: var(--radius-xl);
+  }
+  
+  .track-log-header {
+    padding: 20px 28px;
+  }
+  
+  .track-log-title {
+    font-size: 17px;
+  }
+  
+  .track-entry {
+    padding: 18px 28px;
+    transition: var(--transition-fast);
+  }
+  
+  .track-entry:hover {
+    background: var(--bg2);
+  }
+  
+  .track-entry-date {
+    font-size: 11px;
+  }
+  
+  .track-entry-text {
+    font-size: 14px;
+  }
+}
+
+/* Desktop Experience Cards */
+@media (min-width: 768px) {
+  #exp-list {
+    display: grid;
+    gap: 16px;
+  }
+  
+  .exp-card {
+    padding: 24px 28px;
+    border-radius: var(--radius-xl);
+    transition: var(--transition);
+  }
+  
+  .exp-card:hover {
+    transform: translateX(6px);
+    box-shadow: var(--shadow-neu);
+  }
+  
+  .exp-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+  }
+  
+  .exp-icon .mi {
+    font-size: 26px;
+  }
+  
+  .exp-title {
+    font-size: 17px;
+  }
+  
+  .exp-place {
+    font-size: 14px;
+  }
+  
+  .exp-date {
+    font-size: 12px;
+  }
+  
+  .exp-desc {
+    font-size: 14px;
+    line-height: 1.7;
+  }
+}
+
+/* Desktop Contact Section */
+@media (min-width: 768px) {
+  .contact-btn {
+    padding: 20px 24px;
+    margin-bottom: 14px;
+    border-radius: var(--radius-xl);
+    transition: var(--transition);
+  }
+  
+  .contact-btn:hover {
+    transform: translateX(6px);
+    box-shadow: var(--shadow-neu);
+  }
+  
+  .contact-btn:active {
+    transform: translateX(6px);
+  }
+  
+  .contact-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+  }
+  
+  .contact-icon .mi {
+    font-size: 26px;
+  }
+  
+  .contact-label {
+    font-size: 15px;
+  }
+  
+  .contact-val {
+    font-size: 13px;
+  }
+}
+
+/* Desktop Chat Animation */
+@media (min-width: 768px) {
+  .chat-animation {
+    margin-top: 24px;
+    padding: 20px;
+    border-radius: var(--radius-lg);
+  }
+  
+  .chat-bubble {
+    padding: 12px 18px;
+    font-size: 13px;
+    max-width: 70%;
+  }
+  
+  .typing-indicator {
+    padding: 12px 18px;
+  }
+  
+  .typing-dot {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+/* Desktop Admin Panel */
+@media (min-width: 768px) {
+  #admin-panel {
+    max-width: 480px;
+    right: 0;
+    left: auto;
+    transform: translateX(100%);
+    border-left: 1px solid rgba(156, 39, 176, 0.12);
+  }
+  
+  #admin-panel.open {
+    transform: translateX(0);
+  }
+  
+  .admin-topbar {
+    padding: 16px 24px;
+  }
+  
+  .admin-title {
+    font-size: 19px;
+  }
+  
+  .admin-content {
+    padding: 24px;
+  }
+  
+  .neu-input {
+    padding: 15px 18px;
+    font-size: 15px;
+  }
+  
+  .neu-textarea {
+    padding: 15px 18px;
+    font-size: 14px;
+    min-height: 110px;
+  }
+  
+  .admin-section-title {
+    font-size: 17px;
+    margin: 28px 0 16px;
+  }
+  
+  .img-upload-area {
+    height: 160px;
+  }
+  
+  .img-upload-area .mi {
+    font-size: 40px;
+  }
+  
+  .img-upload-area span {
+    font-size: 14px;
+  }
+}
+
+/* Desktop Repo Viewer */
+@media (min-width: 768px) {
+  #repo-view {
+    max-width: 600px;
+    right: 0;
+    left: auto;
+    transform: translateX(100%);
+    border-left: 1px solid rgba(156, 39, 176, 0.12);
+  }
+  
+  #repo-view.open {
+    transform: translateX(0);
+  }
+  
+  .rv-content {
+    padding: 24px;
+  }
+  
+  .rv-file-row {
+    padding: 14px 20px;
+    transition: var(--transition);
+  }
+  
+  .rv-file-row:hover {
+    transform: translateX(4px);
+    background: var(--bg2);
+  }
+}
+
+/* Desktop Code Viewer */
+@media (min-width: 768px) {
+  #code-view {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .cv-topbar {
+    padding: 16px 24px;
+  }
+  
+  .cv-filename {
+    font-size: 16px;
+  }
+  
+  .cv-code-wrap {
+    padding: 24px;
+  }
+  
+  .cv-code-wrap pre {
+    font-size: 14px;
+    line-height: 1.8;
+  }
+}
+
+/* Desktop Login Overlay */
+@media (min-width: 768px) {
+  .login-box {
+    max-width: 400px;
+    padding: 40px 36px;
+  }
+  
+  .login-icon {
+    width: 76px;
+    height: 76px;
+    border-radius: 24px;
+  }
+  
+  .login-icon .mi {
+    font-size: 38px;
+  }
+  
+  .login-title {
+    font-size: 26px;
+  }
+  
+  .login-sub {
+    font-size: 14px;
+    margin-bottom: 28px;
+  }
+  
+  .login-input {
+    padding: 16px 20px;
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .login-btn {
+    padding: 16px;
+    font-size: 15px;
+  }
+}
+
+/* Desktop Toast */
+@media (min-width: 768px) {
+  #toast {
+    bottom: 40px;
+    padding: 14px 28px;
+    font-size: 14px;
+    border-radius: var(--radius-lg);
+  }
+  
+  #toast .mi {
+    font-size: 18px;
+  }
+}
+
+/* Large Desktop (1200px+) */
+@media (min-width: 1200px) {
+  .main-content {
+    max-width: 1100px;
+    padding: 32px 60px 60px;
+  }
+  
+  .hero-card {
+    min-height: 450px;
+  }
+  
+  .hero-name {
+    font-size: 52px;
+  }
+  
+  .hero-role {
+    font-size: 18px;
+  }
+  
+  .hero-bio {
+    font-size: 16px;
+  }
+  
+  #home-repos,
+  #all-repos {
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 20px;
+  }
+}
+
+/* Desktop Hover Effects for Buttons */
+@media (min-width: 768px) {
+  .theme-toggle:hover .theme-thumb {
+    transform: scale(1.05);
+  }
+  
+  [data-theme="dark"] .theme-toggle:hover .theme-thumb {
+    transform: translateX(32px) scale(1.05);
+  }
+  
+  .toggle:hover {
+    opacity: 0.9;
+  }
+}
+
+/* Smooth Scrollbar for Desktop */
+@media (min-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: var(--bg2);
+    border-radius: 8px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: var(--nd);
+    border-radius: 8px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--text3);
+  }
+}
+</style>
+</head>
+<body>
+
+<div id="loader">
+  <div class="loader-orb"></div>
+  <div class="loader-name" id="loader-name">Portfolio</div>
+  <div class="loader-sub">Loading your world…</div>
+  <div class="loader-dots"><div class="loader-dot"></div><div class="loader-dot"></div><div class="loader-dot"></div></div>
+</div>
+
+<div id="app">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="topbar-avatar" id="topbar-avatar">RH</div>
+      <div class="topbar-name" id="topbar-name">Portfolio</div>
+    </div>
+    <div class="topbar-right">
+      <button class="topbar-btn color-cycle-btn" onclick="cycleColor()" title="Change color theme">
+        <span class="mi">palette</span>
+      </button>
+      <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+        <div class="theme-thumb"><span class="mi" id="theme-icon">light_mode</span></div>
+      </button>
+      <button class="topbar-btn" onclick="openAdmin()"><span class="mi">settings</span></button>
+    </div>
+  </div>
+
+  <!-- Desktop Sidebar Navigation -->
+  <aside class="desktop-sidebar">
+    <button class="sidebar-item active" onclick="scrollToSection('home',this)">
+      <span class="mi">home</span>
+      <span class="sidebar-label">Home</span>
+    </button>
+    <button class="sidebar-item" onclick="openAllProjects()">
+      <span class="mi">code</span>
+      <span class="sidebar-label">Projects</span>
+    </button>
+    <button class="sidebar-item" onclick="scrollToSection('tracking',this)">
+      <span class="mi">trending_up</span>
+      <span class="sidebar-label">Tracking</span>
+    </button>
+    <button class="sidebar-item" onclick="scrollToSection('experience',this)">
+      <span class="mi">work</span>
+      <span class="sidebar-label">Experience</span>
+    </button>
+    <button class="sidebar-item" onclick="scrollToSection('contact',this)">
+      <span class="mi">mail</span>
+      <span class="sidebar-label">Contact</span>
+    </button>
+  </aside>
+
+  <!-- MAIN CONTENT - All Sections Visible -->
+  <main class="main-content">
+    <!-- HOME SECTION -->
+    <section class="section" id="section-home">
+      <div class="hero-card reveal">
+        <div class="hero-img-wrap" id="hero-img-wrap">
+          <div class="hero-img-placeholder" id="hero-img-placeholder">
+            <span class="mi">person</span>
+            <span>Add photo from Admin panel</span>
+          </div>
+          <img id="hero-img" src="" alt="" style="display:none;">
+          <div class="hero-img-overlay"></div>
+        </div>
+        <div class="hero-body">
+          <div class="hero-badge"><div class="hero-badge-dot"></div><span id="hero-status">Available for work</span></div>
+          <div class="hero-name" id="hero-name">Hi, I'm<br><span>Developer</span></div>
+          <div class="hero-role" id="hero-role">Full-Stack Developer · UI Designer</div>
+          <div class="hero-bio" id="hero-bio">Building clean, purposeful digital experiences with modern technologies and a passion for great design.</div>
+          <div class="hero-actions">
+            <button class="btn-primary" onclick="scrollToSection('projects')"><span class="mi">folder_open</span>View Work</button>
+            <button class="btn-neu" onclick="scrollToSection('contact')"><span class="mi">mail_outline</span>Contact</button>
+          </div>
+        </div>
+      </div>
+      <div class="stat-row reveal reveal-delay-1">
+        <div class="stat-chip"><div class="stat-chip-n" id="stat-repos">—</div><div class="stat-chip-l">REPOS</div></div>
+        <div class="stat-chip"><div class="stat-chip-n" id="stat-stars">—</div><div class="stat-chip-l">STARS</div></div>
+        <div class="stat-chip"><div class="stat-chip-n" id="stat-followers">—</div><div class="stat-chip-l">FOLLOWERS</div></div>
+      </div>
+      <div class="sec-header reveal reveal-delay-2">
+        <div class="sec-title">Featured</div>
+      </div>
+      <div id="featured-projects">
+        <div style="text-align:center;padding:30px 20px;color:var(--text3);">
+          <span class="mi" style="font-size:36px;opacity:0.4;display:block;margin-bottom:8px;">star_outline</span>
+          <div style="font-size:13px;">No featured projects yet</div>
+          <div style="font-size:11px;margin-top:4px;">Add from Admin panel</div>
+        </div>
+      </div>
+      
+      <div class="sec-header reveal reveal-delay-3">
+        <div class="sec-title">Projects</div>
+        <button class="sec-more" onclick="openAllProjects()">See all <span class="mi">arrow_forward</span></button>
+      </div>
+      <div id="home-repos">
+        <div style="text-align:center;padding:30px 20px;color:var(--text3);">
+          <span class="mi" style="font-size:36px;opacity:0.4;display:block;margin-bottom:8px;">folder_open</span>
+          <div style="font-size:13px;">No projects loaded</div>
+          <div style="font-size:11px;margin-top:4px;">Set GitHub username in Admin</div>
+        </div>
+      </div>
+      
+      <div class="sec-header reveal reveal-delay-4"><div class="sec-title">Skills</div></div>
+      <div class="skills-grid reveal reveal-delay-5" id="skills-wrap">
+        <div class="skill-card">
+          <div class="skill-icon"><span class="mi">code</span></div>
+          <div class="skill-name">React</div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon"><span class="mi">dns</span></div>
+          <div class="skill-name">Node.js</div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon"><span class="mi">integration_instructions</span></div>
+          <div class="skill-name">TypeScript</div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon"><span class="mi">terminal</span></div>
+          <div class="skill-name">Python</div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon"><span class="mi">storage</span></div>
+          <div class="skill-name">MongoDB</div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon"><span class="mi">design_services</span></div>
+          <div class="skill-name">Figma</div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon"><span class="mi">cloud_queue</span></div>
+          <div class="skill-name">Docker</div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon"><span class="mi">account_tree</span></div>
+          <div class="skill-name">Git</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRACKING SECTION -->
+    <section class="section" id="section-tracking">
+      <div class="sec-header reveal" style="margin-top:0;">
+        <div class="sec-title" style="font-size:22px;">Currently Learning</div>
+      </div>
+      <div class="track-header reveal reveal-delay-1">
+        <div class="track-label"><span class="mi">my_location</span>Current Focus</div>
+        <div class="track-current" id="track-title">Loading…</div>
+        <div class="track-sub" id="track-subtitle"></div>
+        <div class="track-progress"><div class="track-bar" id="track-bar" style="width:0%"></div></div>
+        <div class="track-pct" id="track-pct">0%</div>
+      </div>
+      <div class="sec-header reveal reveal-delay-2"><div class="sec-title">Learning Log</div></div>
+      <div class="track-log reveal reveal-delay-3">
+        <div class="track-log-header"><div class="track-log-title">Recent Updates</div><span class="mi" style="color:var(--text3);">history</span></div>
+        <div id="track-entries"><div style="padding:24px;text-align:center;color:var(--text3);font-size:13px;">No entries yet</div></div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE SECTION -->
+    <section class="section" id="section-experience">
+      <div class="sec-header reveal" style="margin-top:0;">
+        <div class="sec-title" style="font-size:22px;">Experience</div>
+      </div>
+      <div id="exp-list">
+        <div class="exp-card reveal reveal-delay-1">
+          <div class="exp-icon"><span class="mi">computer</span></div>
+          <div><div class="exp-title">Full-Stack Developer</div><div class="exp-place">Freelance</div><div class="exp-date"><span class="mi">schedule</span>2022 — Present</div><div class="exp-desc">Building web applications for clients worldwide using React, Node.js, and cloud platforms.</div></div>
+        </div>
+      </div>
+      <div class="sec-header reveal reveal-delay-2"><div class="sec-title">Education</div></div>
+      <div class="edu-card reveal reveal-delay-3" id="edu-card">
+        <div class="edu-header">
+          <div class="edu-icon-wrap"><span class="mi">school</span></div>
+          <div class="edu-info">
+            <div class="edu-degree" id="edu-degree">BSc in Computer Science</div>
+            <div class="edu-school" id="edu-school">University</div>
+            <div class="edu-year"><span class="mi">schedule</span><span id="edu-year">2020 — 2024</span></div>
+          </div>
+        </div>
+        <div class="edu-desc" id="edu-desc">Studied algorithms, data structures, software engineering and system design.</div>
+      </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section class="section" id="section-contact">
+      <div class="sec-header reveal" style="margin-top:0;">
+        <div class="sec-title" style="font-size:22px;">Get in Touch</div>
+      </div>
+      <div class="card reveal reveal-delay-1" style="text-align:center;padding:28px;">
+        <!-- Chat Animation -->
+        <div class="chat-animation">
+          <div class="chat-bubble received">Hey Rayhan! 👋</div>
+          <div class="chat-bubble sent">Hey! I saw your portfolio...</div>
+          <div class="chat-bubble received">Would you like to collaborate?</div>
+          <div class="chat-bubble sent">Absolutely! Let's connect 🚀</div>
+          <div class="typing-indicator">
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+          </div>
+        </div>
+        <div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--text);margin-top:20px;margin-bottom:8px;">Let's work together</div>
+        <div style="font-size:13px;color:var(--text3);line-height:1.7;">Open to new opportunities and collaborations. Feel free to reach out!</div>
+      </div>
+      <div style="margin-top:16px;">
+        <button class="contact-btn email reveal reveal-delay-2" onclick="handleContact('email')"><div class="contact-icon"><span class="mi">mail</span></div><div><div class="contact-label">Email</div><div class="contact-val" id="c-email">your@email.com</div></div><div class="contact-arrow"><span class="mi">chevron_right</span></div></button>
+        <button class="contact-btn whatsapp reveal reveal-delay-3" onclick="handleContact('whatsapp')"><div class="contact-icon"><span class="mi">chat</span></div><div><div class="contact-label">WhatsApp</div><div class="contact-val" id="c-whatsapp">+880 1XXX-XXXXXX</div></div><div class="contact-arrow"><span class="mi">chevron_right</span></div></button>
+        <button class="contact-btn facebook reveal reveal-delay-4" onclick="handleContact('facebook')"><div class="contact-icon"><span class="mi">facebook</span></div><div><div class="contact-label">Facebook</div><div class="contact-val" id="c-facebook">facebook.com/username</div></div><div class="contact-arrow"><span class="mi">chevron_right</span></div></button>
+      </div>
+    </section>
+  </main>
+
+  <div class="bottom-nav">
+    <button class="bnav-item active" onclick="scrollToSection('home',this)"><div class="bnav-icon-wrap"><span class="mi">home</span></div><div class="bnav-label">Home</div></button>
+    <button class="bnav-item" onclick="openAllProjects()"><div class="bnav-icon-wrap"><span class="mi">code</span></div><div class="bnav-label">Projects</div></button>
+    <button class="bnav-item" onclick="scrollToSection('tracking',this)"><div class="bnav-icon-wrap"><span class="mi">trending_up</span></div><div class="bnav-label">Track</div></button>
+    <button class="bnav-item" onclick="scrollToSection('experience',this)"><div class="bnav-icon-wrap"><span class="mi">work</span></div><div class="bnav-label">Work</div></button>
+    <button class="bnav-item" onclick="scrollToSection('contact',this)"><div class="bnav-icon-wrap"><span class="mi">mail</span></div><div class="bnav-label">Contact</div></button>
+  </div>
+</div>
+
+<!-- ALL PROJECTS OVERLAY -->
+<div id="all-projects-view">
+  <div class="apv-topbar">
+    <button class="rv-back" onclick="closeAllProjects()"><span class="mi">arrow_back</span></button>
+    <div class="apv-title">All Projects</div>
+    <div id="apv-count" style="font-size:12px;color:var(--text3);font-weight:600;">0 projects</div>
+  </div>
+  <div class="apv-search">
+    <span class="mi" style="color:var(--text3);">search</span>
+    <input class="apv-input" placeholder="Search projects…" oninput="filterAllProjects(this.value)">
+  </div>
+  <div class="apv-content" id="apv-list">
+    <div style="text-align:center;padding:60px 20px;color:var(--text3);">
+      <span class="mi" style="font-size:48px;opacity:0.4;display:block;margin-bottom:12px;">folder_open</span>
+      <div style="font-size:14px;font-weight:600;margin-bottom:6px;">No projects loaded</div>
+      <div style="font-size:12px;">Set your GitHub username in Admin panel</div>
+    </div>
+  </div>
+</div>
+
+<!-- REPO VIEWER -->
+<div id="repo-view">
+  <div class="rv-topbar">
+    <button class="rv-back" onclick="closeRepoView()"><span class="mi">arrow_back</span></button>
+    <div><div class="rv-repo-name" id="rv-name">Repo</div><div style="font-size:11px;color:var(--text3);" id="rv-desc-top"></div></div>
+  </div>
+  <div class="rv-content">
+    <div id="rv-meta" style="margin-bottom:14px;"></div>
+    <div class="rv-breadcrumb" id="rv-breadcrumb"></div>
+    <div id="rv-files"></div>
+  </div>
+</div>
+
+<!-- CODE VIEWER -->
+<div id="code-view">
+  <div class="cv-topbar">
+    <button class="cv-back" onclick="closeCodeView()"><span class="mi" style="color:#fff;">arrow_back</span></button>
+    <div class="cv-filename" id="cv-filename">file.js</div>
+    <button class="cv-copy" onclick="copyCode()"><span class="mi">content_copy</span>Copy</button>
+  </div>
+  <div class="cv-code-wrap"><pre id="cv-code"></pre></div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="admin-panel">
+  <div class="admin-topbar">
+    <button class="rv-back" onclick="closeAdmin()"><span class="mi">close</span></button>
+    <div class="admin-title"><span class="mi">admin_panel_settings</span>Admin Panel</div>
+    <button class="btn-primary" style="flex:unset;padding:8px 16px;font-size:12px;" onclick="saveAdmin()"><span class="mi" style="font-size:16px;">save</span>Save</button>
+  </div>
+  <div class="admin-content">
+    
+    <!-- GitHub Configuration -->
+    <div class="admin-section-title"><span class="mi">hub</span>Admin Token</div>
+    <div class="github-config-section">
+      <div style="font-size:12px;color:var(--text2);margin-bottom:12px;padding:10px;background:var(--bg);border-radius:var(--radius-sm);">
+        <strong>Portfolio Config:</strong><br>
+        Owner: <span id="config-owner" style="color:var(--primary);">—</span><br>
+        Repo: <span id="config-repo" style="color:var(--primary);">—</span>
+      </div>
+      <div class="input-group">
+        <div class="input-label"><span class="mi">key</span>Personal Access Token (for editing)</div>
+        <input class="neu-input" id="a-token" type="password" placeholder="ghp_xxxxxxxxxxxx">
+        <div class="config-note">Token needed to save changes. Get from: <a href="https://github.com/settings/tokens/new" target="_blank" class="config-link">GitHub Settings</a><br>Scopes: <strong>repo</strong></div>
+      </div>
+      <button class="btn-primary" style="width:100%;margin-top:10px;" onclick="testGitHub()"><span class="mi">sync</span>Connect Token</button>
+    </div>
+    
+    <!-- GitHub Username for Stats -->
+    <div class="admin-section-title"><span class="mi">code</span>GitHub Username (for stats)</div>
+    <div class="input-group" style="margin-bottom:16px;">
+      <div class="input-label"><span class="mi">person</span>Your GitHub Username</div>
+      <input class="neu-input" id="a-username" placeholder="e.g. rafidhassan">
+      <div class="config-note">This shows your public repos & stats on the portfolio</div>
+      <button class="btn-primary" style="width:100%;margin-top:10px;" onclick="syncRepos()"><span class="mi">sync</span>Sync Repositories</button>
+    </div>
+
+    <!-- Hero Image -->
+    <div class="admin-section-title"><span class="mi">image</span>Hero Image</div>
+    <div class="input-group">
+      <div class="input-label"><span class="mi">add_photo_alternate</span>Profile / Cover Photo</div>
+      <div class="img-upload-area" onclick="document.getElementById('img-file-input').click()">
+        <span class="mi">add_photo_alternate</span><span>Tap to upload image</span>
+        <img id="admin-img-preview" src="" alt="" style="display:none;">
+      </div>
+      <input type="file" id="img-file-input" accept="image/*" onchange="handleImgUpload(this)">
+    </div>
+
+    <!-- Profile -->
+    <div class="admin-section-title"><span class="mi">badge</span>Profile</div>
+    <div class="input-group"><div class="input-label"><span class="mi">person</span>Your Name</div><input class="neu-input" id="a-name" placeholder="Rafid Hassan"></div>
+    <div class="input-group"><div class="input-label"><span class="mi">work_outline</span>Role / Title</div><input class="neu-input" id="a-role" placeholder="Full-Stack Developer"></div>
+    <div class="input-group"><div class="input-label"><span class="mi">notes</span>Short Bio</div><textarea class="neu-textarea" id="a-bio" placeholder="Building clean digital experiences…"></textarea></div>
+    <div class="input-group"><div class="input-label"><span class="mi">fiber_manual_record</span>Status Badge Text</div><input class="neu-input" id="a-status" placeholder="Available for work"></div>
+
+    <!-- Contact Info -->
+    <div class="admin-section-title"><span class="mi">contacts</span>Contact Info</div>
+    <div class="input-group"><div class="input-label"><span class="mi">mail</span>Email</div><input class="neu-input" id="a-email" placeholder="your@email.com"></div>
+    <div class="input-group"><div class="input-label"><span class="mi">chat</span>WhatsApp Number</div><input class="neu-input" id="a-whatsapp" placeholder="+880 1XXX-XXXXXX"></div>
+    <div class="input-group"><div class="input-label"><span class="mi">facebook</span>Facebook Profile</div><input class="neu-input" id="a-facebook" placeholder="facebook.com/username"></div>
+
+    <!-- Currently Learning -->
+    <div class="admin-section-title"><span class="mi">trending_up</span>Currently Learning</div>
+    <div class="input-group"><div class="input-label"><span class="mi">my_location</span>Topic / Technology</div><input class="neu-input" id="a-track-title" placeholder="e.g. Advanced React Patterns"></div>
+    <div class="input-group"><div class="input-label"><span class="mi">menu_book</span>Subtitle / Resource</div><input class="neu-input" id="a-track-sub" placeholder="e.g. Reading: React docs"></div>
+    <div class="input-group"><div class="input-label"><span class="mi">percent</span>Progress (0–100)</div><input class="neu-input" id="a-track-pct" type="number" min="0" max="100" placeholder="65"></div>
+    <div class="input-group"><div class="input-label"><span class="mi">edit_note</span>Add Log Entry</div><textarea class="neu-textarea" id="a-track-entry" placeholder="What did you learn today?"></textarea></div>
+    <button class="btn-neu" style="width:100%;margin-bottom:6px;" onclick="addTrackEntry()"><span class="mi">add_circle_outline</span>Add Entry</button>
+
+    <!-- Skills -->
+    <div class="admin-section-title"><span class="mi">build</span>Skills</div>
+    <div class="input-group"><div class="input-label"><span class="mi">tag</span>Skills (comma separated)</div><textarea class="neu-textarea" id="a-skills" placeholder="React, Node.js, TypeScript…"></textarea></div>
+
+    <!-- Education -->
+    <div class="admin-section-title"><span class="mi">school</span>Education</div>
+    <div class="input-group"><div class="input-label"><span class="mi">person</span>Degree / Certificate</div><input class="neu-input" id="a-edu-degree" placeholder="e.g. BSc in Computer Science"></div>
+    <div class="input-group"><div class="input-label"><span class="mi">business</span>Institution</div><input class="neu-input" id="a-edu-institution" placeholder="e.g. University of Dhaka"></div>
+    <div class="input-group"><div class="input-label"><span class="mi">calendar_today</span>Year / Duration</div><input class="neu-input" id="a-edu-year" placeholder="e.g. 2020 - 2024"></div>
+    <div class="input-group"><div class="input-label"><span class="mi">notes</span>Description (optional)</div><textarea class="neu-textarea" id="a-edu-desc" placeholder="Additional details about your education…"></textarea></div>
+
+    <!-- Featured Projects -->
+    <div class="admin-section-title"><span class="mi">star</span>Featured Projects</div>
+    <div class="input-group">
+      <div class="input-label"><span class="mi">image</span>Thumbnail</div>
+      <div class="img-upload-area" id="featured-thumb-upload" onclick="document.getElementById('featured-thumb-input').click()" style="height:80px;">
+        <span class="mi" id="featured-thumb-icon">add_photo_alternate</span>
+        <span id="featured-thumb-text">Tap to upload thumbnail</span>
+        <img id="featured-thumb-preview" src="" alt="" style="display:none;">
+      </div>
+      <input type="file" id="featured-thumb-input" accept="image/*" onchange="handleFeaturedThumb(this)">
+    </div>
+    <div class="input-group"><div class="input-label"><span class="mi">title</span>Project Name</div><input class="neu-input" id="a-featured-name" placeholder="e.g. Portfolio Website"></div>
+    <div class="input-group"><div class="input-label"><span class="mi">link</span>Project URL (optional)</div><input class="neu-input" id="a-featured-url" placeholder="https://github.com/user/project"></div>
+    <div class="input-group"><div class="input-label"><span class="mi">description</span>Description</div><textarea class="neu-textarea" id="a-featured-desc" placeholder="Brief description of the project…"></textarea></div>
+    <button class="btn-primary" style="width:100%;margin-bottom:12px;" onclick="addFeaturedProject()"><span class="mi">add_circle</span>Add Featured Project</button>
+    
+    <!-- Featured Projects List -->
+    <div id="featured-list" style="margin-bottom:12px;"></div>
+
+    <!-- Change Password -->
+    <div class="admin-section-title"><span class="mi">lock</span>Change Password</div>
+    <div class="input-group"><div class="input-label"><span class="mi">password</span>New Password</div><input class="neu-input" id="a-newpass" type="password" placeholder="New admin password"></div>
+    <button class="btn-neu" style="width:100%;" onclick="changePassword()"><span class="mi">update</span>Update Password</button>
+    
+    <div style="height:30px;"></div>
+  </div>
+</div>
+
+<!-- LOGIN -->
+<div id="login-overlay">
+  <div class="login-box">
+    <div class="login-icon"><span class="mi">admin_panel_settings</span></div>
+    <div class="login-title">Admin Access</div>
+    <div class="login-sub">Enter your password to continue</div>
+    <input class="login-input" type="password" id="login-input" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="login-btn" onclick="doLogin()"><span class="mi">login</span>Enter</button>
+    <div class="login-error" id="login-error">Wrong password. Try again.</div>
+  </div>
+</div>
+
+<div id="toast"><span class="mi" id="toast-icon">info</span><span id="toast-msg"></span></div>
+
+<script>
+// ==========================================
+// PORTFOLIO CONFIGURATION
+// ==========================================
+// 
+// HOW TO SET UP (ONE TIME SETUP):
+// 1. Create a PUBLIC GitHub repository (e.g., 'portfolio-data')
+// 2. Edit the 'owner' and 'repo' values below with your GitHub username and repo name
+// 3. Upload this HTML file to any hosting (GitHub Pages, Netlify, Vercel, etc.)
+// 4. Visitors can now see your portfolio WITHOUT any setup!
+// 
+// FOR ADMIN (You):
+// - Click the settings icon → Enter password → Enter your GitHub PAT token
+// - Token is only needed for EDITING, not for viewing
+//
+// ==========================================
+
+// ╔══════════════════════════════════════════════════════════════╗
+// ║  👇 EDIT HERE: Change these values to your own GitHub info   ║
+// ╚══════════════════════════════════════════════════════════════╝
+const PORTFOLIO_CONFIG = {
+  owner: 'rayhan-404',                // ← YOUR GITHUB USERNAME
+  repo: 'portfolio-data',            // ← YOUR REPO NAME (must be PUBLIC)
+  dataBranch: 'main',
+  dataPath: 'data.json',
+  imagePath: 'images'
+};
+// ╔══════════════════════════════════════════════════════════════╗
+// ║  👆 EDIT HERE: Change these values to your own GitHub info   ║
+// ╚══════════════════════════════════════════════════════════════╝
+
+// Admin token (only needed for editing, stored in localStorage after login)
+let ADMIN_TOKEN = '';
+
+// Default portfolio data
+const DEFAULT_DATA = {
+  github: { username: '', token: '' },
+  profile: {
+    name: 'Developer',
+    role: 'Full-Stack Developer · UI Designer',
+    bio: 'Building clean, purposeful digital experiences with modern technologies and a passion for great design.',
+    status: 'Available for work'
+  },
+  contact: {
+    email: 'your@email.com',
+    whatsapp: '+880 1XXX-XXXXXX',
+    facebook: 'facebook.com/username'
+  },
+  tracking: {
+    title: 'Nothing yet',
+    subtitle: 'Add a topic from admin panel',
+    pct: 0,
+    log: []
+  },
+  education: {
+    degree: 'BSc in Computer Science',
+    institution: 'University',
+    year: '2020 - 2024',
+    description: 'Studied algorithms, data structures, and software engineering.'
+  },
+  featuredProjects: [],
+  skills: ['React', 'Node.js', 'TypeScript', 'Python', 'MongoDB', 'Figma', 'Docker', 'Git'],
+  password: 'admin123',
+  heroImage: '',
+  theme: 'light'
+};
+
+let S = JSON.parse(JSON.stringify(DEFAULT_DATA));
+let fileSha = null;
+let allRepos = [];
+
+// ==========================================
+// GITHUB API FUNCTIONS
+// ==========================================
+
+// Get file from GitHub
+// Get file from GitHub (PUBLIC read - no token needed for visitors)
+async function getFile(path) {
+  const { owner, repo, dataBranch } = PORTFOLIO_CONFIG;
+  if (!owner || !repo || owner === 'your-github-username') return null;
+  
+  try {
+    // Use raw.githubusercontent.com for public read (faster, no rate limit issues)
+    const rawUrl = `https://raw.githubusercontent.com/${owner}/${repo}/${dataBranch}/${path}`;
+    const res = await fetch(rawUrl);
+    
+    if (!res.ok) return null;
+    
+    const content = await res.text();
+    // Return in same format as API for compatibility
+    return {
+      content: btoa(unescape(encodeURIComponent(content))),
+      sha: null // We don't need SHA for read-only
+    };
+  } catch (e) {
+    console.error('Error fetching file:', e);
+    return null;
+  }
+}
+
+// Save file to GitHub
+// Save file to GitHub (requires admin token)
+async function saveFile(path, content, message = 'Update portfolio data') {
+  const { owner, repo, dataBranch } = PORTFOLIO_CONFIG;
+  if (!owner || !repo || owner === 'your-github-username') {
+    showToast('warning', 'Portfolio not configured');
+    return false;
+  }
+  
+  if (!ADMIN_TOKEN) {
+    showToast('warning', 'Admin token required');
+    return false;
+  }
+  
+  try {
+    // Get current file SHA (need API call for this)
+    const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}?ref=${dataBranch}`;
+    let sha = null;
+    
+    const shaRes = await fetch(apiUrl, {
+      headers: {
+        'Authorization': `token ${ADMIN_TOKEN}`,
+        'Accept': 'application/vnd.github.v3+json'
+      }
+    });
+    
+    if (shaRes.ok) {
+      const shaData = await shaRes.json();
+      sha = shaData.sha;
+    }
+    
+    const body = {
+      message,
+      content: btoa(unescape(encodeURIComponent(content))),
+      branch: dataBranch
+    };
+    
+    if (sha) body.sha = sha;
+    
+    const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `token ${ADMIN_TOKEN}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    });
+    
+    if (res.ok) {
+      const data = await res.json();
+      fileSha = data.content?.sha;
+      return true;
+    } else {
+      const err = await res.json();
+      console.error('Save error:', err);
+      showToast('error', err.message || 'Failed to save');
+      return false;
+    }
+  } catch (e) {
+    console.error('Error saving file:', e);
+    showToast('error', 'Failed to save to GitHub');
+    return false;
+  }
+}
+
+// Upload image to GitHub
+// Upload image to GitHub (requires admin token)
+async function uploadImage(filename, base64Data) {
+  const { owner, repo, dataBranch, imagePath } = PORTFOLIO_CONFIG;
+  if (!owner || !repo || owner === 'your-github-username') {
+    showToast('warning', 'Portfolio not configured');
+    return null;
+  }
+  
+  if (!ADMIN_TOKEN) {
+    showToast('warning', 'Admin token required');
+    return null;
+  }
+  
+  const path = `${imagePath}/${filename}`;
+  
+  try {
+    const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `token ${ADMIN_TOKEN}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        message: `Upload image: ${filename}`,
+        content: base64Data.split(',')[1], // Remove data:image/xxx;base64, prefix
+        branch: dataBranch
+      })
+    });
+    
+    if (res.ok) {
+      // Return raw GitHub URL
+      return `https://raw.githubusercontent.com/${owner}/${repo}/${dataBranch}/${path}`;
+    } else {
+      const err = await res.json();
+      console.error('Upload error:', err);
+      return null;
+    }
+  } catch (e) {
+    console.error('Error uploading image:', e);
+    return null;
+  }
+}
+
+// Fetch GitHub user repos (admin only, for listing your own repos)
+async function fetchGitHubRepos() {
+  if (!ADMIN_TOKEN) return [];
+  
+  try {
+    const res = await fetch('https://api.github.com/user/repos?per_page=100&sort=updated', {
+      headers: {
+        'Authorization': `token ${ADMIN_TOKEN}`,
+        'Accept': 'application/vnd.github.v3+json'
+      }
+    });
+    
+    if (res.ok) {
+      return await res.json();
+    }
+    return [];
+  } catch (e) {
+    console.error('Error fetching repos:', e);
+    return [];
+  }
+}
+
+// Fetch public repos for display
+async function fetchPublicRepos(username) {
+  if (!username) return [];
+  
+  try {
+    const res = await fetch(`https://api.github.com/users/${username}/repos?per_page=100&sort=updated`);
+    if (res.ok) {
+      return await res.json();
+    }
+    return [];
+  } catch (e) {
+    console.error('Error fetching public repos:', e);
+    return [];
+  }
+}
+
+// Fetch GitHub user info
+async function fetchGitHubUser(username) {
+  if (!username) return null;
+  
+  try {
+    const res = await fetch(`https://api.github.com/users/${username}`);
+    if (res.ok) {
+      return await res.json();
+    }
+    return null;
+  } catch (e) {
+    console.error('Error fetching user:', e);
+    return null;
+  }
+}
+
+// ==========================================
+// DATA MANAGEMENT
+// ==========================================
+
+async function loadData() {
+  // First try to load from GitHub (public read, no token needed)
+  const file = await getFile(PORTFOLIO_CONFIG.dataPath);
+  
+  if (file) {
+    try {
+      const content = decodeBase64(file.content);
+      const data = JSON.parse(content);
+      S = { ...DEFAULT_DATA, ...data };
+      fileSha = file.sha;
+      console.log('Data loaded from GitHub');
+    } catch (e) {
+      console.error('Error parsing data:', e);
+    }
+  } else {
+    console.log('Using default data - make sure to configure PORTFOLIO_CONFIG');
+  }
+  
+  renderProfile();
+  renderTracking();
+  
+  // Load GitHub stats if username is set
+  if (S.github.username) {
+    await loadGitHubStats();
+  }
+}
+
+async function saveData() {
+  const content = JSON.stringify(S, null, 2);
+  const success = await saveFile(PORTFOLIO_CONFIG.dataPath, content, 'Update portfolio data');
+  return success;
+}
+
+function decodeBase64(base64) {
+  try {
+    return decodeURIComponent(escape(atob(base64)));
+  } catch (e) {
+    return atob(base64);
+  }
+}
+
+// ==========================================
+// UI FUNCTIONS
+// ==========================================
+
+function applyTheme(t) {
+  document.documentElement.setAttribute('data-theme', t);
+  document.getElementById('theme-icon').textContent = t === 'dark' ? 'dark_mode' : 'light_mode';
+}
+
+function toggleTheme() {
+  S.theme = S.theme === 'dark' ? 'light' : 'dark';
+  applyTheme(S.theme);
+  saveData();
+}
+
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      revealObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08 });
+
+function observeReveals() {
+  document.querySelectorAll('.reveal:not(.visible)').forEach(el => revealObserver.observe(el));
+}
+
+// Scroll to section function
+function scrollToSection(id, clickedBtn) {
+  const section = document.getElementById('section-' + id);
+  if (!section) return;
+  
+  const idx = { home: 0, projects: 1, tracking: 2, experience: 3, contact: 4 }[id];
+  
+  // Update active states for bottom nav
+  document.querySelectorAll('.bnav-item').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.bnav-item')[idx]?.classList.add('active');
+  
+  // Update active states for desktop sidebar
+  document.querySelectorAll('.sidebar-item').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.sidebar-item')[idx]?.classList.add('active');
+  
+  // Scroll to section
+  const topbarHeight = 58;
+  const targetPosition = section.offsetTop - topbarHeight - 10;
+  
+  window.scrollTo({
+    top: targetPosition,
+    behavior: 'smooth'
+  });
+  
+  // Update URL hash without jumping
+  history.replaceState(null, null, '#' + id);
+}
+
+// Update active nav on scroll
+function updateActiveNavOnScroll() {
+  const sections = document.querySelectorAll('.section');
+  const scrollPos = window.scrollY + 100;
+  
+  sections.forEach((section, index) => {
+    const sectionTop = section.offsetTop;
+    const sectionBottom = sectionTop + section.offsetHeight;
+    const sectionId = section.id.replace('section-', '');
+    
+    if (scrollPos >= sectionTop && scrollPos < sectionBottom) {
+      // Update bottom nav
+      document.querySelectorAll('.bnav-item').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.bnav-item')[index]?.classList.add('active');
+      
+      // Update desktop sidebar
+      document.querySelectorAll('.sidebar-item').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.sidebar-item')[index]?.classList.add('active');
+    }
+  });
+}
+
+// Throttle scroll events
+let scrollTimeout;
+window.addEventListener('scroll', () => {
+  if (scrollTimeout) clearTimeout(scrollTimeout);
+  scrollTimeout = setTimeout(updateActiveNavOnScroll, 50);
+});
+
+function renderProfile() {
+  const first = S.profile.name.split(' ')[0] || 'Dev';
+  document.getElementById('hero-name').innerHTML = `Hi, I'm<br><span>${first}</span>`;
+  document.getElementById('hero-role').textContent = S.profile.role;
+  document.getElementById('hero-bio').textContent = S.profile.bio;
+  document.getElementById('hero-status').textContent = S.profile.status;
+  document.getElementById('topbar-name').textContent = first;
+  document.getElementById('loader-name').textContent = first + "'s Portfolio";
+  
+  // Update avatar with image or initials
+  const ta = document.getElementById('topbar-avatar');
+  if (S.heroImage) {
+    ta.innerHTML = `<img src="${S.heroImage}" alt="Avatar" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;">`;
+  } else {
+    const initials = S.profile.name.split(' ').map(w => w[0] || '').join('').slice(0, 2).toUpperCase() || 'ME';
+    ta.textContent = initials;
+  }
+  
+  // Update hero image section
+  const heroImg = document.getElementById('hero-img');
+  const heroPlaceholder = document.getElementById('hero-img-placeholder');
+  const heroWrap = document.getElementById('hero-img-wrap');
+  
+  if (S.heroImage) {
+    heroImg.src = S.heroImage;
+    heroImg.style.display = 'block';
+    heroImg.onload = function() {
+      heroPlaceholder.style.display = 'none';
+    };
+    heroImg.onerror = function() {
+      heroImg.style.display = 'none';
+      heroPlaceholder.style.display = 'flex';
+    };
+    heroPlaceholder.style.display = 'none';
+  } else {
+    heroImg.style.display = 'none';
+    heroPlaceholder.style.display = 'flex';
+  }
+  
+  // Update contact info
+  document.getElementById('c-email').textContent = S.contact.email;
+  document.getElementById('c-whatsapp').textContent = S.contact.whatsapp || '+880 1XXX-XXXXXX';
+  document.getElementById('c-facebook').textContent = S.contact.facebook || 'facebook.com/username';
+  
+  // Update skills with cards
+  renderSkills();
+  
+  // Update education
+  renderEducation();
+  
+  // Update featured projects
+  renderFeaturedProjects();
+}
+
+function getSkillIcon(skill) {
+  const icons = {
+    'React': 'code',
+    'Node.js': 'dns',
+    'TypeScript': 'integration_instructions',
+    'JavaScript': 'integration_instructions',
+    'Python': 'terminal',
+    'MongoDB': 'storage',
+    'Figma': 'design_services',
+    'Docker': 'cloud_queue',
+    'Git': 'account_tree',
+    'CSS': 'palette',
+    'HTML': 'html',
+    'Vue': 'code',
+    'Angular': 'code',
+    'Next.js': 'code',
+    'Express': 'dns',
+    'PostgreSQL': 'storage',
+    'MySQL': 'storage',
+    'Redis': 'storage',
+    'AWS': 'cloud',
+    'Firebase': 'cloud',
+    'Tailwind': 'palette',
+    'Sass': 'palette',
+    'GraphQL': 'share',
+    'REST': 'api',
+    'Java': 'integration_instructions',
+    'C++': 'integration_instructions',
+    'Go': 'terminal',
+    'Rust': 'terminal'
+  };
+  return icons[skill] || 'build';
+}
+
+function renderSkills() {
+  const skillsWrap = document.getElementById('skills-wrap');
+  if (skillsWrap && S.skills.length) {
+    skillsWrap.innerHTML = S.skills.map(s => `
+      <div class="skill-card">
+        <div class="skill-icon"><span class="mi">${getSkillIcon(s)}</span></div>
+        <div class="skill-name">${s}</div>
+      </div>
+    `).join('');
+  }
+}
+
+function renderEducation() {
+  const edu = S.education;
+  if (!edu || !edu.degree) return;
+  
+  // Update education card with new structure
+  const degreeEl = document.getElementById('edu-degree');
+  const schoolEl = document.getElementById('edu-school');
+  const yearEl = document.getElementById('edu-year');
+  const descEl = document.getElementById('edu-desc');
+  
+  if (degreeEl) degreeEl.textContent = edu.degree;
+  if (schoolEl) schoolEl.textContent = edu.institution || '';
+  if (yearEl) yearEl.textContent = edu.year || '';
+  if (descEl) descEl.textContent = edu.description || '';
+}
+
+// ==========================================
+// FEATURED PROJECTS FUNCTIONS
+// ==========================================
+
+function renderFeaturedProjects() {
+  const el = document.getElementById('featured-projects');
+  const projects = S.featuredProjects || [];
+  
+  if (!projects.length) {
+    el.innerHTML = `
+      <div style="text-align:center;padding:30px 20px;color:var(--text3);">
+        <span class="mi" style="font-size:36px;opacity:0.4;display:block;margin-bottom:8px;">star_outline</span>
+        <div style="font-size:13px;">No featured projects yet</div>
+        <div style="font-size:11px;margin-top:4px;">Add from Admin panel</div>
+      </div>
+    `;
+    return;
+  }
+  
+  el.innerHTML = projects.map((p, i) => `
+    <div class="featured-card reveal reveal-delay-${i + 1}" onclick="${p.url ? `window.open('${p.url}', '_blank')` : ''}">
+      <div class="featured-thumb">
+        ${p.thumbnail ? `<img src="${p.thumbnail}" alt="${p.name}">` : '<span class="mi">folder_open</span>'}
+      </div>
+      <div class="featured-content">
+        <div class="featured-name">${p.name}</div>
+        <div class="featured-desc">${p.description}</div>
+      </div>
+    </div>
+  `).join('');
+  
+  setTimeout(observeReveals, 60);
+}
+
+function renderFeaturedList() {
+  const el = document.getElementById('featured-list');
+  const projects = S.featuredProjects || [];
+  
+  if (!projects.length) {
+    el.innerHTML = '<div style="text-align:center;padding:16px;color:var(--text3);font-size:12px;">No featured projects added</div>';
+    return;
+  }
+  
+  el.innerHTML = projects.map((p, i) => `
+    <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--bg2);border-radius:var(--radius-md);margin-bottom:8px;">
+      <div style="width:40px;height:40px;border-radius:8px;background:var(--bg);overflow:hidden;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        ${p.thumbnail ? `<img src="${p.thumbnail}" style="width:100%;height:100%;object-fit:cover;">` : '<span class="mi" style="color:var(--primary);opacity:0.5;">folder</span>'}
+      </div>
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:13px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${p.name}</div>
+        <div style="font-size:11px;color:var(--text3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${p.description || 'No description'}</div>
+      </div>
+      <button onclick="deleteFeaturedProject(${i})" style="width:32px;height:32px;border-radius:8px;border:none;background:rgba(244,67,54,0.1);color:#f44336;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+        <span class="mi" style="font-size:18px;">delete</span>
+      </button>
+    </div>
+  `).join('');
+}
+
+let currentFeaturedThumb = '';
+
+function handleFeaturedThumb(input) {
+  const file = input.files[0];
+  if (!file) return;
+  
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    currentFeaturedThumb = e.target.result;
+    const preview = document.getElementById('featured-thumb-preview');
+    const icon = document.getElementById('featured-thumb-icon');
+    const text = document.getElementById('featured-thumb-text');
+    
+    preview.src = currentFeaturedThumb;
+    preview.style.display = 'block';
+    icon.style.display = 'none';
+    text.style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+}
+
+async function addFeaturedProject() {
+  const name = document.getElementById('a-featured-name').value.trim();
+  const desc = document.getElementById('a-featured-desc').value.trim();
+  const url = document.getElementById('a-featured-url').value.trim();
+  
+  if (!name) {
+    showToast('warning', 'Project name required');
+    return;
+  }
+  
+  if (!S.featuredProjects) S.featuredProjects = [];
+  
+  // Upload thumbnail to GitHub if configured
+  let thumbnailUrl = currentFeaturedThumb;
+  if (currentFeaturedThumb && GITHUB_CONFIG.owner && GITHUB_CONFIG.repo && GITHUB_CONFIG.token) {
+    const ext = 'jpg';
+    const filename = `featured-${Date.now()}.${ext}`;
+    const uploadedUrl = await uploadImage(filename, currentFeaturedThumb);
+    if (uploadedUrl) {
+      thumbnailUrl = uploadedUrl;
+    }
+  }
+  
+  S.featuredProjects.push({
+    name,
+    description: desc,
+    url,
+    thumbnail: thumbnailUrl
+  });
+  
+  // Clear form
+  document.getElementById('a-featured-name').value = '';
+  document.getElementById('a-featured-desc').value = '';
+  document.getElementById('a-featured-url').value = '';
+  currentFeaturedThumb = '';
+  
+  const preview = document.getElementById('featured-thumb-preview');
+  const icon = document.getElementById('featured-thumb-icon');
+  const text = document.getElementById('featured-thumb-text');
+  preview.style.display = 'none';
+  icon.style.display = 'block';
+  text.style.display = 'block';
+  
+  renderFeaturedList();
+  renderFeaturedProjects();
+  
+  showToast('check_circle', 'Featured project added!');
+  await saveData();
+}
+
+function deleteFeaturedProject(index) {
+  S.featuredProjects.splice(index, 1);
+  renderFeaturedList();
+  renderFeaturedProjects();
+  saveData();
+  showToast('check_circle', 'Project removed');
+}
+
+// ==========================================
+// GITHUB PROJECTS FUNCTIONS
+// ==========================================
+
+async function loadAllProjects() {
+  const username = S.github.username;
+  if (!username) {
+    showToast('warning', 'Set GitHub username in Admin');
+    return;
+  }
+  
+  showToast('sync', 'Loading projects...');
+  
+  try {
+    const repos = await fetchPublicRepos(username);
+    
+    if (repos.length) {
+      allRepos = repos;
+      renderAllProjectsList(repos);
+      showToast('check_circle', `${repos.length} projects loaded`);
+    } else {
+      showToast('warning', 'No repositories found');
+    }
+  } catch (e) {
+    console.error('Error loading projects:', e);
+    showToast('error', 'Failed to load projects');
+  }
+}
+
+async function loadGitHubStats() {
+  const username = S.github.username;
+  if (!username) return;
+  
+  try {
+    const [user, repos] = await Promise.all([
+      fetchGitHubUser(username),
+      fetchPublicRepos(username)
+    ]);
+    
+    if (user) {
+      document.getElementById('stat-repos').textContent = user.public_repos || 0;
+      document.getElementById('stat-followers').textContent = user.followers || 0;
+    }
+    
+    if (repos.length) {
+      allRepos = repos;
+      const totalStars = repos.reduce((acc, r) => acc + (r.stargazers_count || 0), 0);
+      document.getElementById('stat-stars').textContent = totalStars;
+      
+      // Load 5 preview repos on homepage (clicking opens repo viewer)
+      renderHomeRepos(repos.slice(0, 5));
+      
+      // All repos are available in the overlay when "See all" is clicked
+    }
+  } catch (e) {
+    console.error('Error loading GitHub stats:', e);
+  }
+}
+
+function renderHomeRepos(repos) {
+  const el = document.getElementById('home-repos');
+  if (!repos.length) {
+    el.innerHTML = `
+      <div style="text-align:center;padding:30px 20px;color:var(--text3);">
+        <span class="mi" style="font-size:36px;opacity:0.4;display:block;margin-bottom:8px;">folder_open</span>
+        <div style="font-size:13px;">No projects found</div>
+      </div>
+    `;
+    return;
+  }
+  
+  el.innerHTML = repos.map(r => `
+    <div class="proj-card reveal" onclick="openRepo('${r.full_name}','${(r.description || '').replace(/'/g, "\\'")}')">
+      <div class="proj-top">
+        <div class="proj-icon"><span class="mi">folder_open</span></div>
+        <div class="proj-stars"><span class="mi">star</span>${r.stargazers_count || 0}</div>
+      </div>
+      <div class="proj-name">${r.name}</div>
+      <div class="proj-desc">${r.description || 'No description provided.'}</div>
+      <div class="proj-meta">
+        ${r.language ? `<div class="proj-lang"><div class="lang-dot ${getLangColor(r.language)}"></div><span style="font-size:10px;font-weight:700;color:var(--text2);">${r.language}</span></div>` : ''}
+        <div class="proj-tag">${r.private ? 'Private' : 'Public'}</div>
+      </div>
+    </div>
+  `).join('');
+  
+  setTimeout(observeReveals, 60);
+}
+
+function renderTracking() {
+  document.getElementById('track-title').textContent = S.tracking.title || 'Not set';
+  document.getElementById('track-subtitle').textContent = S.tracking.subtitle || '';
+  
+  setTimeout(() => {
+    const pct = Math.min(100, Math.max(0, parseInt(S.tracking.pct) || 0));
+    document.getElementById('track-bar').style.width = pct + '%';
+    document.getElementById('track-pct').textContent = pct + '%';
+  }, 600);
+  
+  const el = document.getElementById('track-entries');
+  const log = S.tracking.log || [];
+  
+  if (!log.length) {
+    el.innerHTML = '<div style="padding:24px;text-align:center;color:var(--text3);font-size:13px;">No entries yet</div>';
+    return;
+  }
+  
+  el.innerHTML = [...log].reverse().map(e => `
+    <div class="track-entry">
+      <div class="track-entry-dot"></div>
+      <div>
+        <div class="track-entry-date">${e.date}</div>
+        <div class="track-entry-text">${e.text}</div>
+        ${e.tag ? `<div class="track-entry-tag">${e.tag}</div>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+function getLangColor(l) {
+  const m = {
+    JavaScript: 'lang-js', TypeScript: 'lang-ts', Python: 'lang-py', Go: 'lang-go',
+    Rust: 'lang-rust', CSS: 'lang-css', HTML: 'lang-html', 'C++': 'lang-cpp', Java: 'lang-java'
+  };
+  return m[l] || 'lang-default';
+}
+
+function buildRepoCard(r) {
+  const lc = getLangColor(r.language);
+  return `
+    <div class="proj-card reveal" onclick="openRepo('${r.full_name}','${(r.description || '').replace(/'/g, "\\'")}')">
+      <div class="proj-top">
+        <div class="proj-icon"><span class="mi">folder_open</span></div>
+        <div class="proj-stars"><span class="mi">star</span>${r.stargazers_count || 0}</div>
+      </div>
+      <div class="proj-name">${r.name}</div>
+      <div class="proj-desc">${r.description || 'No description provided.'}</div>
+      <div class="proj-meta">
+        ${r.language ? `<div class="proj-lang"><div class="lang-dot ${lc}"></div><span style="font-size:10px;font-weight:700;color:var(--text2);">${r.language}</span></div>` : ''}
+        <div class="proj-tag">${r.private ? 'Private' : 'Public'}</div>
+      </div>
+    </div>
+  `;
+}
+
+// filterRepos is not used - filterAllProjects is used for the overlay search
+
+// All Projects Overlay
+function openAllProjects() {
+  document.getElementById('all-projects-view').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  if (allRepos.length) {
+    renderAllProjectsList(allRepos);
+  } else {
+    document.getElementById('apv-list').innerHTML = `
+      <div style="text-align:center;padding:60px 20px;color:var(--text3);">
+        <span class="mi" style="font-size:48px;opacity:0.4;display:block;margin-bottom:12px;">folder_open</span>
+        <div style="font-size:14px;font-weight:600;margin-bottom:6px;">No projects loaded</div>
+        <div style="font-size:12px;">Set your GitHub username in Admin panel</div>
+      </div>
+    `;
+    document.getElementById('apv-count').textContent = '0 projects';
+  }
+}
+
+function closeAllProjects() {
+  document.getElementById('all-projects-view').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function renderAllProjectsList(repos) {
+  const el = document.getElementById('apv-list');
+  document.getElementById('apv-count').textContent = `${repos.length} projects`;
+  
+  if (!repos.length) {
+    el.innerHTML = `
+      <div style="text-align:center;padding:60px 20px;color:var(--text3);">
+        <span class="mi" style="font-size:48px;opacity:0.4;display:block;margin-bottom:12px;">search_off</span>
+        <div style="font-size:14px;font-weight:600;">No projects found</div>
+      </div>
+    `;
+    return;
+  }
+  
+  el.innerHTML = repos.map(r => `
+    <div class="apv-card" onclick="openRepoFromOverlay('${r.full_name}','${(r.description || '').replace(/'/g, "\\'")}')">
+      <div class="apv-card-top">
+        <div class="apv-card-icon"><span class="mi">folder_open</span></div>
+        <div class="apv-card-stars"><span class="mi">star</span>${r.stargazers_count || 0}</div>
+      </div>
+      <div class="apv-card-name">${r.name}</div>
+      <div class="apv-card-desc">${r.description || 'No description provided.'}</div>
+      <div class="apv-card-meta">
+        ${r.language ? `<div class="apv-card-lang"><div class="lang-dot ${getLangColor(r.language)}"></div>${r.language}</div>` : ''}
+        <div class="apv-card-tag">${r.private ? 'Private' : 'Public'}</div>
+        <div class="apv-card-tag">${r.forks_count || 0} forks</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterAllProjects(q) {
+  if (!allRepos.length) return;
+  const f = q ? allRepos.filter(r => 
+    r.name.toLowerCase().includes(q.toLowerCase()) || 
+    (r.description || '').toLowerCase().includes(q.toLowerCase())
+  ) : allRepos;
+  renderAllProjectsList(f);
+}
+
+function openRepoFromOverlay(fullName, desc) {
+  closeAllProjects();
+  setTimeout(() => openRepo(fullName, desc), 150);
+}
+
+// Repo viewer
+let curRepo = '';
+let pathStack = [];
+
+async function openRepo(fn, desc) {
+  curRepo = fn;
+  pathStack = [];
+  document.getElementById('rv-name').textContent = fn.split('/')[1];
+  document.getElementById('rv-desc-top').textContent = desc || '';
+  document.getElementById('repo-view').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  await loadContents('');
+}
+
+function closeRepoView() {
+  document.getElementById('repo-view').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+async function loadContents(path) {
+  const el = document.getElementById('rv-files');
+  el.innerHTML = '<div style="padding:30px;display:flex;justify-content:center;"><div style="width:40px;height:40px;border-radius:50%;border:3px solid var(--bg3);border-top:3px solid var(--primary);animation:orbSpin 0.9s linear infinite;"></div></div>';
+  renderBreadcrumb(path);
+  
+  try {
+    const res = await fetch(`https://api.github.com/repos/${curRepo}/contents/${path}`);
+    if (!res.ok) throw new Error();
+    
+    const data = await res.json();
+    
+    if (Array.isArray(data)) {
+      const dirs = data.filter(f => f.type === 'dir').sort((a, b) => a.name.localeCompare(b.name));
+      const files = data.filter(f => f.type === 'file').sort((a, b) => a.name.localeCompare(b.name));
+      
+      el.innerHTML = [...dirs, ...files].map(f => `
+        <div class="rv-file-row" onclick="${f.type === 'dir' ? `drillInto('${f.path}')` : `viewFile('${f.path}','${f.name}')`}">
+          <div class="rv-file-icon"><span class="mi">${f.type === 'dir' ? 'folder' : 'insert_drive_file'}</span></div>
+          <div style="flex:1;"><div class="rv-file-name">${f.name}</div><div class="rv-file-meta">${f.type === 'dir' ? 'Directory' : formatSize(f.size)}</div></div>
+          <div style="color:var(--text3);"><span class="mi">chevron_right</span></div>
+        </div>
+      `).join('');
+    }
+  } catch (e) {
+    el.innerHTML = '<div style="padding:20px;text-align:center;color:var(--text3);font-size:13px;">Could not load contents</div>';
+  }
+}
+
+function drillInto(path) {
+  pathStack.push(path);
+  loadContents(path);
+}
+
+function renderBreadcrumb(path) {
+  const el = document.getElementById('rv-breadcrumb');
+  const parts = path ? path.split('/') : [];
+  let html = `<div class="rv-bc-item" onclick="jumpBC(-1)">root</div>`;
+  parts.forEach((p, i) => {
+    html += `<div class="rv-bc-sep"><span class="mi">chevron_right</span></div><div class="rv-bc-item" onclick="jumpBC(${i})">${p}</div>`;
+  });
+  el.innerHTML = html;
+}
+
+function jumpBC(idx) {
+  if (idx === -1) {
+    pathStack = [];
+    loadContents('');
+    return;
+  }
+  const cur = pathStack[pathStack.length - 1] || '';
+  const parts = cur.split('/');
+  const newPath = parts.slice(0, idx + 1).join('/');
+  pathStack = pathStack.slice(0, idx + 1);
+  loadContents(newPath);
+}
+
+async function viewFile(path, name) {
+  document.getElementById('cv-filename').textContent = name;
+  document.getElementById('code-view').classList.add('open');
+  const pre = document.getElementById('cv-code');
+  pre.textContent = 'Loading…';
+  
+  try {
+    const res = await fetch(`https://api.github.com/repos/${curRepo}/contents/${path}`);
+    const d = await res.json();
+    const decoded = decodeBase64(d.content || '');
+    const lines = decoded.split('\n');
+    pre.innerHTML = lines.map((l, i) => `<span class="cv-line-nums">${i + 1}</span>${esc(l)}`).join('\n');
+  } catch (e) {
+    pre.textContent = 'Could not load file.';
+  }
+}
+
+function closeCodeView() {
+  document.getElementById('code-view').classList.remove('open');
+}
+
+function copyCode() {
+  const text = document.getElementById('cv-code').innerText.replace(/^\d+\s/gm, '');
+  navigator.clipboard.writeText(text).then(() => showToast('check_circle', 'Copied to clipboard!'));
+}
+
+function esc(t) {
+  return t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function formatSize(b) {
+  if (!b) return '';
+  if (b < 1024) return `${b}B`;
+  if (b < 1048576) return `${(b / 1024).toFixed(1)}KB`;
+  return `${(b / 1048576).toFixed(1)}MB`;
+}
+
+// ==========================================
+// ADMIN FUNCTIONS
+// ==========================================
+
+function openAdmin() {
+  document.getElementById('login-overlay').classList.add('show');
+  document.getElementById('login-input').value = '';
+  document.getElementById('login-error').style.display = 'none';
+  setTimeout(() => document.getElementById('login-input').focus(), 300);
+}
+
+function doLogin() {
+  if (document.getElementById('login-input').value === S.password) {
+    document.getElementById('login-overlay').classList.remove('show');
+    
+    // Show portfolio config
+    document.getElementById('config-owner').textContent = PORTFOLIO_CONFIG.owner;
+    document.getElementById('config-repo').textContent = PORTFOLIO_CONFIG.repo;
+    
+    // Populate admin form
+    document.getElementById('a-username').value = S.github.username || '';
+    document.getElementById('a-token').value = ADMIN_TOKEN || '';
+    document.getElementById('a-name').value = S.profile.name;
+    document.getElementById('a-role').value = S.profile.role;
+    document.getElementById('a-bio').value = S.profile.bio;
+    document.getElementById('a-status').value = S.profile.status;
+    document.getElementById('a-email').value = S.contact.email;
+    document.getElementById('a-whatsapp').value = S.contact.whatsapp || '';
+    document.getElementById('a-facebook').value = S.contact.facebook || '';
+    document.getElementById('a-track-title').value = S.tracking.title;
+    document.getElementById('a-track-sub').value = S.tracking.subtitle;
+    document.getElementById('a-track-pct').value = S.tracking.pct;
+    document.getElementById('a-skills').value = S.skills.join(', ');
+    document.getElementById('a-edu-degree').value = S.education?.degree || '';
+    document.getElementById('a-edu-institution').value = S.education?.institution || '';
+    document.getElementById('a-edu-year').value = S.education?.year || '';
+    document.getElementById('a-edu-desc').value = S.education?.description || '';
+    
+    // Render featured projects list
+    renderFeaturedList();
+    
+    if (S.heroImage) {
+      const p = document.getElementById('admin-img-preview');
+      p.src = S.heroImage;
+      p.style.display = 'block';
+    }
+    
+    document.getElementById('admin-panel').classList.add('open');
+  } else {
+    document.getElementById('login-error').style.display = 'block';
+    document.getElementById('login-input').value = '';
+  }
+}
+
+function closeAdmin() {
+  document.getElementById('admin-panel').classList.remove('open');
+}
+
+async function testGitHub() {
+  const token = document.getElementById('a-token').value.trim();
+  
+  if (!token) {
+    showToast('warning', 'Enter your GitHub token');
+    return;
+  }
+  
+  showToast('sync', 'Testing token…');
+  
+  // Test token by fetching user info
+  try {
+    const res = await fetch('https://api.github.com/user', {
+      headers: {
+        'Authorization': `token ${token}`,
+        'Accept': 'application/vnd.github.v3+json'
+      }
+    });
+    
+    if (res.ok) {
+      const user = await res.json();
+      showToast('check_circle', `Connected as ${user.login}!`);
+      // Save token to localStorage for this browser
+      ADMIN_TOKEN = token;
+      localStorage.setItem('admin_token', token);
+      
+      // Auto-fill username if not set in config
+      if (PORTFOLIO_CONFIG.owner === 'your-github-username') {
+        document.getElementById('a-username').value = user.login;
+      }
+    } else {
+      const err = await res.json();
+      showToast('error', err.message || 'Invalid token');
+    }
+  } catch (e) {
+    showToast('error', 'Connection failed');
+  }
+}
+
+async function handleImgUpload(input) {
+  const file = input.files[0];
+  if (!file) return;
+  
+  // Validate file type
+  if (!file.type.startsWith('image/')) {
+    showToast('error', 'Please select an image file');
+    return;
+  }
+  
+  // Show loading
+  showToast('sync', 'Loading image...');
+  
+  // Read the file
+  const reader = new FileReader();
+  reader.onload = async (e) => {
+    const base64 = e.target.result;
+    
+    // Show preview in admin panel
+    const adminPreview = document.getElementById('admin-img-preview');
+    if (adminPreview) {
+      adminPreview.src = base64;
+      adminPreview.style.display = 'block';
+    }
+    
+    // Upload to GitHub if admin token is set
+    if (ADMIN_TOKEN) {
+      showToast('sync', 'Uploading to GitHub...');
+      
+      const ext = file.name.split('.').pop() || 'jpg';
+      const filename = `hero-${Date.now()}.${ext}`;
+      const url = await uploadImage(filename, base64);
+      
+      if (url) {
+        S.heroImage = url;
+        showToast('check_circle', 'Uploaded to GitHub!');
+      } else {
+        S.heroImage = base64;
+        showToast('warning', 'Using local image');
+      }
+    } else {
+      // Use base64 directly
+      S.heroImage = base64;
+      showToast('check_circle', 'Image loaded!');
+    }
+    
+    // Immediately update all image displays
+    updateHeroImage(S.heroImage);
+  };
+  
+  reader.onerror = () => {
+    showToast('error', 'Failed to read image');
+  };
+  
+  reader.readAsDataURL(file);
+}
+
+// Separate function to update hero image across the UI
+function updateHeroImage(imageUrl) {
+  if (!imageUrl) return;
+  
+  // Update hero section image
+  const heroImg = document.getElementById('hero-img');
+  const heroPlaceholder = document.getElementById('hero-img-placeholder');
+  
+  if (heroImg) {
+    heroImg.src = imageUrl;
+    heroImg.style.display = 'block';
+    heroImg.onerror = function() {
+      this.style.display = 'none';
+      if (heroPlaceholder) heroPlaceholder.style.display = 'flex';
+    };
+  }
+  
+  if (heroPlaceholder) {
+    heroPlaceholder.style.display = 'none';
+  }
+  
+  // Update topbar avatar
+  const topbarAvatar = document.getElementById('topbar-avatar');
+  if (topbarAvatar) {
+    topbarAvatar.innerHTML = `<img src="${imageUrl}" alt="Avatar" style="width:100%;height:100%;object-fit:cover;">`;
+  }
+  
+  // Update admin preview
+  const adminPreview = document.getElementById('admin-img-preview');
+  if (adminPreview) {
+    adminPreview.src = imageUrl;
+    adminPreview.style.display = 'block';
+  }
+}
+
+async function saveAdmin() {
+  // Update GitHub username for stats display
+  S.github.username = document.getElementById('a-username').value.trim();
+  
+  // Update profile data
+  S.profile.name = document.getElementById('a-name').value.trim() || 'Developer';
+  S.profile.role = document.getElementById('a-role').value.trim();
+  S.profile.bio = document.getElementById('a-bio').value.trim();
+  S.profile.status = document.getElementById('a-status').value.trim();
+  S.contact.email = document.getElementById('a-email').value.trim();
+  S.contact.whatsapp = document.getElementById('a-whatsapp').value.trim();
+  S.contact.facebook = document.getElementById('a-facebook').value.trim();
+  S.tracking.title = document.getElementById('a-track-title').value.trim();
+  S.tracking.subtitle = document.getElementById('a-track-sub').value.trim();
+  S.tracking.pct = parseInt(document.getElementById('a-track-pct').value) || 0;
+  S.skills = document.getElementById('a-skills').value.split(',').map(s => s.trim()).filter(Boolean);
+  S.education = {
+    degree: document.getElementById('a-edu-degree').value.trim(),
+    institution: document.getElementById('a-edu-institution').value.trim(),
+    year: document.getElementById('a-edu-year').value.trim(),
+    description: document.getElementById('a-edu-desc').value.trim()
+  };
+  
+  // Check if admin token is set
+  if (!ADMIN_TOKEN) {
+    showToast('warning', 'Connect your token first!');
+    return;
+  }
+  
+  // Save to GitHub
+  showToast('sync', 'Saving…');
+  const success = await saveData();
+  
+  if (success) {
+    renderProfile();
+    renderTracking();
+    
+    // Sync repos if username is set
+    if (S.github.username) {
+      try {
+        await syncRepos();
+      } catch (e) {
+        console.log('Could not sync repos:', e);
+      }
+    }
+    
+    showToast('check_circle', 'Saved successfully!');
+    closeAdmin();
+  } else {
+    showToast('error', 'Failed to save. Check your token.');
+  }
+}
+
+async function addTrackEntry() {
+  const text = document.getElementById('a-track-entry').value.trim();
+  if (!text) {
+    showToast('warning', 'Enter something');
+    return;
+  }
+  
+  if (!S.tracking.log) S.tracking.log = [];
+  
+  S.tracking.log.push({
+    text,
+    date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+    tag: document.getElementById('a-track-title').value.trim() || ''
+  });
+  
+  document.getElementById('a-track-entry').value = '';
+  
+  const success = await saveData();
+  if (success) {
+    renderTracking();
+    showToast('add_circle', 'Entry added!');
+  }
+}
+
+function changePassword() {
+  const np = document.getElementById('a-newpass').value;
+  if (np.length < 4) {
+    showToast('warning', 'Min 4 characters');
+    return;
+  }
+  S.password = np;
+  document.getElementById('a-newpass').value = '';
+  saveData();
+  showToast('lock', 'Password updated!');
+}
+
+function handleContact(type) {
+  const map = {
+    email: () => {
+      const email = S.contact.email;
+      navigator.clipboard.writeText(email);
+      showToast('content_copy', 'Email copied!');
+    },
+    whatsapp: () => {
+      const num = (S.contact.whatsapp || '').replace(/[^0-9]/g, '');
+      if (num) window.open(`https://wa.me/${num}`, '_blank');
+      else showToast('warning', 'WhatsApp not set');
+    },
+    facebook: () => {
+      const fb = S.contact.facebook || '';
+      if (fb && fb !== 'facebook.com/username') {
+        const url = fb.startsWith('http') ? fb : `https://${fb}`;
+        window.open(url, '_blank');
+      } else {
+        showToast('warning', 'Facebook not set');
+      }
+    }
+  };
+  map[type]?.();
+}
+
+// Sync GitHub repos manually
+async function syncRepos() {
+  const username = document.getElementById('a-username').value.trim();
+  
+  if (!username) {
+    showToast('warning', 'Enter your GitHub username first');
+    return;
+  }
+  
+  // Save username to data
+  S.github.username = username;
+  
+  showToast('sync', 'Syncing repositories...');
+  
+  try {
+    // Fetch user info
+    const userRes = await fetch(`https://api.github.com/users/${username}`);
+    if (!userRes.ok) {
+      showToast('error', 'User not found');
+      return;
+    }
+    const user = await userRes.json();
+    
+    // Update stats
+    document.getElementById('stat-repos').textContent = user.public_repos || 0;
+    document.getElementById('stat-followers').textContent = user.followers || 0;
+    
+    // Fetch repos
+    const reposRes = await fetch(`https://api.github.com/users/${username}/repos?per_page=100&sort=updated`);
+    const repos = await reposRes.json();
+    
+    if (repos.length) {
+      allRepos = repos;
+      const totalStars = repos.reduce((acc, r) => acc + (r.stargazers_count || 0), 0);
+      document.getElementById('stat-stars').textContent = totalStars;
+      
+      // Render 5 preview repos
+      renderHomeRepos(repos.slice(0, 5));
+      
+      showToast('check_circle', `${repos.length} repos synced!`);
+    } else {
+      showToast('warning', 'No public repositories found');
+    }
+  } catch (e) {
+    console.error('Sync error:', e);
+    showToast('error', 'Failed to sync repos');
+  }
+}
+
+// ==========================================
+// TOAST
+// ==========================================
+
+let toastTimer;
+function showToast(icon, msg) {
+  document.getElementById('toast-icon').textContent = icon;
+  document.getElementById('toast-msg').textContent = msg;
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2600);
+}
+
+// ==========================================
+// INITIALIZATION
+// ==========================================
+
+// Material Colors Palette - Random selection on each refresh
+const MATERIAL_COLORS = [
+  { name: 'purple', primary: '#9c27b0', primary2: '#ab47bc', accent: '#e040fb' },
+  { name: 'indigo', primary: '#3f51b5', primary2: '#5c6bc0', accent: '#7c4dff' },
+  { name: 'teal', primary: '#009688', primary2: '#26a69a', accent: '#64ffda' },
+  { name: 'deep-orange', primary: '#ff5722', primary2: '#ff7043', accent: '#ff6e40' },
+  { name: 'pink', primary: '#e91e63', primary2: '#f06292', accent: '#ff4081' },
+  { name: 'cyan', primary: '#00bcd4', primary2: '#26c6da', accent: '#00e5ff' },
+  { name: 'amber', primary: '#ff9800', primary2: '#ffb74d', accent: '#ffd740' },
+  { name: 'deep-purple', primary: '#673ab7', primary2: '#7e57c2', accent: '#b388ff' },
+  { name: 'green', primary: '#4caf50', primary2: '#66bb6a', accent: '#69f0ae' },
+  { name: 'blue', primary: '#2196f3', primary2: '#42a5f5', accent: '#40c4ff' }
+];
+
+function applyRandomColor() {
+  // Check if user has a saved preference
+  const savedColor = localStorage.getItem('portfolio_color');
+  let colorIndex;
+  
+  if (savedColor) {
+    colorIndex = parseInt(savedColor);
+  } else {
+    // Random selection
+    colorIndex = Math.floor(Math.random() * MATERIAL_COLORS.length);
+    localStorage.setItem('portfolio_color', colorIndex.toString());
+  }
+  
+  const color = MATERIAL_COLORS[colorIndex];
+  
+  // Apply colors to CSS variables
+  document.documentElement.style.setProperty('--primary', color.primary);
+  document.documentElement.style.setProperty('--primary2', color.primary2);
+  document.documentElement.style.setProperty('--accent', color.accent);
+  
+  // Also update the theme toggle icon color
+  const themeThumb = document.querySelector('.theme-thumb');
+  if (themeThumb) {
+    themeThumb.style.background = color.primary;
+  }
+  
+  console.log('🎨 Applied color theme:', color.name);
+  return color;
+}
+
+// Allow user to cycle through colors
+function cycleColor() {
+  const currentIndex = parseInt(localStorage.getItem('portfolio_color') || '0');
+  const newIndex = (currentIndex + 1) % MATERIAL_COLORS.length;
+  localStorage.setItem('portfolio_color', newIndex.toString());
+  
+  const color = MATERIAL_COLORS[newIndex];
+  document.documentElement.style.setProperty('--primary', color.primary);
+  document.documentElement.style.setProperty('--primary2', color.primary2);
+  document.documentElement.style.setProperty('--accent', color.accent);
+  
+  const themeThumb = document.querySelector('.theme-thumb');
+  if (themeThumb) {
+    themeThumb.style.background = color.primary;
+  }
+  
+  showToast('palette', `Color: ${color.name}`);
+}
+
+window.addEventListener('load', async () => {
+  // Apply random color theme
+  applyRandomColor();
+  
+  // Load admin token from localStorage (for admin users who logged in before)
+  const savedToken = localStorage.getItem('admin_token');
+  if (savedToken) {
+    ADMIN_TOKEN = savedToken;
+  }
+  
+  applyTheme(S.theme);
+  
+  // Load data from GitHub (public read, works for all visitors)
+  await loadData();
+  
+  // Hide loader
+  setTimeout(() => {
+    const l = document.getElementById('loader');
+    l.classList.add('hide');
+    setTimeout(() => {
+      l.remove();
+      observeReveals();
+    }, 600);
+  }, 1200);
+});
+
+// Ripple effect
+document.addEventListener('click', e => {
+  const el = e.target.closest('.proj-card,.contact-btn,.btn-primary,.btn-neu,.rv-file-row');
+  if (!el) return;
+  
+  const r = document.createElement('span');
+  r.className = 'ripple';
+  const rect = el.getBoundingClientRect();
+  const size = Math.max(rect.width, rect.height);
+  r.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX - rect.left - size / 2}px;top:${e.clientY - rect.top - size / 2}px;`;
+  el.style.position = 'relative';
+  el.appendChild(r);
+  setTimeout(() => r.remove(), 700);
+});
+
+// Close login on overlay click
+document.getElementById('login-overlay').addEventListener('click', function(e) {
+  if (e.target === this) this.classList.remove('show');
+});
+</script>
+</body>
+</html>
