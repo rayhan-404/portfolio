@@ -1,158 +1,191 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="refresh" content="5;url=https://xn--p5b2cj9c.xn--45bl4db.xn--54b7fta0cc" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta http-equiv="refresh" content="5;url=https://xn--p5b2cj9c.xn--45bl4db.xn--54b7fta0cc"/>
   <title>রিডাইরেক্ট হচ্ছে...</title>
-  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600&family=Noto+Serif+Bengali:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet"/>
   <style>
-    :root {
-      --bg: #0b0f1a;
-      --surface: #131929;
-      --border: #1e2d45;
-      --accent: #00c896;
-      --accent2: #0077ff;
-      --text: #e8edf5;
-      --muted: #6b7fa3;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      background: var(--bg);
-      color: var(--text);
+      background: #f0faf4;
       font-family: 'Hind Siliguri', sans-serif;
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      overflow: hidden;
-      position: relative;
+      padding: 24px;
     }
 
-    /* Background */
-    .bg-grid {
-      position: fixed; inset: 0; z-index: 0;
-      background-image:
-        linear-gradient(rgba(0,200,150,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,200,150,0.04) 1px, transparent 1px);
-      background-size: 48px 48px;
-      animation: gridDrift 20s linear infinite;
-    }
-    @keyframes gridDrift {
-      from { background-position: 0 0; }
-      to   { background-position: 48px 48px; }
-    }
-
-    .orb {
-      position: fixed; border-radius: 50%;
-      filter: blur(100px); pointer-events: none; z-index: 0;
-    }
-    .orb-1 {
-      width: 520px; height: 520px;
-      background: radial-gradient(circle, rgba(0,200,150,0.13), transparent 70%);
-      top: -180px; left: -180px;
-      animation: float1 12s ease-in-out infinite;
-    }
-    .orb-2 {
-      width: 420px; height: 420px;
-      background: radial-gradient(circle, rgba(0,119,255,0.11), transparent 70%);
-      bottom: -140px; right: -140px;
-      animation: float2 15s ease-in-out infinite;
-    }
-    @keyframes float1 {
-      0%,100% { transform: translate(0,0); }
-      50%      { transform: translate(60px,40px); }
-    }
-    @keyframes float2 {
-      0%,100% { transform: translate(0,0); }
-      50%      { transform: translate(-50px,-30px); }
-    }
-
-    /* Card */
-    .card {
-      position: relative; z-index: 1;
-      width: min(480px, 90vw);
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 28px;
-      padding: 52px 44px;
-      box-shadow:
-        0 0 0 1px rgba(0,200,150,0.07),
-        0 32px 80px rgba(0,0,0,0.55),
-        inset 0 1px 0 rgba(255,255,255,0.05);
+    .wrapper {
+      width: min(400px, 100%);
       display: flex;
       flex-direction: column;
-      align-items: center;
-      gap: 32px;
-      animation: cardIn 0.7s cubic-bezier(.22,1,.36,1) forwards;
+      gap: 20px;
+      animation: fadeUp 0.5s cubic-bezier(0.05, 0.7, 0.1, 1.0) forwards;
       opacity: 0;
     }
-    @keyframes cardIn {
-      from { opacity: 0; transform: translateY(28px) scale(0.97); }
-      to   { opacity: 1; transform: translateY(0) scale(1); }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* Ring */
-    .countdown-ring {
+    /* ── Top hero card ── */
+    .hero-card {
+      background: #85e0b0;
+      border-radius: 28px;
+      padding: 32px 28px 28px;
       position: relative;
-      width: 140px; height: 140px;
+      overflow: hidden;
     }
-    .countdown-ring svg {
+    .hero-card::before {
+      content: '';
+      position: absolute;
+      right: -40px; top: -40px;
+      width: 180px; height: 180px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 50%;
+    }
+    .hero-card::after {
+      content: '';
+      position: absolute;
+      right: 20px; bottom: -60px;
       width: 140px; height: 140px;
+      background: rgba(255,255,255,0.10);
+      border-radius: 50%;
+    }
+
+    .app-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #1a5c3a;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .app-label::before {
+      content: '';
+      display: inline-block;
+      width: 20px; height: 2px;
+      background: #1a5c3a;
+      border-radius: 2px;
+    }
+
+    .hero-title {
+      font-size: 2.6rem;
+      font-weight: 900;
+      line-height: 1.1;
+      color: #0d2b1a;
+      letter-spacing: -0.02em;
+      margin-bottom: 28px;
+      font-family: 'Hind Siliguri', sans-serif;
+    }
+
+    /* bottom row inside hero */
+    .hero-bottom {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: end;
+    }
+
+    .hero-sub {
+      background: rgba(255,255,255,0.45);
+      border-radius: 16px;
+      padding: 14px 16px;
+      font-size: 0.85rem;
+      color: #1a3d28;
+      line-height: 1.6;
+    }
+
+    .hero-pills {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .pill {
+      background: rgba(255,255,255,0.55);
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #0d2b1a;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* ── Countdown card ── */
+    .countdown-card {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 28px 24px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .ring-wrap {
+      position: relative;
+      width: 80px; height: 80px;
+      flex-shrink: 0;
+    }
+    .ring-wrap svg {
+      width: 80px; height: 80px;
       transform: rotate(-90deg);
     }
-    .ring-bg { fill: none; stroke: var(--border); stroke-width: 5; }
-    .ring-fg {
+    .ring-track { fill: none; stroke: #e0f2ea; stroke-width: 6; }
+    .ring-prog  {
       fill: none;
-      stroke: var(--accent);
-      stroke-width: 5;
+      stroke: #2dba72;
+      stroke-width: 6;
       stroke-linecap: round;
-      stroke-dasharray: 345;
+      stroke-dasharray: 201;
       stroke-dashoffset: 0;
       transition: stroke-dashoffset 1s linear;
-      filter: drop-shadow(0 0 10px rgba(0,200,150,0.65));
     }
-    .countdown-num {
+    .ring-num {
       position: absolute; inset: 0;
       display: flex; align-items: center; justify-content: center;
-      font-family: 'Noto Serif Bengali', serif;
-      font-size: 3.2rem;
+      font-size: 2rem;
       font-weight: 700;
-      color: var(--accent);
+      color: #1a5c3a;
     }
 
-    /* Text */
-    .redirect-label {
-      font-size: 0.9rem;
-      color: var(--muted);
-      text-align: center;
-      margin-bottom: -16px;
+    .cd-info { flex: 1; }
+    .cd-label {
+      font-size: 0.78rem;
+      color: #6b9c7e;
+      margin-bottom: 4px;
     }
-    .redirect-url {
-      font-family: 'Noto Serif Bengali', serif;
-      font-size: 1.35rem;
+    .cd-domain {
+      font-size: 1.5rem;
       font-weight: 700;
-      color: var(--text);
-      text-align: center;
+      color: #0d2b1a;
+      margin-bottom: 12px;
+      line-height: 1.2;
     }
-    .redirect-url em {
-      color: var(--accent);
+    .cd-domain em {
       font-style: normal;
+      color: #1a7a47;
     }
 
-    /* Progress */
     .progress-track {
-      width: 100%;
-      height: 3px;
-      background: var(--border);
+      height: 4px;
+      background: #e0f2ea;
       border-radius: 999px;
       overflow: hidden;
     }
     .progress-fill {
       height: 100%;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      background: #2dba72;
       border-radius: 999px;
       transform-origin: left;
       animation: shrink 5s linear forwards;
@@ -162,78 +195,85 @@
       to   { transform: scaleX(0); }
     }
 
-    /* Manual link */
-    .manual-link {
-      font-size: 0.82rem;
-      color: var(--muted);
+    /* manual link */
+    .manual {
       text-align: center;
+      font-size: 0.8rem;
+      color: #6b9c7e;
     }
-    .manual-link a {
-      color: var(--accent2);
+    .manual a {
+      color: #1a7a47;
+      font-weight: 600;
       text-decoration: none;
-      border-bottom: 1px solid rgba(0,119,255,0.3);
-      transition: border-color 0.2s;
     }
-    .manual-link a:hover { border-color: var(--accent2); }
+    .manual a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
 
-  <div class="bg-grid"></div>
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
+<div class="wrapper">
 
-  <div class="card">
-
-    <div class="countdown-ring">
-      <svg viewBox="0 0 140 140">
-        <circle class="ring-bg" cx="70" cy="70" r="55"/>
-        <circle class="ring-fg" id="ring" cx="70" cy="70" r="55"/>
-      </svg>
-      <div class="countdown-num" id="num">৫</div>
+  <!-- Hero -->
+  <div class="hero-card">
+    <div class="app-label">CovGen — M Rayhan</div>
+    <div class="hero-title">Cover<br>Generator</div>
+    <div class="hero-bottom">
+      <div class="hero-sub">
+        আপনাকে নিয়ে যাওয়া হচ্ছে নতুন ঠিকানায় — ৫ সেকেন্ড অপেক্ষা করুন।
+      </div>
+      <div class="hero-pills">
+        <div class="pill">📄 Templates</div>
+        <div class="pill">⬇️ Free PDF</div>
+      </div>
     </div>
-
-    <div class="redirect-label">কভার জেনারেটর এখন নতুন ঠিকানায় 🎉</div>
-
-    <div class="redirect-url"><em>কভার</em>.পাতা.বাংলা</div>
-
-    <div class="progress-track">
-      <div class="progress-fill"></div>
-    </div>
-
-    <div class="manual-link">
-      রিডাইরেক্ট না হলে <a href="https://xn--p5b2cj9c.xn--45bl4db.xn--54b7fta0cc">এখানে ক্লিক করুন</a>
-    </div>
-
   </div>
 
-  <script>
-    const TOTAL = 5;
-    const r = 55;
-    const circumference = 2 * Math.PI * r;
-    const ring = document.getElementById('ring');
-    const numEl = document.getElementById('num');
-    const bnDigits = ['০','১','২','৩','৪','৫','৬','৭','৮','৯'];
+  <!-- Countdown -->
+  <div class="countdown-card">
+    <div class="ring-wrap">
+      <svg viewBox="0 0 80 80">
+        <circle class="ring-track" cx="40" cy="40" r="32"/>
+        <circle class="ring-prog" id="ring" cx="40" cy="40" r="32"/>
+      </svg>
+      <div class="ring-num" id="num">৫</div>
+    </div>
 
-    function toBn(n) {
-      return String(n).split('').map(d => bnDigits[+d]).join('');
+    <div class="cd-info">
+      <div class="cd-label">নতুন ঠিকানা</div>
+      <div class="cd-domain"><em>কভার</em>.পাতা.বাংলা</div>
+      <div class="progress-track">
+        <div class="progress-fill"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="manual">
+    রিডাইরেক্ট না হলে <a href="https://xn--p5b2cj9c.xn--45bl4db.xn--54b7fta0cc">এখানে ক্লিক করুন</a>
+  </div>
+
+</div>
+
+<script>
+  const TOTAL = 5;
+  const r = 32;
+  const circ = 2 * Math.PI * r;
+  const ring = document.getElementById('ring');
+  const numEl = document.getElementById('num');
+  const bn = ['০','১','২','৩','৪','৫','৬','৭','৮','৯'];
+
+  ring.style.strokeDasharray = circ;
+  ring.style.strokeDashoffset = 0;
+
+  let left = TOTAL;
+  const iv = setInterval(() => {
+    left--;
+    numEl.textContent = String(left).split('').map(d => bn[+d]).join('');
+    ring.style.strokeDashoffset = circ * (1 - left / TOTAL);
+    if (left <= 0) {
+      clearInterval(iv);
+      window.location.href = 'https://xn--p5b2cj9c.xn--45bl4db.xn--54b7fta0cc';
     }
-
-    ring.style.strokeDasharray = circumference;
-    ring.style.strokeDashoffset = 0;
-
-    let remaining = TOTAL;
-
-    const interval = setInterval(() => {
-      remaining--;
-      numEl.textContent = toBn(remaining);
-      ring.style.strokeDashoffset = circumference * (1 - remaining / TOTAL);
-
-      if (remaining <= 0) {
-        clearInterval(interval);
-        window.location.href = 'https://xn--p5b2cj9c.xn--45bl4db.xn--54b7fta0cc';
-      }
-    }, 1000);
-  </script>
+  }, 1000);
+</script>
 </body>
 </html>
